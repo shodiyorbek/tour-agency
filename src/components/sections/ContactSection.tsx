@@ -24,9 +24,9 @@ export default function ContactSection() {
 
             <div className="space-y-6">
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Phone className="h-6 w-6 text-blue-600" />
-                </div>
+                            <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+              <Phone className="h-6 w-6 text-primary" />
+            </div>
                 <div>
                   <div className="font-semibold text-gray-900">Phone</div>
                   <Link
@@ -39,24 +39,24 @@ export default function ContactSection() {
               </div>
 
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Mail className="h-6 w-6 text-blue-600" />
-                </div>
+                            <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+              <Mail className="h-6 w-6 text-primary" />
+            </div>
                 <div>
                   <div className="font-semibold text-gray-900">Email</div>
-                  <Link
-                    href="mailto:hello@wanderlust.com"
-                    className="text-blue-600 hover:text-blue-700 transition-colors duration-200"
-                  >
-                    hello@wanderlust.com
-                  </Link>
+                                      <Link
+                      href="mailto:hello@wanderlust.com"
+                      className="text-primary hover:text-primary/80 transition-colors duration-200"
+                    >
+                      hello@wanderlust.com
+                    </Link>
                 </div>
               </div>
 
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <MapPin className="h-6 w-6 text-blue-600" />
-                </div>
+                            <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+              <MapPin className="h-6 w-6 text-primary" />
+            </div>
                 <div>
                   <div className="font-semibold text-gray-900">Office</div>
                   <div className="text-gray-600">123 Travel Street, Adventure City, AC 12345</div>
@@ -139,9 +139,9 @@ export default function ContactSection() {
                       className="transition-all duration-200 focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
-                  <Button className="animated-button w-full bg-blue-600 hover:bg-blue-700 transition-colors duration-200">
-                    Send Message
-                  </Button>
+                                <Button className="animated-button w-full bg-primary hover:bg-primary/90 transition-colors duration-200">
+                Send Message
+              </Button>
                 </form>
               </CardContent>
             </Card>

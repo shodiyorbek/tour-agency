@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Navigation from "@/components/sections/Navigation"
 import HeroSection from "@/components/sections/HeroSection"
 import StatsSection from "@/components/sections/StatsSection"
+import HotDealsSection from "@/components/sections/HotDealsSection"
 import ToursSection from "@/components/sections/ToursSection"
 import AboutSection from "@/components/sections/AboutSection"
 import ContactSection from "@/components/sections/ContactSection"
@@ -172,6 +173,7 @@ export default function TravelAgency() {
       <Navigation scrollToSection={scrollToSection} />
       <HeroSection />
       <StatsSection />
+      <HotDealsSection />
       <ToursSection />
       <div id="gallery">
         <ImageGallery />

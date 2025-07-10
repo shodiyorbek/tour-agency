@@ -141,7 +141,7 @@ export default function HeroSection() {
             </label>
             <Input
               placeholder="Search destinations..."
-              className="h-12 border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
+              className="h-12 border-gray-200 focus:border-primary focus:ring-primary"
             />
           </div>
 
@@ -150,7 +150,7 @@ export default function HeroSection() {
             <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
               Departure
             </label>
-            <Input type="date" className="h-12 border-gray-200 focus:border-emerald-500 focus:ring-emerald-500" />
+            <Input type="date" className="h-12 border-gray-200 focus:border-primary focus:ring-primary" />
           </div>
 
           {/* Return Date */}
@@ -158,7 +158,7 @@ export default function HeroSection() {
             <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
               Return
             </label>
-            <Input type="date" className="h-12 border-gray-200 focus:border-emerald-500 focus:ring-emerald-500" />
+            <Input type="date" className="h-12 border-gray-200 focus:border-primary focus:ring-primary" />
           </div>
 
           {/* Travelers */}
@@ -167,7 +167,7 @@ export default function HeroSection() {
               <Users className="w-4 h-4" />
               Travelers
             </label>
-            <select className="h-12 w-full rounded-md border border-gray-200 px-3 py-2 text-sm focus:border-emerald-500 focus:ring-emerald-500 focus:outline-none">
+            <select className="h-12 w-full rounded-md border border-gray-200 px-3 py-2 text-sm focus:border-primary focus:ring-primary focus:outline-none">
               <option>1 Adult, Economy</option>
               <option>2 Adults, Economy</option>
               <option>2 Adults, 1 Child</option>
@@ -178,7 +178,7 @@ export default function HeroSection() {
           {/* Search Button */}
           <Button
             size="lg"
-            className="h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 transition-all duration-300 transform hover:scale-105"
+            className="h-12 bg-primary hover:bg-primary/90 text-white font-semibold px-8 transition-all duration-300 transform hover:scale-105"
           >
             Search Tours
           </Button>
@@ -188,27 +188,27 @@ export default function HeroSection() {
         <div className="flex flex-wrap justify-center gap-4 mt-8 pt-6 border-t border-gray-200">
           <Button
             variant="outline"
-            className="flex items-center gap-2 hover:bg-emerald-50 hover:border-emerald-300 transition-colors bg-transparent"
+            className="flex items-center gap-2 hover:bg-primary/10 hover:border-primary transition-colors bg-transparent"
           >
             <Plane className="w-4 h-4" />
             Flights
           </Button>
           <Button
             variant="outline"
-            className="flex items-center gap-2 hover:bg-emerald-50 hover:border-emerald-300 transition-colors bg-transparent"
+            className="flex items-center gap-2 hover:bg-primary/10 hover:border-primary transition-colors bg-transparent"
           >
             <MapPin className="w-4 h-4" />
             Hotels
           </Button>
           <Button
             variant="outline"
-            className="flex items-center gap-2 hover:bg-emerald-50 hover:border-emerald-300 transition-colors bg-transparent"
+            className="flex items-center gap-2 hover:bg-primary/10 hover:border-primary transition-colors bg-transparent"
           >
             Popular Destinations
           </Button>
           <Button
             variant="outline"
-            className="flex items-center gap-2 hover:bg-emerald-50 hover:border-emerald-300 transition-colors bg-transparent"
+            className="flex items-center gap-2 hover:bg-primary/10 hover:border-primary transition-colors bg-transparent"
           >
             Last Minute Deals
           </Button>

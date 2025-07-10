@@ -22,9 +22,9 @@ export default function AboutSection() {
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Award className="h-6 w-6 text-blue-600" />
-                  </div>
+                                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                <Award className="h-6 w-6 text-primary" />
+              </div>
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">Expert Curation</h3>
@@ -36,9 +36,9 @@ export default function AboutSection() {
 
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Users className="h-6 w-6 text-blue-600" />
-                  </div>
+                                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                <Users className="h-6 w-6 text-primary" />
+              </div>
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">Small Groups</h3>
@@ -50,9 +50,9 @@ export default function AboutSection() {
 
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Camera className="h-6 w-6 text-blue-600" />
-                  </div>
+                                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                <Camera className="h-6 w-6 text-primary" />
+              </div>
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">Unforgettable Moments</h3>
