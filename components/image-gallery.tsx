@@ -1,0 +1,279 @@
+"use client"
+
+import { useEffect, useRef, useState } from "react"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import Image from "next/image"
+import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react"
+import { Button } from "@/components/ui/button"
+
+gsap.registerPlugin(ScrollTrigger)
+
+interface GalleryImage {
+  id: number
+  src: string
+  alt: string
+  title: string
+  location: string
+}
+
+const galleryImages: GalleryImage[] = [
+  {
+    id: 1,
+    src: "/placeholder.svg?height=800&width=1200",
+    alt: "Dubai Skyline",
+    title: "Dubai Skyline at Sunset",
+    location: "Dubai, UAE",
+  },
+  {
+    id: 2,
+    src: "/placeholder.svg?height=800&width=1200",
+    alt: "Grand Canyon",
+    title: "Grand Canyon Vista",
+    location: "Arizona, USA",
+  },
+  {
+    id: 3,
+    src: "/placeholder.svg?height=800&width=1200",
+    alt: "Samarkand Architecture",
+    title: "Ancient Samarkand",
+    location: "Uzbekistan",
+  },
+  {
+    id: 4,
+    src: "/placeholder.svg?height=800&width=1200",
+    alt: "Maldives Resort",
+    title: "Overwater Villas",
+    location: "Maldives",
+  },
+  {
+    id: 5,
+    src: "/placeholder.svg?height=800&width=1200",
+    alt: "Cherry Blossoms",
+    title: "Kyoto Cherry Blossoms",
+    location: "Japan",
+  },
+  {
+    id: 6,
+    src: "/placeholder.svg?height=800&width=1200",
+    alt: "African Safari",
+    title: "Serengeti Wildlife",
+    location: "Tanzania",
+  },
+  {
+    id: 7,
+    src: "/placeholder.svg?height=800&width=1200",
+    alt: "Northern Lights",
+    title: "Aurora Borealis",
+    location: "Iceland",
+  },
+  {
+    id: 8,
+    src: "/placeholder.svg?height=800&width=1200",
+    alt: "Machu Picchu",
+    title: "Ancient Citadel",
+    location: "Peru",
+  },
+]
+
+export default function ImageGallery() {
+  const galleryRef = useRef<HTMLDivElement>(null)
+  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const lightboxRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Parallax effect for gallery items
+      gsap.utils.toArray(".gallery-item").forEach((item: any, index) => {
+        const speed = 0.5 + (index % 3) * 0.2
+
+        gsap.to(item, {
+          yPercent: -50 * speed,
+          ease: "none",
+          scrollTrigger: {
+            trigger: item,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        })
+      })
+
+      // Staggered fade-in animation
+      gsap.fromTo(
+        ".gallery-item",
+        {
+          opacity: 0,
+          y: 100,
+          scale: 0.8,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".gallery-grid",
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      )
+
+      // Gallery title animation
+      gsap.fromTo(
+        ".gallery-title",
+        {
+          opacity: 0,
+          y: 50,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".gallery-section",
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      )
+    }, galleryRef)
+
+    return () => ctx.revert()
+  }, [])
+
+  useEffect(() => {
+    if (selectedImage && lightboxRef.current) {
+      gsap.fromTo(
+        lightboxRef.current,
+        {
+          opacity: 0,
+          scale: 0.8,
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.3,
+          ease: "power2.out",
+        },
+      )
+    }
+  }, [selectedImage])
+
+  const openLightbox = (image: GalleryImage, index: number) => {
+    setSelectedImage(image)
+    setCurrentIndex(index)
+  }
+
+  const closeLightbox = () => {
+    if (lightboxRef.current) {
+      gsap.to(lightboxRef.current, {
+        opacity: 0,
+        scale: 0.8,
+        duration: 0.2,
+        ease: "power2.in",
+        onComplete: () => setSelectedImage(null),
+      })
+    }
+  }
+
+  const navigateImage = (direction: "prev" | "next") => {
+    const newIndex =
+      direction === "next"
+        ? (currentIndex + 1) % galleryImages.length
+        : (currentIndex - 1 + galleryImages.length) % galleryImages.length
+
+    setCurrentIndex(newIndex)
+    setSelectedImage(galleryImages[newIndex])
+  }
+
+  return (
+    <section className="gallery-section py-20 bg-gray-50 overflow-hidden" ref={galleryRef}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="gallery-title text-4xl md:text-5xl font-bold text-gray-900 mb-4">Destination Gallery</h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Immerse yourself in the beauty of our carefully curated destinations
+          </p>
+        </div>
+
+        <div className="gallery-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {galleryImages.map((image, index) => (
+            <div
+              key={image.id}
+              className="gallery-item group relative overflow-hidden rounded-2xl cursor-pointer aspect-[4/5]"
+              onClick={() => openLightbox(image, index)}
+            >
+              <Image
+                src={image.src || "/placeholder.svg"}
+                alt={image.alt}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                <h3 className="text-lg font-semibold mb-1">{image.title}</h3>
+                <p className="text-sm text-gray-200">{image.location}</p>
+              </div>
+              <div className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <ZoomIn className="h-5 w-5 text-white" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Lightbox */}
+      {selectedImage && (
+        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
+          <div ref={lightboxRef} className="relative max-w-5xl max-h-full">
+            <Image
+              src={selectedImage.src || "/placeholder.svg"}
+              alt={selectedImage.alt}
+              width={1200}
+              height={800}
+              className="max-w-full max-h-[80vh] object-contain rounded-lg"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white rounded-b-lg">
+              <h3 className="text-2xl font-bold mb-2">{selectedImage.title}</h3>
+              <p className="text-gray-200">{selectedImage.location}</p>
+            </div>
+          </div>
+
+          {/* Navigation Controls */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-4 right-4 text-white hover:bg-white/20"
+            onClick={closeLightbox}
+          >
+            <X className="h-6 w-6" />
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20"
+            onClick={() => navigateImage("prev")}
+          >
+            <ChevronLeft className="h-8 w-8" />
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20"
+            onClick={() => navigateImage("next")}
+          >
+            <ChevronRight className="h-8 w-8" />
+          </Button>
+        </div>
+      )}
+    </section>
+  )
+}
