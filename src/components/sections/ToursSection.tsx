@@ -5,6 +5,8 @@ import { MapPin, Users, Star, Clock, Heart, ChevronLeft, ChevronRight } from "lu
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { useWishlistContext } from "@/components/wishlist-provider"
+import { Tour } from "@/hooks/use-wishlist"
 import Image from "next/image"
 
 const tours = [
@@ -103,6 +105,15 @@ export default function ToursSection() {
   const [isTransitioning, setIsTransitioning] = useState(false)
   const carouselRef = useRef<HTMLDivElement>(null)
   const toursRef = useRef<HTMLElement>(null)
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlistContext()
+
+  const toggleWishlist = (tour: any) => {
+    if (isInWishlist(tour.id)) {
+      removeFromWishlist(tour.id)
+    } else {
+      addToWishlist(tour as Tour)
+    }
+  }
 
   const nextSlide = () => {
     if (isTransitioning) return
@@ -155,8 +166,17 @@ export default function ToursSection() {
                             <Badge className="bg-blue-600 text-white">{tour.category}</Badge>
                           </div>
                           <div className="absolute top-4 right-4">
-                            <button className="p-2 bg-white/90 rounded-full hover:bg-white transition-colors duration-200">
-                              <Heart className="h-5 w-5 text-gray-600 hover:text-red-500 transition-colors duration-200" />
+                            <button 
+                              onClick={() => toggleWishlist(tour)}
+                              className="p-2 bg-white/90 rounded-full hover:bg-white transition-colors duration-200"
+                            >
+                              <Heart 
+                                className={`h-5 w-5 transition-colors duration-200 ${
+                                  isInWishlist(tour.id) 
+                                    ? "text-red-500 fill-current" 
+                                    : "text-gray-600 hover:text-red-500"
+                                }`} 
+                              />
                             </button>
                           </div>
                         </div>
