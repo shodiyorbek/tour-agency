@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { Slider } from "@/components/ui/slider"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -164,7 +163,6 @@ export default function ToursSection() {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [priceRange, setPriceRange] = useState([0, 3000])
   const [sortBy, setSortBy] = useState("Popular")
-  const [showFilters, setShowFilters] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [filteredTours, setFilteredTours] = useState(tours)
   
@@ -207,7 +205,7 @@ export default function ToursSection() {
 
       setFilteredTours(filtered)
       setIsLoading(false)
-    }, 100) // Smaller delay since we're already debouncing
+    }, 100) 
 
     return () => clearTimeout(filterTimer)
   }, [debouncedSearchQuery, selectedCategory, debouncedPriceRange, sortBy])
@@ -463,14 +461,7 @@ export default function ToursSection() {
                 </SelectContent>
               </Select>
               
-              <Button
-                variant="outline"
-                onClick={() => setShowFilters(!showFilters)}
-                className="h-12"
-              >
-                <Filter className="h-4 w-4 mr-2" />
-                Filters
-              </Button>
+              
               
               <div className="flex border rounded-lg">
                 <Button
@@ -493,55 +484,7 @@ export default function ToursSection() {
             </div>
           </div>
           
-          <AnimatePresence>
-            {showFilters && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="mt-4 pt-4 border-t"
-              >
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="text-sm font-medium">
-                        Price Range: ${priceRange[0]} - ${priceRange[1]}
-                      </label>
-                      {JSON.stringify(priceRange) !== JSON.stringify(debouncedPriceRange) && (
-                        <motion.div
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: 10 }}
-                          className="flex items-center gap-1 text-xs text-blue-600"
-                        >
-                          <motion.div
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ 
-                              duration: 0.6, 
-                              repeat: Infinity,
-                              repeatType: "reverse"
-                            }}
-                          >
-                            <Sparkles className="h-3 w-3" />
-                          </motion.div>
-                          <span>Updating...</span>
-                        </motion.div>
-                      )}
-                    </div>
-                    <Slider
-                      value={priceRange}
-                      onValueChange={setPriceRange}
-                      min={0}
-                      max={3000}
-                      step={100}
-                      className="w-full"
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          
         </motion.div>
 
         {/* Results Count */}
