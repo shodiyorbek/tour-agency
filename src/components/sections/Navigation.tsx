@@ -2,12 +2,10 @@
 
 import { useState } from "react"
 
-import { Camera, Menu, X, Heart } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { useWishlistContext } from "@/components/wishlist-provider"
 import WishlistModal from "@/components/wishlist-modal"
 
-import { Menu, X } from "lucide-react"
+import { Heart, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 
@@ -29,13 +27,13 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
             <div className="w-8 h-8 relative">
               <Image
                 src="/images/logo.png"
-                alt="Travelo Logo"
+                alt="Big Trip Logo"
                 width={32}
                 height={32}
                 className="object-contain"
               />
             </div>
-            <span className="text-2xl font-bold text-gray-900">Travelo</span>
+            <span className="text-2xl font-bold text-gray-900">Big Trip</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -50,7 +48,7 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
               onClick={() => scrollToSection("tours")}
               className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
             >
-              Discover
+              Hot deals
             </button>
             <button
               onClick={() => scrollToSection("gallery")}
@@ -62,12 +60,15 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
               onClick={() => scrollToSection("contact")}
               className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
             >
-              Support
+              Tours
             </button>
             <button className="text-gray-700 hover:text-primary transition-colors duration-200 font-medium">
-              Login
+              Gallery
             </button>
-
+            <button className="text-gray-700 hover:text-primary transition-colors duration-200 font-medium">
+              Why we?
+            </button>
+          
             <button
               onClick={() => setIsWishlistOpen(true)}
               className="relative text-gray-700 hover:text-purple-600 transition-colors duration-200 p-2"
@@ -79,12 +80,9 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
                 </span>
               )}
             </button>
-            <Button className="animated-button bg-purple-600 hover:bg-purple-700 transition-colors duration-200 rounded-full px-6">
+            <Button>Book Now</Button>
 
-            <Button className="animated-button bg-primary hover:bg-primary/90 transition-colors duration-200 rounded-full px-6">
-
-              Sign Up
-            </Button>
+           
           </div>
 
           {/* Mobile menu button */}
@@ -126,9 +124,7 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
               >
                 Support
               </button>
-              <button className="block px-3 py-2 text-gray-700 hover:text-primary transition-colors duration-200 font-medium">
-                Login
-              </button>
+             
               <button
                 onClick={() => setIsWishlistOpen(true)}
                 className="flex items-center px-3 py-2 text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium"
@@ -136,11 +132,7 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
                 <Heart className="h-5 w-5 mr-2" />
                 Wishlist {getWishlistCount() > 0 && `(${getWishlistCount()})`}
               </button>
-              <div className="px-3 py-2">
-                <Button className="animated-button w-full bg-primary hover:bg-primary/90 transition-colors duration-200 rounded-full">
-                  Sign Up
-                </Button>
-              </div>
+              
             </div>
           </div>
         )}

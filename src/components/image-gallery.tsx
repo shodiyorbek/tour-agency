@@ -20,56 +20,56 @@ interface GalleryImage {
 const galleryImages: GalleryImage[] = [
   {
     id: 1,
-    src: "/placeholder.svg?height=800&width=1200",
+    src: "/gallery/dubai-sunset.jpg",
     alt: "Dubai Skyline",
     title: "Dubai Skyline at Sunset",
     location: "Dubai, UAE",
   },
   {
     id: 2,
-    src: "/placeholder.svg?height=800&width=1200",
+    src: "/gallery/canyon.avif",
     alt: "Grand Canyon",
     title: "Grand Canyon Vista",
     location: "Arizona, USA",
   },
   {
     id: 3,
-    src: "/placeholder.svg?height=800&width=1200",
-    alt: "Samarkand Architecture",
-    title: "Ancient Samarkand",
-    location: "Uzbekistan",
+    src: "/gallery/turkey.webp",
+    alt: "Turkey",
+    title: "Turkey",
+    location: "Turkey, Anqara",
   },
   {
     id: 4,
-    src: "/placeholder.svg?height=800&width=1200",
+    src: "/gallery/over-water.jpg",
     alt: "Maldives Resort",
     title: "Overwater Villas",
     location: "Maldives",
   },
   {
     id: 5,
-    src: "/placeholder.svg?height=800&width=1200",
+    src: "/gallery/kyoto.jpg",
     alt: "Cherry Blossoms",
     title: "Kyoto Cherry Blossoms",
     location: "Japan",
   },
   {
     id: 6,
-    src: "/placeholder.svg?height=800&width=1200",
+    src: "/gallery/serengeti.webp",
     alt: "African Safari",
     title: "Serengeti Wildlife",
     location: "Tanzania",
   },
   {
     id: 7,
-    src: "/placeholder.svg?height=800&width=1200",
+    src: "/gallery/aurora.jpg",
     alt: "Northern Lights",
     title: "Aurora Borealis",
     location: "Iceland",
   },
   {
     id: 8,
-    src: "/placeholder.svg?height=800&width=1200",
+    src: "/gallery/macho.jpg",
     alt: "Machu Picchu",
     title: "Ancient Citadel",
     location: "Peru",
@@ -195,7 +195,7 @@ export default function ImageGallery() {
   return (
     <section className="gallery-section py-20 bg-gray-50 overflow-hidden" ref={galleryRef}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-24">
           <h2 className="gallery-title text-4xl md:text-5xl font-bold text-gray-900 mb-4">Destination Gallery</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Immerse yourself in the beauty of our carefully curated destinations

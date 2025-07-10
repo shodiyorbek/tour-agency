@@ -9,8 +9,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel"
 import { Clock, MapPin, Users, Star, Flame, Calendar } from "lucide-react"
@@ -159,10 +157,10 @@ export default function HotDealsSection() {
           >
             <CarouselContent>
               {hotDeals.map((deal) => (
-                <CarouselItem key={deal.id} className="px-4">
-                  <Card className="group overflow-hidden border-0 shadow-2xl hover:shadow-3xl transition-all duration-300 bg-white">
+                <CarouselItem key={deal.id}>
+                  <Card className="group overflow-hidden border-0 h-full  hover:shadow-3xl transition-all duration-300 bg-white">
                     <div className="relative">
-                      {/* Deal Image */}
+                     
                       <div className="relative overflow-hidden h-80 md:h-96">
                         <Image
                           src={deal.image || "/placeholder.svg"}
@@ -173,21 +171,18 @@ export default function HotDealsSection() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                         
-                        {/* Discount Badge */}
                         <div className="absolute top-4 left-4">
                           <Badge className="bg-red-500 text-white text-lg px-3 py-1 animate-pulse">
                             -{deal.discount}% OFF
                           </Badge>
                         </div>
 
-                        {/* Urgency Badge */}
                         <div className="absolute top-4 right-4">
-                          <Badge variant="destructive" className="text-sm animate-bounce">
+                          <Badge variant="destructive" className="text-sm">
                             {deal.urgency}
                           </Badge>
                         </div>
 
-                        {/* Price Overlay */}
                         <div className="absolute bottom-4 right-4 text-right">
                           <div className="text-white text-sm line-through opacity-75">
                             ${deal.originalPrice}
@@ -198,10 +193,9 @@ export default function HotDealsSection() {
                         </div>
                       </div>
 
-                      {/* Deal Content */}
                       <div className="p-8">
                         <div className="flex items-center justify-between mb-4">
-                          <Badge className="bg-blue-600 text-white">{deal.category}</Badge>
+                          <Badge className="bg-primary text-white">{deal.category}</Badge>
                           <div className="flex items-center space-x-1">
                             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                             <span className="text-sm font-medium">{deal.rating}</span>
@@ -210,7 +204,7 @@ export default function HotDealsSection() {
                         </div>
 
                         <CardHeader className="p-0 mb-4">
-                          <CardTitle className="text-2xl md:text-3xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
+                          <CardTitle className="text-2xl md:text-3xl font-bold text-gray-900 group-hover:text-primary transition-colors duration-200">
                             {deal.title}
                           </CardTitle>
                           <div className="flex items-center text-gray-600 mt-2">
@@ -224,7 +218,6 @@ export default function HotDealsSection() {
                             {deal.description}
                           </p>
 
-                          {/* Deal Details */}
                           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
                             <div className="flex items-center text-gray-600">
                               <Clock className="h-5 w-5 mr-2" />
@@ -240,7 +233,6 @@ export default function HotDealsSection() {
                             </div>
                           </div>
 
-                          {/* Highlights */}
                           <div className="mb-6">
                             <h4 className="font-semibold text-gray-900 mb-3">What's Included:</h4>
                             <div className="flex flex-wrap gap-2">
@@ -252,11 +244,10 @@ export default function HotDealsSection() {
                             </div>
                           </div>
 
-                          {/* Action Buttons */}
                           <div className="flex gap-4">
                             <Button 
                               size="lg" 
-                              className="flex-1 bg-red-600 hover:bg-red-700 text-white text-lg py-3 animated-button"
+                              className="flex-1 bg-red-600 hover:bg-red-700 text-white text-lg py-3"
                             >
                               Book Now & Save ${deal.originalPrice - deal.salePrice}
                             </Button>
@@ -275,22 +266,7 @@ export default function HotDealsSection() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="left-4" />
-            <CarouselNext className="right-4" />
           </Carousel>
-
-          {/* Carousel Indicators */}
-          <div className="flex justify-center mt-8 space-x-2">
-            {Array.from({ length: count }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => api?.scrollTo(index)}
-                className={`w-3 h-3 rounded-full transition-colors duration-200 ${
-                  current === index + 1 ? "bg-red-600" : "bg-gray-300 hover:bg-gray-400"
-                }`}
-              />
-            ))}
-          </div>
         </div>
 
         <div className="text-center mt-12">
@@ -302,7 +278,7 @@ export default function HotDealsSection() {
             size="lg"
             className="animated-button px-8 py-3 hover:bg-red-50 border-red-600 text-red-600 hover:text-red-700 transition-colors duration-200"
           >
-            View All Hot Deals
+            Book Now
           </Button>
         </div>
       </div>
