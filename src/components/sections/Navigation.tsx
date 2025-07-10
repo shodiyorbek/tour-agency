@@ -1,8 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { Camera, Menu, X } from "lucide-react"
+import { Camera, Menu, X, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useWishlistContext } from "@/components/wishlist-provider"
+import WishlistModal from "@/components/wishlist-modal"
 
 interface NavigationProps {
   scrollToSection: (sectionId: string) => void
@@ -10,6 +12,8 @@ interface NavigationProps {
 
 export default function Navigation({ scrollToSection }: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false)
+  const { getWishlistCount } = useWishlistContext()
 
   return (
     <nav className="fixed top-0 w-full bg-white z-50 border-b border-gray-100">
@@ -50,6 +54,17 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
             </button>
             <button className="text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium">
               Login
+            </button>
+            <button
+              onClick={() => setIsWishlistOpen(true)}
+              className="relative text-gray-700 hover:text-purple-600 transition-colors duration-200 p-2"
+            >
+              <Heart className="h-6 w-6" />
+              {getWishlistCount() > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {getWishlistCount()}
+                </span>
+              )}
             </button>
             <Button className="animated-button bg-purple-600 hover:bg-purple-700 transition-colors duration-200 rounded-full px-6">
               Sign Up
@@ -98,6 +113,13 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
               <button className="block px-3 py-2 text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium">
                 Login
               </button>
+              <button
+                onClick={() => setIsWishlistOpen(true)}
+                className="flex items-center px-3 py-2 text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium"
+              >
+                <Heart className="h-5 w-5 mr-2" />
+                Wishlist {getWishlistCount() > 0 && `(${getWishlistCount()})`}
+              </button>
               <div className="px-3 py-2">
                 <Button className="animated-button w-full bg-purple-600 hover:bg-purple-700 transition-colors duration-200 rounded-full">
                   Sign Up
@@ -106,6 +128,11 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
             </div>
           </div>
         )}
+        
+        <WishlistModal 
+          isOpen={isWishlistOpen} 
+          onClose={() => setIsWishlistOpen(false)} 
+        />
       </div>
     </nav>
   )
