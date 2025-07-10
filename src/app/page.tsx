@@ -172,13 +172,14 @@ export default function TravelAgency() {
     <div className="min-h-screen bg-white relative">
       <Navigation scrollToSection={scrollToSection} />
       <HeroSection />
-      <StatsSection />
+      <AboutSection />
       <HotDealsSection />
       <ToursSection />
       <div id="gallery">
         <ImageGallery />
       </div>
-      <AboutSection />
+    
+      <StatsSection />
       <ContactSection />
       <Footer scrollToSection={scrollToSection} />
       <FloatingElements />

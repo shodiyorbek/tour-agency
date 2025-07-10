@@ -21,12 +21,9 @@ export default function WishlistModal({ isOpen, onClose }: WishlistModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop */}
       <div className="fixed inset-0 bg-black/50" onClick={onClose} />
       
-      {/* Modal */}
       <div className="relative w-full max-w-6xl max-h-[90vh] m-4 bg-white rounded-2xl shadow-2xl overflow-hidden">
-        {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center space-x-3">
             <Heart className="h-6 w-6 text-red-500 fill-current" />

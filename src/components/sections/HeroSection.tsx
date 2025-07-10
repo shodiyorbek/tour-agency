@@ -1,139 +1,143 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion, useAnimation } from "framer-motion"
+import { motion } from "framer-motion"
 import { MapPin, Users, Plane } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 
+// Define the rotation data with backgrounds and titles
+const rotationData = [
+  {
+    background: "/images/bg.jpg",
+    alt: "Stunning mountain landscape with turquoise lake",
+    title: "EXPLORE THE",
+    subtitle: "WORLD"
+  },
+  {
+    background: "/images/tropical-beach.jpg",
+    alt: "Beautiful tropical beach with crystal clear waters",
+    title: "DISCOVER",
+    subtitle: "PARADISE"
+  },
+  {
+    background: "/gallery/aurora.jpg",
+    alt: "Breathtaking aurora borealis in the night sky",
+    title: "WITNESS",
+    subtitle: "MAGIC"
+  },
+  {
+    background: "/gallery/dubai-sunset.jpg",
+    alt: "Stunning Dubai skyline at sunset",
+    title: "EXPERIENCE",
+    subtitle: "LUXURY"
+  },
+  {
+    background: "/gallery/kyoto.jpg",
+    alt: "Traditional Japanese temple in Kyoto",
+    title: "IMMERSE",
+    subtitle: "CULTURE"
+  },
+  {
+    background: "/gallery/serengeti.webp",
+    alt: "Wildlife safari in Serengeti plains",
+    title: "EMBRACE",
+    subtitle: "ADVENTURE"
+  },
+  {
+    background: "/gallery/canyon.avif",
+    alt: "Majestic canyon landscape",
+    title: "CONQUER",
+    subtitle: "NATURE"
+  },
+  {
+    background: "/gallery/over-water.jpg",
+    alt: "Overwater bungalows in tropical paradise",
+    title: "ESCAPE",
+    subtitle: "REALITY"
+  }
+]
+
 export default function HeroSection() {
-  const [isLoaded, setIsLoaded] = useState(false)
-  const controls = useAnimation()
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
-    setIsLoaded(true)
-    controls.start("visible")
-  }, [controls])
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % rotationData.length)
+    }, 10000) // 10 seconds for testing, change to 1800000 for production
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        staggerChildren: 0.3,
-      },
-    },
-  }
+    return () => clearInterval(interval)
+  }, [])
 
-  const titleVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        duration: 1.2,
-        ease: "easeOut",
-      },
-    },
-  }
-
-  const searchBoxVariants = {
-    hidden: { y: 100, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 1,
-        delay: 0.8,
-        ease: "easeOut",
-      },
-    },
-  }
+  const currentData = rotationData[currentIndex]
 
   return (
     <section id="home">
-      <div className="relative mt-20 flex items-center justify-center overflow-hidden max-w-[1280px] h-[621px] w-full mx-auto rounded-[40px]">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0 z-0">
+      <div className="relative z-10 mt-20 flex  items-center justify-center overflow-hidden max-w-[1280px] h-[621px] w-full mx-auto rounded-[40px]">
+        <div className="absolute inset-0 z-0 ">
           <Image
-            src="/images/bg.jpg"
-            alt="Stunning mountain landscape with turquoise lake"
+            src={currentData.background}
+            alt={currentData.alt}
             fill
-            className="object-cover"
+            className="object-cover transition-all duration-1000"
             priority
           />
           <div className="absolute inset-0 bg-black/20" />
         </div>
+        <div className="bg-black/5 rounded-[40px] backdrop-blur-sm absolute inset-0"/>
 
-        {/* Animated Content */}
         <motion.div
-          className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
-          variants={containerVariants}
-          initial="hidden"
-          animate={controls}
+          className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto "
+          key={currentIndex}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          {/* Main Title */}
-          <motion.div variants={titleVariants} className="mb-8">
+          <div className="mb-8">
             <motion.h1
               className="text-4xl sm:text-6xl lg:text-8xl font-bold text-white mb-4 tracking-wider"
               style={{
                 textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
                 fontFamily: "system-ui, -apple-system, sans-serif",
               }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
-              EXPLORE THE
+              {currentData.title}
             </motion.h1>
             <motion.h1
-              className="text-[150px] font-bold text-white tracking-widest mix-blend-overlay"
+              className="text-[150px] font-bold tracking-widest"
               style={{
-                textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
                 fontFamily: "system-ui, -apple-system, sans-serif",
+                color: "rgba(255,255,255,0.3)",
+                mixBlendMode: "lighten"
               }}
-              variants={{
-                hidden: { scale: 0.8, opacity: 0 },
-                visible: {
-                  scale: 1,
-                  opacity: 1,
-                  transition: {
-                    duration: 1.2,
-                    delay: 0.3,
-                    ease: "easeOut",
-                  },
-                },
-              }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
             >
-              WORLD
+              {currentData.subtitle}
             </motion.h1>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          animate={{
-            y: [0, 10, 0],
-            opacity: 1,
-          }}
-          transition={{
-            duration: 2,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "easeInOut",
-          }}
-          initial={{ opacity: 0 }}
-        >
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/70 rounded-full mt-2"></div>
           </div>
         </motion.div>
+
+        
+        
+
+
+        
       </div>
 
+      <div className="z-50 absolute w-full translate-y-[-100px]">
       <motion.div
-        variants={searchBoxVariants}
-        className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-2xl max-w-5xl mx-auto translate-y-[-100px]"
+        className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-2xl max-w-5xl mx-auto"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.6 }}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
-          {/* Destination */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
               <MapPin className="w-4 h-4" />
@@ -214,6 +218,7 @@ export default function HeroSection() {
           </Button>
         </div>
       </motion.div>
+      </div>
     </section>
   )
 }
