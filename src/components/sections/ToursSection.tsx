@@ -6,6 +6,7 @@ import {
   Search, Filter, Grid, List, Calendar, DollarSign, X, 
   Check, Globe, Sparkles, TrendingUp, Info
 } from "lucide-react"
+import { useDebounce } from "@/hooks/use-debounce"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -170,16 +171,20 @@ export default function ToursSection() {
   const toursRef = useRef<HTMLElement>(null)
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlistContext()
 
-  // Filter and sort tours
+  // Use debounced values for smooth filtering
+  const debouncedSearchQuery = useDebounce(searchQuery, 300)
+  const debouncedPriceRange = useDebounce(priceRange, 500)
+
+  // Filter and sort tours with debounced values
   useEffect(() => {
     setIsLoading(true)
     
-    setTimeout(() => {
+    const filterTimer = setTimeout(() => {
       let filtered = tours.filter(tour => {
-        const matchesSearch = tour.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            tour.destination.toLowerCase().includes(searchQuery.toLowerCase())
+        const matchesSearch = tour.title.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+                            tour.destination.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
         const matchesCategory = selectedCategory === "All" || tour.category === selectedCategory
-        const matchesPrice = tour.price >= priceRange[0] && tour.price <= priceRange[1]
+        const matchesPrice = tour.price >= debouncedPriceRange[0] && tour.price <= debouncedPriceRange[1]
         
         return matchesSearch && matchesCategory && matchesPrice
       })
@@ -202,8 +207,10 @@ export default function ToursSection() {
 
       setFilteredTours(filtered)
       setIsLoading(false)
-    }, 300)
-  }, [searchQuery, selectedCategory, priceRange, sortBy])
+    }, 100) // Smaller delay since we're already debouncing
+
+    return () => clearTimeout(filterTimer)
+  }, [debouncedSearchQuery, selectedCategory, debouncedPriceRange, sortBy])
 
   const toggleWishlist = (tour: any) => {
     if (isInWishlist(tour.id)) {
@@ -215,10 +222,21 @@ export default function ToursSection() {
 
   const TourCard = ({ tour, index }: { tour: typeof tours[0], index: number }) => (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: index * 0.1 }}
-      whileHover={{ y: -5 }}
+      key={tour.id}
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={{ 
+        opacity: 1, 
+        y: 0, 
+        scale: 1,
+        transition: {
+          type: "spring",
+          bounce: 0.4,
+          duration: 0.6,
+          delay: index * 0.05
+        }
+      }}
+      exit={{ opacity: 0, scale: 0.9, y: -20 }}
+      whileHover={{ y: -5, scale: 1.02 }}
       className={viewMode === 'list' ? 'mb-4' : ''}
     >
       <Card className={`group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 ${
@@ -391,8 +409,35 @@ export default function ToursSection() {
                 placeholder="Search destinations, tours..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-12"
+                className="pl-10 pr-10 h-12"
               />
+              {/* Bounce loading indicator */}
+              {searchQuery !== debouncedSearchQuery && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ 
+                    opacity: 1, 
+                    scale: 1,
+                    rotate: 360
+                  }}
+                  transition={{
+                    rotate: {
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear"
+                    },
+                    opacity: { duration: 0.2 },
+                    scale: { 
+                      type: "spring", 
+                      bounce: 0.5,
+                      duration: 0.3
+                    }
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2"
+                >
+                  <div className="h-5 w-5 border-2 border-blue-500 border-t-transparent rounded-full" />
+                </motion.div>
+              )}
             </div>
             
             <div className="flex gap-2">
@@ -459,9 +504,31 @@ export default function ToursSection() {
               >
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">
-                      Price Range: ${priceRange[0]} - ${priceRange[1]}
-                    </label>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="text-sm font-medium">
+                        Price Range: ${priceRange[0]} - ${priceRange[1]}
+                      </label>
+                      {JSON.stringify(priceRange) !== JSON.stringify(debouncedPriceRange) && (
+                        <motion.div
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: 10 }}
+                          className="flex items-center gap-1 text-xs text-blue-600"
+                        >
+                          <motion.div
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ 
+                              duration: 0.6, 
+                              repeat: Infinity,
+                              repeatType: "reverse"
+                            }}
+                          >
+                            <Sparkles className="h-3 w-3" />
+                          </motion.div>
+                          <span>Updating...</span>
+                        </motion.div>
+                      )}
+                    </div>
                     <Slider
                       value={priceRange}
                       onValueChange={setPriceRange}
@@ -502,26 +569,47 @@ export default function ToursSection() {
         {isLoading ? (
           <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
             {[...Array(6)].map((_, i) => (
-              <Card key={i} className="overflow-hidden">
-                <Skeleton className="h-64 w-full" />
-                <CardHeader>
-                  <Skeleton className="h-4 w-3/4 mb-2" />
-                  <Skeleton className="h-6 w-full mb-2" />
-                  <Skeleton className="h-4 w-1/2" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-20 w-full mb-4" />
-                  <Skeleton className="h-10 w-full" />
-                </CardContent>
-              </Card>
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ 
+                  opacity: 1, 
+                  y: 0, 
+                  scale: 1,
+                  transition: {
+                    type: "spring",
+                    bounce: 0.5,
+                    duration: 0.6,
+                    delay: i * 0.05
+                  }
+                }}
+              >
+                <Card className="overflow-hidden">
+                  <Skeleton className="h-64 w-full" />
+                  <CardHeader>
+                    <Skeleton className="h-4 w-3/4 mb-2" />
+                    <Skeleton className="h-6 w-full mb-2" />
+                    <Skeleton className="h-4 w-1/2" />
+                  </CardHeader>
+                  <CardContent>
+                    <Skeleton className="h-20 w-full mb-4" />
+                    <Skeleton className="h-10 w-full" />
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
           </div>
         ) : filteredTours.length > 0 ? (
-          <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
-            {filteredTours.map((tour, index) => (
-              <TourCard key={tour.id} tour={tour} index={index} />
-            ))}
-          </div>
+          <AnimatePresence mode="popLayout">
+            <motion.div 
+              className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}
+              layout
+            >
+              {filteredTours.map((tour, index) => (
+                <TourCard key={tour.id} tour={tour} index={index} />
+              ))}
+            </motion.div>
+          </AnimatePresence>
         ) : (
           <div className="text-center py-12">
             <Globe className="h-16 w-16 text-gray-300 mx-auto mb-4" />
