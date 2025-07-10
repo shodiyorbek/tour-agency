@@ -1,8 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Camera, Menu, X } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 interface NavigationProps {
   scrollToSection: (sectionId: string) => void
@@ -16,8 +17,14 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
-              <Camera className="h-5 w-5 text-white" />
+            <div className="w-8 h-8 relative">
+              <Image
+                src="/images/logo.png"
+                alt="Travelo Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
             </div>
             <span className="text-2xl font-bold text-gray-900">Travelo</span>
           </div>
@@ -26,32 +33,32 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
           <div className="hidden md:flex items-center space-x-8">
             <button
               onClick={() => scrollToSection("home")}
-              className="nav-link text-gray-700 hover:text-purple-600 transition-colors duration-200 relative font-medium"
+              className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Home
             </button>
             <button
               onClick={() => scrollToSection("tours")}
-              className="nav-link text-gray-700 hover:text-purple-600 transition-colors duration-200 relative font-medium"
+              className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Discover
             </button>
             <button
               onClick={() => scrollToSection("gallery")}
-              className="nav-link text-gray-700 hover:text-purple-600 transition-colors duration-200 relative font-medium"
+              className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Special Deals
             </button>
             <button
               onClick={() => scrollToSection("contact")}
-              className="nav-link text-gray-700 hover:text-purple-600 transition-colors duration-200 relative font-medium"
+              className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Support
             </button>
-            <button className="text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium">
+            <button className="text-gray-700 hover:text-primary transition-colors duration-200 font-medium">
               Login
             </button>
-            <Button className="animated-button bg-purple-600 hover:bg-purple-700 transition-colors duration-200 rounded-full px-6">
+            <Button className="animated-button bg-primary hover:bg-primary/90 transition-colors duration-200 rounded-full px-6">
               Sign Up
             </Button>
           </div>
@@ -60,7 +67,7 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-purple-600 transition-colors duration-200"
+              className="text-gray-700 hover:text-primary transition-colors duration-200"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -73,33 +80,33 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
             <div className="px-2 pt-2 pb-3 space-y-1">
               <button
                 onClick={() => scrollToSection("home")}
-                className="block px-3 py-2 text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium"
+                className="block px-3 py-2 text-gray-700 hover:text-primary transition-colors duration-200 font-medium"
               >
                 Home
               </button>
               <button
                 onClick={() => scrollToSection("tours")}
-                className="block px-3 py-2 text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium"
+                className="block px-3 py-2 text-gray-700 hover:text-primary transition-colors duration-200 font-medium"
               >
                 Discover
               </button>
               <button
                 onClick={() => scrollToSection("gallery")}
-                className="block px-3 py-2 text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium"
+                className="block px-3 py-2 text-gray-700 hover:text-primary transition-colors duration-200 font-medium"
               >
                 Special Deals
               </button>
               <button
                 onClick={() => scrollToSection("contact")}
-                className="block px-3 py-2 text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium"
+                className="block px-3 py-2 text-gray-700 hover:text-primary transition-colors duration-200 font-medium"
               >
                 Support
               </button>
-              <button className="block px-3 py-2 text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium">
+              <button className="block px-3 py-2 text-gray-700 hover:text-primary transition-colors duration-200 font-medium">
                 Login
               </button>
               <div className="px-3 py-2">
-                <Button className="animated-button w-full bg-purple-600 hover:bg-purple-700 transition-colors duration-200 rounded-full">
+                <Button className="animated-button w-full bg-primary hover:bg-primary/90 transition-colors duration-200 rounded-full">
                   Sign Up
                 </Button>
               </div>
