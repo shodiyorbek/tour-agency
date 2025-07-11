@@ -15,7 +15,7 @@ export default function StatsSection() {
   const statsRef = useRef<HTMLElement>(null)
 
   return (
-    <section ref={statsRef} className="py-16 bg-gray-50">
+    <section ref={statsRef} className="py-16 bg-muted/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
@@ -23,10 +23,10 @@ export default function StatsSection() {
                               <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4 group-hover:bg-primary/20 transition-colors duration-200">
                   <stat.icon className="h-8 w-8 text-primary" />
                 </div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">
+              <div className="text-3xl font-bold text-foreground mb-2">
                 <AnimatedCounter end={stat.value} suffix={stat.suffix} />
               </div>
-              <div className="text-gray-600">{stat.label}</div>
+              <div className="text-muted-foreground">{stat.label}</div>
             </div>
           ))}
         </div>

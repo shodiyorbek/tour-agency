@@ -47,7 +47,7 @@ export default function BookingConfirmationPage() {
       <div className="min-h-screen flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
-            <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+            <AlertCircle className="h-12 w-12 text-destructive mx-auto mb-4" />
             <CardTitle className="text-center">Booking Not Found</CardTitle>
             <CardDescription className="text-center">
               The booking you're looking for doesn't exist or has expired.
@@ -86,7 +86,7 @@ export default function BookingConfirmationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-muted/10 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -115,14 +115,14 @@ export default function BookingConfirmationPage() {
             </div>
 
             <div className="text-center">
-              <CheckCircle2 className="h-16 w-16 text-green-500 mx-auto mb-4" />
+              <CheckCircle2 className="h-16 w-16 text-primary mx-auto mb-4" />
               <h1 className="text-3xl font-bold mb-2">Booking Confirmed!</h1>
-              <p className="text-gray-600 mb-4">
+              <p className="text-muted-foreground mb-4">
                 Thank you for booking with us. Your adventure awaits!
               </p>
-              <div className="bg-blue-50 inline-block px-6 py-3 rounded-lg">
-                <p className="text-sm text-gray-600">Booking Reference</p>
-                <p className="text-2xl font-bold text-blue-600">{booking.id}</p>
+              <div className="bg-primary/10 inline-block px-6 py-3 rounded-lg">
+                <p className="text-sm text-muted-foreground">Booking Reference</p>
+                <p className="text-2xl font-bold text-primary">{booking.id}</p>
               </div>
             </div>
           </div>
@@ -138,20 +138,20 @@ export default function BookingConfirmationPage() {
                   <h3 className="text-xl font-semibold mb-2">{booking.tour.title}</h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-gray-500" />
+                      <MapPin className="h-4 w-4 text-muted-foreground" />
                       <span>{booking.tour.destination}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-gray-500" />
+                      <Calendar className="h-4 w-4 text-muted-foreground" />
                       <span>{booking.tour.duration}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Users className="h-4 w-4 text-gray-500" />
+                      <Users className="h-4 w-4 text-muted-foreground" />
                       <span>{booking.numberOfPassengers} Passenger{booking.numberOfPassengers > 1 ? 's' : ''}</span>
                     </div>
                     {booking.tour.nextDeparture && (
                       <div className="flex items-center gap-2">
-                        <Clock className="h-4 w-4 text-gray-500" />
+                        <Clock className="h-4 w-4 text-muted-foreground" />
                         <span>Departure: {format(new Date(booking.tour.nextDeparture), 'MMMM d, yyyy')}</span>
                       </div>
                     )}
@@ -177,14 +177,14 @@ export default function BookingConfirmationPage() {
             <CardContent>
               <div className="space-y-4">
                 {booking.passengers.map((passenger: any, index: number) => (
-                  <div key={index} className="p-4 bg-gray-50 rounded-lg">
+                  <div key={index} className="p-4 bg-muted/20 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="font-medium">
                         {passenger.firstName} {passenger.lastName}
                       </h4>
                       <Badge variant="secondary">Passenger {index + 1}</Badge>
                     </div>
-                    <div className="grid md:grid-cols-2 gap-2 text-sm text-gray-600">
+                    <div className="grid md:grid-cols-2 gap-2 text-sm text-muted-foreground">
                       <div className="flex items-center gap-2">
                         <Mail className="h-3 w-3" />
                         <span>{passenger.email}</span>
@@ -218,11 +218,11 @@ export default function BookingConfirmationPage() {
                 <Separator />
                 <div className="flex justify-between text-lg font-semibold">
                   <span>Total Paid</span>
-                  <span className="text-blue-600">${booking.totalPrice}</span>
+                  <span className="text-primary">${booking.totalPrice}</span>
                 </div>
                 <div className="flex items-center gap-2 pt-2">
-                  <CreditCard className="h-4 w-4 text-gray-500" />
-                  <span className="text-sm text-gray-600">
+                  <CreditCard className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">
                     Payment Method: {booking.paymentMethod === 'card' ? 'Credit/Debit Card' : 
                                    booking.paymentMethod === 'paypal' ? 'PayPal' : 'Bank Transfer'}
                   </span>
@@ -246,16 +246,16 @@ export default function BookingConfirmationPage() {
             <CardContent>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-gray-500" />
+                  <Mail className="h-4 w-4 text-muted-foreground" />
                   <div>
-                    <p className="text-sm text-gray-600">Email</p>
+                    <p className="text-sm text-muted-foreground">Email</p>
                     <p className="font-medium">{booking.contactDetails.email}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-gray-500" />
+                  <Phone className="h-4 w-4 text-muted-foreground" />
                   <div>
-                    <p className="text-sm text-gray-600">Phone</p>
+                    <p className="text-sm text-muted-foreground">Phone</p>
                     <p className="font-medium">{booking.contactDetails.phone}</p>
                   </div>
                 </div>
@@ -270,7 +270,7 @@ export default function BookingConfirmationPage() {
                 <CardTitle>Special Requests</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600">{booking.specialRequests}</p>
+                <p className="text-muted-foreground">{booking.specialRequests}</p>
               </CardContent>
             </Card>
           )}

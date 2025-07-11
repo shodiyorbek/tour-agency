@@ -9,12 +9,12 @@ export default function AboutSection() {
   const aboutRef = useRef<HTMLElement>(null)
 
   return (
-    <section id="about" ref={aboutRef} className="py-20 bg-gray-50 mt-[120px]">
+    <section id="about" ref={aboutRef} className="py-20 bg-muted/20 mt-[120px]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="about-content">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Why we?</h2>
-            <p className="text-lg text-gray-600 mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Why we?</h2>
+            <p className="text-lg text-muted-foreground mb-8">
               With over 15 years of experience in crafting extraordinary travel experiences, we specialize in creating
               personalized journeys that go beyond the ordinary. Our expert team ensures every detail is perfect.
             </p>
@@ -27,8 +27,8 @@ export default function AboutSection() {
               </div>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Expert Curation</h3>
-                  <p className="text-gray-600">
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Expert Curation</h3>
+                  <p className="text-muted-foreground">
                     Every destination and experience is carefully selected by our travel experts.
                   </p>
                 </div>
@@ -41,8 +41,8 @@ export default function AboutSection() {
               </div>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Small Groups</h3>
-                  <p className="text-gray-600">
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Small Groups</h3>
+                  <p className="text-muted-foreground">
                     Intimate group sizes ensure personalized attention and authentic experiences.
                   </p>
                 </div>
@@ -55,8 +55,8 @@ export default function AboutSection() {
               </div>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Unforgettable Moments</h3>
-                  <p className="text-gray-600">
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Unforgettable Moments</h3>
+                  <p className="text-muted-foreground">
                     We create opportunities for those once-in-a-lifetime experiences and memories.
                   </p>
                 </div>
@@ -73,10 +73,10 @@ export default function AboutSection() {
               className="rounded-2xl shadow-2xl"
             />
             <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
-              <div className="text-3xl font-bold text-blue-600">
+              <div className="text-3xl font-bold text-primary">
                 <AnimatedCounter end={15} suffix="+" />
               </div>
-              <div className="text-gray-600">Years Experience</div>
+              <div className="text-muted-foreground">Years Experience</div>
             </div>
           </div>
         </div>

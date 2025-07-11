@@ -68,11 +68,11 @@ export default function MyBookingsPage() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "confirmed":
-        return <CheckCircle2 className="h-4 w-4 text-green-500" />
+        return <CheckCircle2 className="h-4 w-4 text-primary" />
       case "pending":
-        return <Clock className="h-4 w-4 text-yellow-500" />
+        return <Clock className="h-4 w-4 text-primary/70" />
       case "cancelled":
-        return <X className="h-4 w-4 text-red-500" />
+        return <X className="h-4 w-4 text-destructive" />
       default:
         return null
     }
@@ -119,29 +119,29 @@ export default function MyBookingsPage() {
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                 <div>
-                  <p className="text-xs text-gray-500">Booking Ref</p>
+                  <p className="text-xs text-muted-foreground">Booking Ref</p>
                   <p className="font-medium text-sm">{booking.id}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Booking Date</p>
+                  <p className="text-xs text-muted-foreground">Booking Date</p>
                   <p className="font-medium text-sm">
                     {format(new Date(booking.bookingDate), 'MMM d, yyyy')}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Passengers</p>
+                  <p className="text-xs text-muted-foreground">Passengers</p>
                   <p className="font-medium text-sm flex items-center gap-1">
                     <Users className="h-3 w-3" />
                     {booking.numberOfPassengers}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Total Price</p>
-                  <p className="font-medium text-sm text-blue-600">${booking.totalPrice}</p>
+                  <p className="text-xs text-muted-foreground">Total Price</p>
+                  <p className="font-medium text-sm text-primary">${booking.totalPrice}</p>
                 </div>
               </div>
               {booking.tour.nextDeparture && (
-                <div className="flex items-center gap-2 mb-4 text-sm text-gray-600">
+                <div className="flex items-center gap-2 mb-4 text-sm text-muted-foreground">
                   <Calendar className="h-3 w-3" />
                   <span>Departure: {format(new Date(booking.tour.nextDeparture), 'MMM d, yyyy')}</span>
                 </div>
@@ -173,7 +173,7 @@ export default function MyBookingsPage() {
   )
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-muted/10 py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -191,7 +191,7 @@ export default function MyBookingsPage() {
               Back to Tours
             </Button>
             <h1 className="text-3xl font-bold mb-2">My Bookings</h1>
-            <p className="text-gray-600">Manage and view all your tour bookings</p>
+            <p className="text-muted-foreground">Manage and view all your tour bookings</p>
           </div>
 
           {/* Stats */}
@@ -200,11 +200,11 @@ export default function MyBookingsPage() {
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-500">Total Bookings</p>
+                    <p className="text-sm text-muted-foreground">Total Bookings</p>
                     <p className="text-2xl font-bold">{bookings.length}</p>
                   </div>
-                  <div className="h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center">
-                    <Calendar className="h-6 w-6 text-blue-600" />
+                  <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center">
+                    <Calendar className="h-6 w-6 text-primary" />
                   </div>
                 </div>
               </CardContent>
@@ -213,11 +213,11 @@ export default function MyBookingsPage() {
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-500">Active</p>
+                    <p className="text-sm text-muted-foreground">Active</p>
                     <p className="text-2xl font-bold">{activeBookings.length}</p>
                   </div>
-                  <div className="h-12 w-12 bg-green-100 rounded-full flex items-center justify-center">
-                    <CheckCircle2 className="h-6 w-6 text-green-600" />
+                                      <div className="h-12 w-12 bg-primary/15 rounded-full flex items-center justify-center">
+                      <CheckCircle2 className="h-6 w-6 text-primary" />
                   </div>
                 </div>
               </CardContent>
@@ -226,11 +226,11 @@ export default function MyBookingsPage() {
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-500">Pending</p>
+                    <p className="text-sm text-muted-foreground">Pending</p>
                     <p className="text-2xl font-bold">{pendingBookings.length}</p>
                   </div>
-                  <div className="h-12 w-12 bg-yellow-100 rounded-full flex items-center justify-center">
-                    <Clock className="h-6 w-6 text-yellow-600" />
+                  <div className="h-12 w-12 bg-primary/20 rounded-full flex items-center justify-center">
+                    <Clock className="h-6 w-6 text-primary/70" />
                   </div>
                 </div>
               </CardContent>
@@ -239,11 +239,11 @@ export default function MyBookingsPage() {
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-500">Cancelled</p>
+                    <p className="text-sm text-muted-foreground">Cancelled</p>
                     <p className="text-2xl font-bold">{cancelledBookings.length}</p>
                   </div>
-                  <div className="h-12 w-12 bg-red-100 rounded-full flex items-center justify-center">
-                    <X className="h-6 w-6 text-red-600" />
+                  <div className="h-12 w-12 bg-destructive/10 rounded-full flex items-center justify-center">
+                    <X className="h-6 w-6 text-destructive" />
                   </div>
                 </div>
               </CardContent>
@@ -255,7 +255,7 @@ export default function MyBookingsPage() {
             <CardContent className="p-4">
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
                     placeholder="Search by booking ref, destination, or tour name..."
                     value={searchQuery}
@@ -299,9 +299,9 @@ export default function MyBookingsPage() {
           ) : (
             <Card>
               <CardContent className="p-12 text-center">
-                <AlertCircle className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+                <AlertCircle className="h-12 w-12 text-muted mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-2">No bookings found</h3>
-                <p className="text-gray-600 mb-4">
+                <p className="text-muted-foreground mb-4">
                   {bookings.length === 0 
                     ? "You haven't made any bookings yet." 
                     : "No bookings match your search criteria."}
