@@ -41,9 +41,9 @@ const partners = [
   },
   {
     id: 7,
-    name: "Booking.com",
+    name: "Expedia",
     logo: "/placeholder-logo.png",
-    category: "Booking Platform"
+    category: "Travel Platform"
   },
   {
     id: 8,

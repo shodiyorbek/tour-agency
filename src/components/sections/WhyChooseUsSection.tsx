@@ -112,7 +112,7 @@ export default function WhyChooseUsSection() {
               </div>
               <div className="flex items-center">
                 <div className="w-3 h-3 bg-yellow-400 rounded-full mr-4"></div>
-                <span className="text-gray-700">Flexible booking and cancellation policies</span>
+                <span className="text-gray-700">Flexible travel planning and consultation</span>
               </div>
               <div className="flex items-center">
                 <div className="w-3 h-3 bg-yellow-400 rounded-full mr-4"></div>
@@ -120,7 +120,7 @@ export default function WhyChooseUsSection() {
               </div>
               <div className="flex items-center">
                 <div className="w-3 h-3 bg-yellow-400 rounded-full mr-4"></div>
-                <span className="text-gray-700">Best price guarantee and exclusive deals</span>
+                <span className="text-gray-700">Best value recommendations and exclusive experiences</span>
               </div>
             </div>
           </div>

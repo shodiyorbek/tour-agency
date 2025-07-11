@@ -2,29 +2,24 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { useWishlistContext } from "@/components/wishlist-provider"
-import { useBookingContext } from "@/components/booking-provider"
-import WishlistModal from "@/components/wishlist-modal"
-
-import { Heart, Menu, X, Calendar } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import Image from "next/image"
-
+import { Menu, X, Heart, Calendar } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { useWishlistContext } from "@/components/wishlist-provider"
+import WishlistModal from "@/components/wishlist-modal"
 
 interface NavigationProps {
   scrollToSection: (sectionId: string) => void
 }
 
 export default function Navigation({ scrollToSection }: NavigationProps) {
-  const router = useRouter()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isWishlistOpen, setIsWishlistOpen] = useState(false)
+  const router = useRouter()
   const { getWishlistCount } = useWishlistContext()
-  const { getTotalBookings } = useBookingContext()
 
   const handleWishlistOpen = () => {
     setIsWishlistOpen(true)
-    setIsMenuOpen(false) // Close mobile menu when opening wishlist
   }
 
   const handleMobileNavClick = (sectionId: string) => {
@@ -32,8 +27,8 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
     setIsMenuOpen(false) // Close menu after navigation
   }
 
-  const handleBookingsClick = () => {
-    router.push('/my-bookings')
+  const handleContactClick = () => {
+    scrollToSection("contact")
     setIsMenuOpen(false)
   }
 
@@ -94,15 +89,10 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
             </button>
           
             <button
-              onClick={handleBookingsClick}
+              onClick={handleContactClick}
               className="relative text-foreground hover:text-primary transition-colors duration-200 p-2"
             >
               <Calendar className="h-5 w-5 lg:h-6 lg:w-6" />
-              {getTotalBookings() > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                  {getTotalBookings()}
-                </span>
-              )}
             </button>
             
             <button
@@ -118,24 +108,19 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
             </button>
             <Button 
               className="text-sm lg:text-base"
-              onClick={() => scrollToSection("tours")}
+              onClick={() => scrollToSection("contact")}
             >
-              Book Now
+              Contact Us
             </Button>
           </div>
 
           {/* Mobile menu button and wishlist */}
           <div className="md:hidden flex items-center space-x-2">
             <button
-              onClick={handleBookingsClick}
+              onClick={handleContactClick}
               className="relative text-foreground hover:text-primary transition-colors duration-200 p-2"
             >
               <Calendar className="h-5 w-5" />
-              {getTotalBookings() > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-4 w-4 flex items-center justify-center text-[10px] font-medium">
-                  {getTotalBookings()}
-                </span>
-              )}
             </button>
             
             <button
@@ -200,19 +185,16 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
               </button>
               <div className="border-t border-gray-200 mt-2 pt-2">
                 <button
-                  onClick={handleBookingsClick}
+                  onClick={handleContactClick}
                   className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
                 >
-                  My Bookings
-                  {getTotalBookings() > 0 && (
-                    <span className="ml-2 text-sm text-primary">({getTotalBookings()})</span>
-                  )}
+                  Contact Us
                 </button>
                 <Button 
                   className="w-full mt-2"
-                  onClick={() => handleMobileNavClick("tours")}
+                  onClick={() => handleMobileNavClick("contact")}
                 >
-                  Book Now
+                  Contact Us
                 </Button>
               </div>
             </div>

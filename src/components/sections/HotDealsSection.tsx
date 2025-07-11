@@ -1,28 +1,35 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import Image from "next/image"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import {
+import { useState, useEffect } from "react"
+import { motion } from "framer-motion"
+import { 
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-  type CarouselApi,
 } from "@/components/ui/carousel"
-import { Clock, MapPin, Users, Star, Flame, Calendar, Heart, ArrowRight, Zap } from "lucide-react"
-import Autoplay from "embla-carousel-autoplay"
-
+import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { useWishlistContext } from "@/components/wishlist-provider"
-import { useToast } from "@/components/ui/use-toast"
-
-import { useBookingContext } from "@/components/booking-provider"
-import BookingModal from "@/components/booking-modal"
-
+import { useToast } from "@/hooks/use-toast"
 import { Tour } from "@/hooks/use-wishlist"
+import { 
+  Flame, 
+  Zap, 
+  Heart, 
+  Star, 
+  MapPin, 
+  Clock, 
+  Users, 
+  Calendar,
+  ArrowRight,
+  Info,
+  X
+} from "lucide-react"
+import Image from "next/image"
+import Autoplay from "embla-carousel-autoplay"
 
 const hotDeals = [
   {
@@ -123,17 +130,14 @@ const hotDeals = [
 ]
 
 export default function HotDealsSection() {
-  const [api, setApi] = useState<CarouselApi>()
-  const [current, setCurrent] = useState(0)
+  const [api, setApi] = useState<any>()
+  const [current, setCurrent] = useState(1)
   const [count, setCount] = useState(0)
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+  const [selectedTour, setSelectedTour] = useState<Tour | null>(null)
 
   const { wishlist, addToWishlist, removeFromWishlist, isInWishlist } = useWishlistContext()
   const { toast } = useToast()
-
-  const [selectedTour, setSelectedTour] = useState<Tour | null>(null)
-  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false)
-  const { startBooking } = useBookingContext()
 
   // Convert hotDeals to Tour format
   const tours: Tour[] = hotDeals.map(deal => ({
@@ -162,17 +166,21 @@ export default function HotDealsSection() {
     return acc
   }, {} as Record<number, typeof hotDeals[0]>)
 
-  const handleBookNow = (tour: Tour) => {
-    setSelectedTour(tour)
-    setIsBookingModalOpen(true)
-    startBooking(tour)
+  const handleContactUs = (tour: Tour) => {
+    // Scroll to contact section
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+    toast({
+      title: "Contact Us",
+      description: "Please contact us to book this tour. We'll get back to you soon!",
+    })
   }
 
-  const handleCloseBookingModal = () => {
-    setIsBookingModalOpen(false)
+  const handleCloseModal = () => {
     setSelectedTour(null)
   }
-
 
   useEffect(() => {
     if (!api) {
@@ -251,7 +259,7 @@ export default function HotDealsSection() {
           <div className="flex items-center justify-center gap-2 mb-4 flex-wrap">
             <Zap className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-primary/70 animate-pulse" />
             <p className="text-base sm:text-lg lg:text-xl text-foreground font-medium text-center">
-              Limited time offers • Save up to 35% • Book now!
+              Limited time offers • Save up to 35% • Contact us now!
             </p>
             <Zap className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-primary/70 animate-pulse" />
           </div>
@@ -315,160 +323,135 @@ export default function HotDealsSection() {
                                   <div className="text-sm text-muted-foreground">Starting from</div>
                                   <div className="text-2xl font-bold text-foreground">${tour.price}</div>
                                 </div>
-                                                                  <Button 
-                                    size="sm" 
-                                    className="bg-primary hover:bg-primary/90"
-                                    onClick={() => handleBookNow(tour)}
-                                  >
-                                    Quick Book
-                                  </Button>
+                                <Button 
+                                  size="sm" 
+                                  className="bg-primary hover:bg-primary/90"
+                                  onClick={() => handleContactUs(tour)}
+                                >
+                                  Contact Us
+                                </Button>
                               </div>
                             </div>
                           </div>
                         </div>
 
-                        {/* Left side - Content */}
-                        <div className="p-6 sm:p-8 lg:p-12 flex flex-col justify-between bg-gradient-to-br from-white to-gray-50 relative overflow-hidden order-2 lg:order-1">
-                          {/* Animated background pattern */}
-                          <div className="absolute inset-0 opacity-5">
-                            <div className="absolute top-0 right-0 w-24 sm:w-28 lg:w-32 h-24 sm:h-28 lg:h-32 bg-primary/50 rounded-full transform translate-x-16 -translate-y-16 group-hover:scale-150 transition-transform duration-1000"></div>
-                            <div className="absolute bottom-0 left-0 w-20 sm:w-22 lg:w-24 h-20 sm:h-22 lg:h-24 bg-primary/40 rounded-full transform -translate-x-12 translate-y-12 group-hover:scale-150 transition-transform duration-1000 delay-300"></div>
-                          </div>
-
-                          <div className="relative z-10">
-                            {/* Header badges */}
-                            <div className="flex items-center justify-between mb-4 sm:mb-6">
-                              <div className="flex gap-2 flex-wrap">
-                                <Badge className="bg-gradient-to-r from-red-500 to-red-600 text-white text-sm sm:text-base lg:text-lg px-3 sm:px-4 py-1 sm:py-2 animate-pulse shadow-lg">
-                                  -{dealData[tour.id]?.discount}% OFF
-                                </Badge>
-                                <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 sm:px-3 py-1 sm:py-2 text-xs sm:text-sm">
-                                  {tour.category}
-                                </Badge>
-                              </div>
-                              <Button 
-                                variant="ghost" 
-                                size="icon" 
-                                className="hover:bg-primary/10 group lg:hidden"
-                                onClick={() => handleWishlistToggle(tour)}
-                              >
-                                <Heart className={`h-5 w-5 text-muted-foreground group-hover:text-primary transition-all duration-300 ${isInWishlist(tour.id) ? 'fill-primary text-primary' : ''}`} />
-                              </Button>
-                            </div>
-
-                            {/* Title and location */}
-                            <div className="mb-4 sm:mb-6">
-                              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-2 sm:mb-3 group-hover:text-primary transition-colors duration-300">
-                                {tour.title}
-                              </h3>
-                              <div className="flex items-center text-muted-foreground mb-3 sm:mb-4">
-                                <MapPin className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-primary" />
-                                <span className="text-base sm:text-lg font-medium">{tour.destination}</span>
-                              </div>
-                              
-                              {/* Rating */}
-                              <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-                                <div className="flex items-center">
-                                  {[...Array(5)].map((_, i) => (
-                                    <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 fill-primary text-primary" />
-                                  ))}
+                        {/* Content */}
+                        <div className="p-6 sm:p-8 lg:p-10 order-2 lg:order-1 flex flex-col justify-between">
+                          <div>
+                            {/* Header */}
+                            <div className="flex items-start justify-between mb-4">
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <Badge className="bg-gradient-to-r from-red-500 to-red-600 text-white text-sm sm:text-base lg:text-lg px-3 sm:px-4 py-1 sm:py-2 animate-pulse shadow-lg">
+                                    HOT DEAL
+                                  </Badge>
+                                  <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 sm:px-3 py-1 sm:py-2 text-xs sm:text-sm">
+                                    Save ${dealData[tour.id]?.originalPrice - dealData[tour.id]?.salePrice}
+                                  </Badge>
                                 </div>
-                                <span className="text-base sm:text-lg font-semibold text-foreground">{tour.rating}</span>
-                                <span className="text-sm sm:text-base text-muted-foreground">({tour.reviews} reviews)</span>
+                                
+                                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
+                                  {tour.title}
+                                </h3>
+                                
+                                <div className="flex items-center gap-2 text-muted-foreground mb-3">
+                                  <MapPin className="h-4 w-4" />
+                                  <span className="text-sm sm:text-base">{tour.destination}</span>
+                                </div>
                               </div>
                             </div>
 
-                            {/* Description - Hidden on mobile */}
-                            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-4 sm:mb-6 hidden sm:block">
+                            {/* Rating and Reviews */}
+                            <div className="flex items-center gap-2 mb-4">
+                              <div className="flex items-center">
+                                {[...Array(5)].map((_, i) => (
+                                  <Star
+                                    key={i}
+                                    className={`h-4 w-4 sm:h-5 sm:w-5 ${
+                                      i < Math.floor(tour.rating)
+                                        ? 'fill-primary text-primary'
+                                        : 'fill-muted text-muted'
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                              <span className="text-sm sm:text-base font-medium">{tour.rating}</span>
+                              <span className="text-sm sm:text-base text-muted-foreground">({tour.reviews} reviews)</span>
+                            </div>
+
+                            {/* Description */}
+                            <p className="text-muted-foreground text-sm sm:text-base mb-6 line-clamp-3">
                               {tour.description}
                             </p>
 
-                            {/* Details grid */}
-                            <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
-                              <div className="flex items-center text-muted-foreground bg-muted/20 rounded-lg p-2 sm:p-3 group-hover:bg-primary/10 transition-colors duration-300">
-                                <Clock className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 text-primary" />
-                                <div>
-                                  <div className="text-xs sm:text-sm text-muted-foreground">Duration</div>
-                                  <div className="text-sm sm:text-base font-semibold">{tour.duration}</div>
-                                </div>
+                            {/* Tour Details */}
+                            <div className="grid grid-cols-2 gap-4 mb-6">
+                              <div className="flex items-center gap-2">
+                                <Clock className="h-4 w-4 text-primary" />
+                                <span className="text-sm sm:text-base">{tour.duration}</span>
                               </div>
-                              <div className="flex items-center text-muted-foreground bg-muted/20 rounded-lg p-2 sm:p-3 group-hover:bg-primary/10 transition-colors duration-300">
-                                <Users className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 text-primary" />
-                                <div>
-                                  <div className="text-xs sm:text-sm text-muted-foreground">Group Size</div>
-                                  <div className="text-sm sm:text-base font-semibold">{tour.groupSize}</div>
-                                </div>
+                              <div className="flex items-center gap-2">
+                                <Users className="h-4 w-4 text-primary" />
+                                <span className="text-sm sm:text-base">{tour.groupSize}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Calendar className="h-4 w-4 text-primary" />
+                                <span className="text-sm sm:text-base">Valid until {new Date(dealData[tour.id]?.validUntil).toLocaleDateString()}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Info className="h-4 w-4 text-primary" />
+                                <span className="text-sm sm:text-base">{tour.spotsLeft} spots left</span>
                               </div>
                             </div>
 
-                            {/* Highlights - Hidden on mobile */}
-                            <div className="mb-6 sm:mb-8 hidden lg:block">
-                              <h4 className="font-bold text-foreground mb-3 text-lg">What's Included:</h4>
-                                                              <div className="grid grid-cols-2 gap-2">
-                                  {tour.included?.map((highlight, idx) => (
-                                    <div key={idx} className="flex items-center text-sm text-muted-foreground">
-                                      <div className="w-2 h-2 bg-primary rounded-full mr-2"></div>
-                                      {highlight}
-                                    </div>
-                                  ))}
-                                </div>
+                            {/* Highlights */}
+                            <div className="mb-6">
+                              <h4 className="font-semibold text-sm sm:text-base mb-2">Highlights:</h4>
+                              <div className="flex flex-wrap gap-1">
+                                {tour.highlights.slice(0, 3).map((highlight, idx) => (
+                                  <Badge key={idx} variant="secondary" className="text-xs">
+                                    {highlight}
+                                  </Badge>
+                                ))}
+                                {tour.highlights.length > 3 && (
+                                  <Badge variant="outline" className="text-xs">
+                                    +{tour.highlights.length - 3} more
+                                  </Badge>
+                                )}
+                              </div>
                             </div>
                           </div>
 
-                          {/* Bottom section with price and CTA */}
-                          <div className="relative z-10">
-                            {/* Urgency banner */}
-                            <div className="bg-gradient-to-r from-primary/90 to-primary text-white p-2 sm:p-3 rounded-lg mb-4 sm:mb-6 text-center">
-                              <div className="flex items-center justify-center gap-2">
-                                <Calendar className="h-4 w-4 sm:h-5 sm:w-5 animate-pulse" />
-                                <span className="text-sm sm:text-base font-bold">{dealData[tour.id]?.urgency}</span>
-                              </div>
-                              <div className="text-xs sm:text-sm opacity-90">Valid until {tour.nextDeparture}</div>
-                            </div>
-
-                            {/* Price section */}
-                            <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white p-4 sm:p-6 rounded-xl mb-4 sm:mb-6 relative overflow-hidden">
-                              <div className="absolute top-0 right-0 w-16 sm:w-20 h-16 sm:h-20 bg-primary/30 rounded-full transform translate-x-10 -translate-y-10 opacity-20"></div>
-                              <div className="relative z-10">
-                                <div className="flex items-end justify-between">
-                                  <div>
-                                    <div className="text-xs sm:text-sm text-muted line-through mb-1">
-                                      Was ${dealData[tour.id]?.originalPrice}
-                                    </div>
-                                    <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
-                                      ${tour.price}
-                                    </div>
-                                    <div className="text-sm sm:text-base text-primary font-semibold">
-                                      You save ${dealData[tour.id]?.savings}!
-                                    </div>
-                                  </div>
-                                  <div className="text-right">
-                                    <div className="text-xl sm:text-2xl font-bold text-primary/80">
-                                      {dealData[tour.id]?.discount}%
-                                    </div>
-                                    <div className="text-xs sm:text-sm text-muted">OFF</div>
-                                  </div>
+                          {/* Price and Actions */}
+                          <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary">
+                                    ${tour.price}
+                                  </span>
+                                  <span className="text-lg sm:text-xl text-muted-foreground line-through">
+                                    ${dealData[tour.id]?.originalPrice}
+                                  </span>
                                 </div>
+                                <p className="text-sm text-muted-foreground">per person</p>
                               </div>
                             </div>
 
-                            {/* Action buttons */}
-                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                              <Button 
-                                size="lg" 
-                                className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-sm sm:text-base lg:text-lg py-5 sm:py-6 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group"
-                                onClick={() => handleBookNow(tour)}
+                            <div className="flex gap-2">
+                              <Button
+                                onClick={() => setSelectedTour(tour)}
+                                variant="outline"
+                                className="flex-1 hover:bg-primary/10"
                               >
-                                <span>Book Now & Save</span>
-                                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-300" />
+                                <Info className="h-4 w-4 mr-2" />
+                                View Details
                               </Button>
-                              <Button 
-                                variant="outline" 
-                                size="lg" 
-                                className="px-4 sm:px-6 py-5 sm:py-6 border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300 hover:scale-105"
-                                onClick={() => handleDetailsClick(tour)}
+                              <Button
+                                onClick={() => handleContactUs(tour)}
+                                className="flex-1 bg-primary hover:bg-primary/90"
                               >
-                                Details
+                                Contact Us
                               </Button>
                             </div>
                           </div>
@@ -480,58 +463,93 @@ export default function HotDealsSection() {
               ))}
             </CarouselContent>
             
-            {/* Custom carousel controls */}
-            <CarouselPrevious className="left-2 sm:left-4 bg-white/80 backdrop-blur-sm border-2 border-primary/20 hover:bg-primary/10 hover:border-primary/40 transition-all duration-300" />
-            <CarouselNext className="right-2 sm:right-4 bg-white/80 backdrop-blur-sm border-2 border-primary/20 hover:bg-primary/10 hover:border-primary/40 transition-all duration-300" />
+            <CarouselPrevious className="hidden lg:flex" />
+            <CarouselNext className="hidden lg:flex" />
           </Carousel>
 
-          {/* Carousel indicators */}
-          <div className="flex justify-center mt-6 sm:mt-8 gap-2">
-            {Array.from({ length: count }).map((_, index) => (
-              <button
-                key={index}
-                className={`w-2 sm:w-3 h-2 sm:h-3 rounded-full transition-all duration-300 ${
-                  index === current - 1 
-                    ? 'bg-primary w-6 sm:w-8' 
-                    : 'bg-gray-300 hover:bg-primary/30'
-                }`}
-                onClick={() => api?.scrollTo(index)}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom CTA section */}
-        <div className="text-center mt-8 sm:mt-12 lg:mt-16 bg-gradient-to-r from-red-600 to-orange-600 rounded-xl sm:rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-black/10"></div>
-          <div className="relative z-10">
-            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Don't Miss These Amazing Deals!</h3>
-            <p className="text-sm sm:text-base lg:text-lg mb-4 sm:mb-6 opacity-90">
-              Limited time offers with incredible savings. Book your dream vacation today!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button
-                size="lg"
-                variant="secondary"
-                className="bg-white text-primary hover:bg-gray-100 px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base lg:text-lg font-semibold transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
-              >
-                View All Deals
-              </Button>
-              <div className="flex items-center gap-2 text-primary">
-                <Zap className="h-4 w-4 sm:h-5 sm:w-5 animate-pulse" />
-                <span className="text-sm sm:text-base font-medium">Flash sales ending soon!</span>
-              </div>
+          {/* Carousel Indicators */}
+          <div className="flex justify-center mt-6">
+            <div className="flex space-x-2">
+              {Array.from({ length: count }).map((_, index) => (
+                <button
+                  key={index}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === current - 1 ? 'bg-primary w-6' : 'bg-primary/30'
+                  }`}
+                  onClick={() => api?.scrollTo(index)}
+                />
+              ))}
             </div>
           </div>
         </div>
       </div>
-              {selectedTour && (
-          <BookingModal 
-            isOpen={isBookingModalOpen} 
-            onClose={handleCloseBookingModal} 
-            tour={selectedTour} 
-          />
-        )}
+
+      {/* Tour Details Modal */}
+      {selectedTour && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-6">
+                <h3 className="text-2xl font-bold">{selectedTour.title}</h3>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={handleCloseModal}
+                >
+                  <X className="h-6 w-6" />
+                </Button>
+              </div>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                  <img
+                    src={selectedTour.image}
+                    alt={selectedTour.title}
+                    className="w-full h-64 object-cover rounded-lg"
+                  />
+                </div>
+                
+                <div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <MapPin className="h-4 w-4 text-primary" />
+                    <span className="text-muted-foreground">{selectedTour.destination}</span>
+                  </div>
+                  
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-4 w-4 text-primary" />
+                      <span>{selectedTour.duration}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Users className="h-4 w-4 text-primary" />
+                      <span>Group size: {selectedTour.groupSize}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Star className="h-4 w-4 text-primary" />
+                      <span>{selectedTour.rating}/5 ({selectedTour.reviews} reviews)</span>
+                    </div>
+                  </div>
+                  
+                  <div className="mb-6">
+                    <h4 className="font-semibold mb-2">Description</h4>
+                    <p className="text-muted-foreground">{selectedTour.description}</p>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-2xl font-bold">${selectedTour.price}</span>
+                      <span className="text-muted-foreground"> per person</span>
+                    </div>
+                    <Button onClick={() => handleContactUs(selectedTour)} className="bg-primary hover:bg-primary/90">
+                      Contact Us
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }

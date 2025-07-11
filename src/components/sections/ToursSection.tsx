@@ -1,27 +1,17 @@
 "use client"
 
-import { useState, useRef, useEffect, useCallback, memo } from "react"
-import { 
-  MapPin, Users, Star, Clock, Heart, ChevronLeft, ChevronRight, 
-  Search, Filter, Grid, List, Calendar, DollarSign, X, 
-  Check, Globe, Sparkles, TrendingUp, Info
-} from "lucide-react"
-import { useDebounce } from "@/hooks/use-debounce"
+import { useState, useEffect, useRef, useCallback } from "react"
+import { motion } from "framer-motion"
+import { Search, Grid, List, Heart, Star, MapPin, Clock, Users, Calendar, ArrowRight, Filter, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { useWishlistContext } from "@/components/wishlist-provider"
-import { useBookingContext } from "@/components/booking-provider"
+import { useToast } from "@/hooks/use-toast"
+import { useDebounce } from "@/hooks/use-debounce"
 import { Tour } from "@/hooks/use-wishlist"
-import BookingModal from "@/components/booking-modal"
-import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 const tours = [
   {
@@ -419,18 +409,18 @@ interface TourCardProps {
   isInWishlist: boolean
   onToggleWishlist: (tour: typeof tours[0]) => void
   onSelectTour: (tour: typeof tours[0]) => void
-  onBookTour: (tour: typeof tours[0]) => void
+  onContactUs: () => void
 }
 
-const TourCard = memo<TourCardProps>(({ 
+const TourCard = ({ 
   tour, 
   index, 
   viewMode, 
   isInWishlist, 
   onToggleWishlist, 
   onSelectTour, 
-  onBookTour 
-}) => (
+  onContactUs 
+}: TourCardProps) => (
   <motion.div
     layoutId={`tour-${tour.id}`}
     initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -454,10 +444,9 @@ const TourCard = memo<TourCardProps>(({
     }`}>
       <div className={`relative overflow-hidden ${viewMode === 'list' ? 'w-1/3' : ''}`}>
         <div className="relative h-64 overflow-hidden">
-          <Image
+          <img
             src={tour.image || "/placeholder.svg"}
             alt={tour.title}
-            fill
             className="object-cover group-hover:scale-110 transition-transform duration-500"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -492,116 +481,100 @@ const TourCard = memo<TourCardProps>(({
       </div>
       
       <div className={`${viewMode === 'list' ? 'flex-1' : ''}`}>
-        <CardHeader>
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2">
-              <div className="flex items-center">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`h-4 w-4 ${
-                      i < Math.floor(tour.rating)
-                        ? 'fill-primary text-primary'
-                        : 'fill-muted text-muted'
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="text-sm font-medium">{tour.rating}</span>
-              <span className="text-sm text-muted-foreground">({tour.reviews})</span>
-            </div>
-            <div className="text-2xl font-bold text-primary">
-              ${tour.price}
-              <span className="text-sm font-normal text-muted-foreground">/person</span>
-            </div>
-          </div>
-          
-          <CardTitle className="text-xl group-hover:text-primary transition-colors duration-200 line-clamp-1">
-            {tour.title}
-          </CardTitle>
-          
-          <CardDescription className="flex items-center gap-2 text-muted-foreground">
-            <MapPin className="h-4 w-4" />
-            {tour.destination}
-            <Badge variant="outline" className="ml-2">
-              {tour.difficulty}
-            </Badge>
-          </CardDescription>
-        </CardHeader>
-        
-        <CardContent>
-          <p className="text-muted-foreground mb-4 line-clamp-2">{tour.description}</p>
-          
-          <div className="grid grid-cols-2 gap-3 text-sm text-muted-foreground mb-4">
-            <div className="flex items-center gap-1">
-              <Clock className="h-4 w-4 text-primary" />
-              {tour.duration}
-            </div>
-            <div className="flex items-center gap-1">
-              <Users className="h-4 w-4 text-primary" />
-              {tour.groupSize}
-            </div>
-            <div className="flex items-center gap-1">
-              <Calendar className="h-4 w-4 text-primary" />
-              Next: {new Date(tour.nextDeparture).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-            </div>
-            <div className="flex items-center gap-1">
-              <TrendingUp className="h-4 w-4 text-primary" />
-              {tour.availability}
-            </div>
-          </div>
-          
-          <div className="mb-4">
-            <div className="flex flex-wrap gap-1">
-              {tour.highlights.slice(0, 3).map((highlight, idx) => (
-                <Badge key={idx} variant="secondary" className="text-xs">
-                  {highlight}
-                </Badge>
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={`h-4 w-4 ${
+                    i < Math.floor(tour.rating)
+                      ? 'fill-primary text-primary'
+                      : 'fill-muted text-muted'
+                  }`}
+                />
               ))}
-              {tour.highlights.length > 3 && (
-                <Badge variant="outline" className="text-xs">
-                  +{tour.highlights.length - 3} more
-                </Badge>
-              )}
             </div>
+            <span className="text-sm font-medium">{tour.rating}</span>
+            <span className="text-sm text-muted-foreground">({tour.reviews})</span>
           </div>
-          
-          <div className="flex gap-2">
-            <Button 
-              onClick={() => onSelectTour(tour)}
-              className="flex-1 bg-primary hover:bg-primary/90 transition-all duration-200 group"
-            >
-              <Info className="h-4 w-4 mr-2" />
-              Quick View
-            </Button>
-            <Button
-              variant="outline"
-              className="hover:bg-primary/10 transition-colors duration-200"
-              onClick={(e) => {
-                e.stopPropagation()
-                onBookTour(tour)
-              }}
-            >
-              Book Now
-            </Button>
+          <div className="text-2xl font-bold text-primary">
+            ${tour.price}
+            <span className="text-sm font-normal text-muted-foreground">/person</span>
           </div>
-        </CardContent>
+        </div>
+        
+        <h3 className="text-xl group-hover:text-primary transition-colors duration-200 line-clamp-1">
+          {tour.title}
+        </h3>
+        
+        <p className="flex items-center gap-2 text-muted-foreground text-sm mb-4">
+          <MapPin className="h-4 w-4" />
+          {tour.destination}
+          <Badge variant="outline" className="ml-2">
+            {tour.difficulty}
+          </Badge>
+        </p>
+        
+        <div className="grid grid-cols-2 gap-3 text-sm text-muted-foreground mb-4">
+          <div className="flex items-center gap-1">
+            <Clock className="h-4 w-4 text-primary" />
+            {tour.duration}
+          </div>
+          <div className="flex items-center gap-1">
+            <Users className="h-4 w-4 text-primary" />
+            {tour.groupSize}
+          </div>
+          <div className="flex items-center gap-1">
+            <Calendar className="h-4 w-4 text-primary" />
+            Next: {new Date(tour.nextDeparture).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+          </div>
+          <div className="flex items-center gap-1">
+            <ArrowRight className="h-4 w-4 text-primary" />
+            {tour.availability}
+          </div>
+        </div>
+        
+        <div className="mb-4">
+          <div className="flex flex-wrap gap-1">
+            {tour.highlights.slice(0, 3).map((highlight, idx) => (
+              <Badge key={idx} variant="secondary" className="text-xs">
+                {highlight}
+              </Badge>
+            ))}
+            {tour.highlights.length > 3 && (
+              <Badge variant="outline" className="text-xs">
+                +{tour.highlights.length - 3} more
+              </Badge>
+            )}
+          </div>
+        </div>
+        
+        <div className="flex gap-2">
+          <Button 
+            onClick={() => onSelectTour(tour)}
+            className="flex-1 bg-primary hover:bg-primary/90 transition-all duration-200 group"
+          >
+            <ArrowRight className="h-4 w-4 mr-2" />
+            Quick View
+          </Button>
+          <Button
+            variant="outline"
+            className="hover:bg-primary/10 transition-colors duration-200"
+            onClick={onContactUs}
+          >
+            Book Now
+          </Button>
+        </div>
       </div>
     </Card>
   </motion.div>
-), (prevProps, nextProps) => {
-  // Custom comparison function to prevent re-renders
-  return prevProps.tour.id === nextProps.tour.id &&
-         prevProps.index === nextProps.index &&
-         prevProps.viewMode === nextProps.viewMode &&
-         prevProps.isInWishlist === nextProps.isInWishlist
-})
+)
 
 TourCard.displayName = 'TourCard'
 
 export default function ToursSection() {
   const [selectedTour, setSelectedTour] = useState<typeof tours[0] | null>(null)
-  const [bookingTour, setBookingTour] = useState<typeof tours[0] | null>(null)
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
@@ -613,7 +586,7 @@ export default function ToursSection() {
   
   const toursRef = useRef<HTMLElement>(null)
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlistContext()
-  const { startBooking } = useBookingContext()
+  const { toast } = useToast()
 
   // Use debounced values for smooth filtering
   const debouncedSearchQuery = useDebounce(searchQuery, 300)
@@ -670,9 +643,17 @@ export default function ToursSection() {
     setSelectedTour(tour)
   }, [])
 
-  const handleBookTour = useCallback((tour: typeof tours[0]) => {
-    setBookingTour(tour)
-  }, [])
+  const handleContactUs = useCallback(() => {
+    // Scroll to contact section
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+    toast({
+      title: "Contact Us",
+      description: "Please contact us to book this tour. We'll get back to you soon!",
+    })
+  }, [toast])
 
   return (
     <section id="tours" ref={toursRef} className="py-20 bg-muted/20">
@@ -798,268 +779,110 @@ export default function ToursSection() {
                 setSearchQuery("")
                 setSelectedCategory("All")
                 setPriceRange([0, 3000])
-                setDisplayCount(6)
+                setSortBy("Popular")
               }}
-              className="text-primary hover:text-primary/70"
+              className="text-primary hover:text-primary/80"
             >
-              Clear all filters
-              <X className="h-4 w-4 ml-1" />
+              Clear filters
             </Button>
           )}
         </div>
 
         {/* Tours Grid/List */}
-        {isLoading ? (
-          <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
-            {[...Array(6)].map((_, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                animate={{ 
-                  opacity: 1, 
-                  y: 0, 
-                  scale: 1,
-                  transition: {
-                    type: "spring",
-                    bounce: 0.5,
-                    duration: 0.6,
-                    delay: i * 0.05
-                  }
-                }}
-              >
-                <Card className="overflow-hidden">
-                  <Skeleton className="h-64 w-full" />
-                  <CardHeader>
-                    <Skeleton className="h-4 w-3/4 mb-2" />
-                    <Skeleton className="h-6 w-full mb-2" />
-                    <Skeleton className="h-4 w-1/2" />
-                  </CardHeader>
-                  <CardContent>
-                    <Skeleton className="h-20 w-full mb-4" />
-                    <Skeleton className="h-10 w-full" />
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        ) : filteredTours.length > 0 ? (
-          <AnimatePresence mode="popLayout">
-            <motion.div 
-              className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}
-              layout
-            >
-              {filteredTours.slice(0, displayCount).map((tour, index) => (
-                <TourCard 
-                  key={tour.id} 
-                  tour={tour} 
-                  index={index} 
-                  viewMode={viewMode} 
-                  isInWishlist={isInWishlist(tour.id)} 
-                  onToggleWishlist={toggleWishlist} 
-                  onSelectTour={handleSelectTour} 
-                  onBookTour={handleBookTour} 
-                />
-              ))}
-            </motion.div>
-          </AnimatePresence>
-        ) : (
-          <div className="text-center py-12">
-            <Globe className="h-16 w-16 text-muted mx-auto mb-4" />
-            <p className="text-xl text-muted-foreground mb-2">No tours found</p>
-            <p className="text-muted-foreground">Try adjusting your filters or search query</p>
-          </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {filteredTours.slice(0, displayCount).map((tour, index) => (
+            <TourCard
+              key={tour.id}
+              tour={tour}
+              index={index}
+              viewMode={viewMode}
+              isInWishlist={isInWishlist(tour.id)}
+              onToggleWishlist={toggleWishlist}
+              onSelectTour={handleSelectTour}
+              onContactUs={handleContactUs}
+            />
+          ))}
+        </div>
 
-        {/* Load More */}
-        {filteredTours.length > displayCount && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="text-center mt-12"
-          >
+        {/* Load More Button */}
+        {displayCount < filteredTours.length && (
+          <div className="text-center">
             <Button
-              variant="outline"
-              size="lg"
-              onClick={() => {
-                // Add a small delay to allow other animations to settle
-                setTimeout(() => {
-                  setDisplayCount(filteredTours.length)
-                  // Refresh ScrollTrigger after content changes
-                  ScrollTrigger.refresh()
-                }, 100)
-              }}
-              className="px-8 py-3 hover:bg-primary/10 transition-colors duration-200"
+              onClick={() => setDisplayCount(prev => Math.min(prev + 6, filteredTours.length))}
+              className="bg-primary hover:bg-primary/90"
             >
-              <Sparkles className="h-4 w-4 mr-2" />
-              Load More Tours ({filteredTours.length - displayCount} remaining)
+              Load More Tours
             </Button>
-          </motion.div>
+          </div>
         )}
-      </div>
 
-      {/* Quick View Modal */}
-      <Dialog open={!!selectedTour} onOpenChange={() => setSelectedTour(null)}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          {selectedTour && (
-            <>
-              <DialogHeader>
-                <DialogTitle className="text-2xl font-bold">{selectedTour.title}</DialogTitle>
-                <DialogDescription className="flex items-center gap-2 text-lg">
-                  <MapPin className="h-4 w-4" />
-                  {selectedTour.destination}
-                </DialogDescription>
-              </DialogHeader>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                <div className="space-y-4">
-                  <div className="relative h-64 rounded-lg overflow-hidden">
-                    <Image
+        {/* Tour Details Modal */}
+        {selectedTour && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-6">
+                  <h3 className="text-2xl font-bold">{selectedTour.title}</h3>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setSelectedTour(null)}
+                  >
+                    <X className="h-6 w-6" />
+                  </Button>
+                </div>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div>
+                    <img
                       src={selectedTour.image}
                       alt={selectedTour.title}
-                      fill
-                      className="object-cover"
+                      className="w-full h-64 object-cover rounded-lg"
                     />
                   </div>
                   
-                  <div className="space-y-2">
-                    <h3 className="font-semibold text-lg">Tour Highlights</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedTour.highlights.map((highlight, idx) => (
-                        <Badge key={idx} variant="secondary">
-                          {highlight}
-                        </Badge>
-                      ))}
+                  <div>
+                    <div className="flex items-center gap-2 mb-4">
+                      <MapPin className="h-4 w-4 text-primary" />
+                      <span className="text-muted-foreground">{selectedTour.destination}</span>
                     </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <h3 className="font-semibold text-lg">Description</h3>
-                    <p className="text-muted-foreground">{selectedTour.description}</p>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <div className="bg-primary/10 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-4">
-                      <div>
-                        <p className="text-3xl font-bold text-primary">${selectedTour.price}</p>
-                        <p className="text-sm text-muted-foreground">per person</p>
+                    
+                    <div className="space-y-3 mb-6">
+                      <div className="flex items-center gap-2">
+                        <Clock className="h-4 w-4 text-primary" />
+                        <span>{selectedTour.duration}</span>
                       </div>
-                      <div className="text-right">
-                        <div className="flex items-center gap-1">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`h-4 w-4 ${
-                                i < Math.floor(selectedTour.rating)
-                                  ? 'fill-primary text-primary'
-                                  : 'fill-muted text-muted'
-                              }`}
-                            />
-                          ))}
-                        </div>
-                        <p className="text-sm text-muted-foreground">{selectedTour.reviews} reviews</p>
+                      <div className="flex items-center gap-2">
+                        <Users className="h-4 w-4 text-primary" />
+                        <span>Group size: {selectedTour.groupSize}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Star className="h-4 w-4 text-primary" />
+                        <span>{selectedTour.rating}/5 ({selectedTour.reviews} reviews)</span>
                       </div>
                     </div>
                     
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between py-2 border-b">
-                        <span className="flex items-center gap-2 text-muted-foreground">
-                          <Clock className="h-4 w-4" />
-                          Duration
-                        </span>
-                        <span className="font-medium">{selectedTour.duration}</span>
-                      </div>
-                      <div className="flex items-center justify-between py-2 border-b">
-                        <span className="flex items-center gap-2 text-muted-foreground">
-                          <Users className="h-4 w-4" />
-                          Group Size
-                        </span>
-                        <span className="font-medium">{selectedTour.groupSize}</span>
-                      </div>
-                      <div className="flex items-center justify-between py-2 border-b">
-                        <span className="flex items-center gap-2 text-muted-foreground">
-                          <Calendar className="h-4 w-4" />
-                          Next Departure
-                        </span>
-                        <span className="font-medium">
-                          {new Date(selectedTour.nextDeparture).toLocaleDateString()}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between py-2">
-                        <span className="flex items-center gap-2 text-muted-foreground">
-                          <TrendingUp className="h-4 w-4" />
-                          Availability
-                        </span>
-                        <Badge variant={selectedTour.spotsLeft <= 3 ? "destructive" : "default"}>
-                          {selectedTour.spotsLeft} / {selectedTour.totalSpots} spots left
-                        </Badge>
-                      </div>
+                    <div className="mb-6">
+                      <h4 className="font-semibold mb-2">Description</h4>
+                      <p className="text-muted-foreground">{selectedTour.description}</p>
                     </div>
-                  </div>
-                  
-                  <Tabs defaultValue="included" className="w-full">
-                    <TabsList className="grid w-full grid-cols-2">
-                      <TabsTrigger value="included">What's Included</TabsTrigger>
-                      <TabsTrigger value="notIncluded">Not Included</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="included" className="space-y-2">
-                      {selectedTour.included.map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2">
-                          <Check className="h-4 w-4 text-primary" />
-                          <span className="text-sm">{item}</span>
-                        </div>
-                      ))}
-                    </TabsContent>
-                    <TabsContent value="notIncluded" className="space-y-2">
-                      {selectedTour.notIncluded.map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2">
-                          <X className="h-4 w-4 text-destructive" />
-                          <span className="text-sm">{item}</span>
-                        </div>
-                      ))}
-                    </TabsContent>
-                  </Tabs>
-                  
-                  <div className="flex gap-2">
-                    <Button
-                      onClick={() => toggleWishlist(selectedTour)}
-                      variant="outline"
-                      className="flex-1"
-                    >
-                      <Heart
-                        className={`h-4 w-4 mr-2 ${
-                          isInWishlist(selectedTour.id) ? 'fill-current text-primary' : ''
-                        }`}
-                      />
-                      {isInWishlist(selectedTour.id) ? 'Saved' : 'Save'}
-                    </Button>
-                    <Button 
-                      className="flex-1 bg-primary hover:bg-primary/90"
-                      onClick={() => {
-                        setSelectedTour(null)
-                        setBookingTour(selectedTour)
-                      }}
-                    >
-                      Book Now
-                    </Button>
+                    
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-2xl font-bold">${selectedTour.price}</span>
+                        <span className="text-muted-foreground"> per person</span>
+                      </div>
+                      <Button onClick={handleContactUs} className="bg-primary hover:bg-primary/90">
+                        Contact Us
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
-
-      {/* Booking Modal */}
-      {bookingTour && (
-        <BookingModal
-          tour={bookingTour}
-          isOpen={!!bookingTour}
-          onClose={() => setBookingTour(null)}
-        />
-      )}
+            </div>
+          </div>
+        )}
+      </div>
     </section>
   )
 }
