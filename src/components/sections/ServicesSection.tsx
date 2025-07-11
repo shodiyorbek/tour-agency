@@ -1,41 +1,41 @@
 "use client"
 
-import { Plane, Hotel, MapPin, Users, Shield, Clock, Heart, Globe } from "lucide-react"
+import { Plane, Hotel, MapPin, Users, Shield, Clock, Heart, Globe, Phone, Mail, MessageCircle } from "lucide-react"
 
 const services = [
   {
     id: 1,
     icon: Plane,
-    title: "Flight Booking",
-    description: "Best deals on flights worldwide with major airlines and budget carriers.",
-    features: ["24/7 Support", "Price Match", "Flexible Dates"]
+    title: "Travel Planning",
+    description: "Expert travel planning and itinerary design for your perfect vacation.",
+    features: ["Custom Itineraries", "Local Expertise", "Flexible Planning"]
   },
   {
     id: 2,
     icon: Hotel,
-    title: "Hotel Reservations",
-    description: "Luxury to budget accommodations with verified reviews and best rates.",
-    features: ["Free Cancellation", "Best Price Guarantee", "VIP Access"]
+    title: "Accommodation Guidance",
+    description: "Recommendations for the best hotels and accommodations worldwide.",
+    features: ["Verified Reviews", "Best Locations", "Value Options"]
   },
   {
     id: 3,
     icon: MapPin,
-    title: "Tour Packages",
-    description: "Curated tours with expert guides, transportation, and activities included.",
-    features: ["Expert Guides", "All-Inclusive", "Small Groups"]
+    title: "Tour Recommendations",
+    description: "Curated tour suggestions with expert guides and authentic experiences.",
+    features: ["Expert Guides", "Authentic Experiences", "Small Groups"]
   },
   {
     id: 4,
     icon: Users,
-    title: "Group Travel",
-    description: "Specialized group tours for families, friends, and corporate events.",
-    features: ["Custom Itineraries", "Group Discounts", "Dedicated Manager"]
+    title: "Group Travel Planning",
+    description: "Specialized planning for families, friends, and corporate events.",
+    features: ["Custom Itineraries", "Group Coordination", "Dedicated Support"]
   },
   {
     id: 5,
     icon: Shield,
-    title: "Travel Insurance",
-    description: "Comprehensive coverage for medical, trip cancellation, and baggage.",
+    title: "Travel Insurance Advice",
+    description: "Guidance on comprehensive coverage for medical, trip cancellation, and baggage.",
     features: ["24/7 Assistance", "Medical Coverage", "Trip Protection"]
   },
   {
@@ -57,8 +57,8 @@ export default function ServicesSection() {
             Our <span className="text-yellow-400">Services</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            We provide comprehensive travel services to make your journey seamless and memorable. 
-            From booking to support, we've got you covered.
+            We provide comprehensive travel planning and support services to make your journey seamless and memorable. 
+            Contact us for personalized travel assistance.
           </p>
         </div>
 
@@ -115,7 +115,7 @@ export default function ServicesSection() {
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-4">Global Network</h3>
             <p className="text-gray-600">
-              Partnered with top travel providers worldwide for the best deals.
+              Partnered with top travel providers worldwide for the best experiences.
             </p>
           </div>
           
@@ -127,6 +127,30 @@ export default function ServicesSection() {
             <p className="text-gray-600">
               Your safety and security are our top priorities throughout your journey.
             </p>
+          </div>
+        </div>
+
+        {/* Contact CTA */}
+        <div className="mt-16 text-center">
+          <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-2xl p-8 text-white">
+            <h3 className="text-2xl font-bold mb-4">Ready to Plan Your Dream Trip?</h3>
+            <p className="text-lg mb-6 opacity-90">
+              Contact our travel experts today for personalized assistance and recommendations.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <div className="flex items-center gap-2">
+                <Phone className="w-5 h-5" />
+                <span>Call us: +1 (555) 123-4567</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="w-5 h-5" />
+                <span>Email: info@bigtrip.com</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MessageCircle className="w-5 h-5" />
+                <span>Live chat available</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
