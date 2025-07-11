@@ -15,6 +15,13 @@ export interface Tour {
   description: string
   highlights: string[]
   category: string
+  difficulty?: string
+  availability?: string
+  spotsLeft?: number
+  totalSpots?: number
+  nextDeparture?: string
+  included?: string[]
+  notIncluded?: string[]
 }
 
 export function useWishlist() {

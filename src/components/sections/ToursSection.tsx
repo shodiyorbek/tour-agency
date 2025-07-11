@@ -16,7 +16,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useWishlistContext } from "@/components/wishlist-provider"
+import { useBookingContext } from "@/components/booking-provider"
 import { Tour } from "@/hooks/use-wishlist"
+import BookingModal from "@/components/booking-modal"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -410,6 +412,7 @@ const sortOptions = ["Popular", "Price: Low to High", "Price: High to Low", "Rat
 
 export default function ToursSection() {
   const [selectedTour, setSelectedTour] = useState<typeof tours[0] | null>(null)
+  const [bookingTour, setBookingTour] = useState<typeof tours[0] | null>(null)
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
@@ -421,6 +424,7 @@ export default function ToursSection() {
   
   const toursRef = useRef<HTMLElement>(null)
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlistContext()
+  const { startBooking } = useBookingContext()
 
   // Use debounced values for smooth filtering
   const debouncedSearchQuery = useDebounce(searchQuery, 300)
@@ -619,6 +623,10 @@ export default function ToursSection() {
               <Button
                 variant="outline"
                 className="hover:bg-blue-50 transition-colors duration-200"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setBookingTour(tour)
+                }}
               >
                 Book Now
               </Button>
@@ -974,7 +982,13 @@ export default function ToursSection() {
                       />
                       {isInWishlist(selectedTour.id) ? 'Saved' : 'Save'}
                     </Button>
-                    <Button className="flex-1 bg-blue-600 hover:bg-blue-700">
+                    <Button 
+                      className="flex-1 bg-blue-600 hover:bg-blue-700"
+                      onClick={() => {
+                        setSelectedTour(null)
+                        setBookingTour(selectedTour)
+                      }}
+                    >
                       Book Now
                     </Button>
                   </div>
@@ -984,6 +998,15 @@ export default function ToursSection() {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Booking Modal */}
+      {bookingTour && (
+        <BookingModal
+          tour={bookingTour}
+          isOpen={!!bookingTour}
+          onClose={() => setBookingTour(null)}
+        />
+      )}
     </section>
   )
 }
