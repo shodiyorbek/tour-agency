@@ -34,6 +34,7 @@ import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useToast } from "@/components/ui/use-toast"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { format } from "date-fns"
 
 interface BookingModalProps {
@@ -53,6 +54,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
   const router = useRouter()
   const { toast } = useToast()
   const { createBooking, calculateTotalPrice } = useBookingContext()
+  const isMobile = useIsMobile()
   
   const [currentStep, setCurrentStep] = useState(1)
   const [isProcessing, setIsProcessing] = useState(false)
@@ -244,7 +246,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
                   ))}
                 </SelectContent>
               </Select>
-                             <p className="text-sm text-muted-foreground mt-2">
+              <p className="text-sm text-muted-foreground mt-2">
                 {tour.spotsLeft || 'Limited'} spots available for this tour
               </p>
             </div>
@@ -266,7 +268,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold mb-2">Primary Contact Details</h3>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="contact-email">Contact Email</Label>
                     <Input
@@ -298,7 +300,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
                 {passengers.map((passenger, index) => (
                   <div key={index} className="space-y-4 p-4 bg-muted/20 rounded-lg">
                     <h4 className="font-medium">Passenger {index + 1}</h4>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <Label>First Name *</Label>
                         <Input
@@ -355,7 +357,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
                           className="mt-1"
                         />
                       </div>
-                      <div className="col-span-2">
+                      <div className="sm:col-span-2">
                         <Label>Passport Number (if applicable)</Label>
                         <Input
                           value={passenger.passportNumber || ''}
@@ -389,7 +391,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
           <div className="space-y-6">
             <div className="bg-primary/10 p-4 rounded-lg">
               <h3 className="font-semibold text-lg mb-2">{tour.title}</h3>
-              <div className="grid grid-cols-2 gap-2 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-primary" />
                   <span>{tour.duration}</span>
@@ -405,7 +407,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
               <h4 className="font-semibold mb-3">Passenger Details</h4>
               <div className="space-y-2">
                 {passengers.map((passenger, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-muted/20 rounded">
+                  <div key={index} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-muted/20 rounded gap-2">
                     <div>
                       <p className="font-medium">{passenger.firstName} {passenger.lastName}</p>
                       <p className="text-sm text-muted-foreground">{passenger.email}</p>
@@ -466,12 +468,12 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
                 <div className="space-y-2">
                   <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/10">
                     <RadioGroupItem value="card" id="card" />
-                    <Label htmlFor="card" className="flex-1 cursor-pointer flex items-center justify-between">
+                    <Label htmlFor="card" className="flex-1 cursor-pointer flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                       <span className="flex items-center gap-2">
                         <CreditCard className="h-4 w-4" />
                         Credit/Debit Card
                       </span>
-                      <div className="flex gap-1">
+                      <div className="flex gap-1 flex-wrap">
                         <Badge variant="secondary" className="text-xs">Visa</Badge>
                         <Badge variant="secondary" className="text-xs">Mastercard</Badge>
                         <Badge variant="secondary" className="text-xs">Amex</Badge>
@@ -518,7 +520,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
                     className="mt-1"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="expiry">Expiry Date</Label>
                     <Input
@@ -592,45 +594,73 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-hidden flex flex-col">
+      <DialogContent className={`${isMobile ? 'w-[95vw] max-w-none mx-2' : 'max-w-3xl'} max-h-[90vh] overflow-hidden flex flex-col`}>
         {!bookingComplete ? (
           <>
             <DialogHeader>
-              <DialogTitle className="text-2xl">Book Your Tour</DialogTitle>
+              <DialogTitle className="text-xl sm:text-2xl">Book Your Tour</DialogTitle>
               <DialogDescription>
                 Complete your booking for {tour.title}
               </DialogDescription>
             </DialogHeader>
             
             {/* Progress Steps */}
-            <div className="flex items-center justify-between mb-6 px-4">
-              {steps.map((step, index) => {
-                const Icon = step.icon
-                return (
-                  <div key={step.id} className="flex items-center w-full">
-                    <div className={`
-                      flex items-center justify-center w-28 h-10 rounded-full transition-colors
-                      ${currentStep >= step.id 
-                        ? 'bg-primary text-white' 
-                        : 'bg-muted text-muted-foreground'
-                      }
-
-                    `}>
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div className={`ml-2`}>
-                      <span className="text-sm font-medium">{step.name}</span>
-                    </div>
-                    {index < steps.length - 1 && (
-
-                      <div className={`w-full h-1 mx-3 rounded transition-colors ${
-                        currentStep > step.id ? 'bg-primary' : 'bg-muted'
-
-                      }`} />
-                    )}
-                  </div>
-                )
-              })}
+            <div className={`${isMobile ? 'px-2' : 'px-4'} mb-6`}>
+              {isMobile ? (
+                // Mobile progress steps - simplified
+                <div className="flex items-center justify-between">
+                  {steps.map((step, index) => {
+                    const Icon = step.icon
+                    return (
+                      <div key={step.id} className="flex flex-col items-center">
+                        <div className={`
+                          flex items-center justify-center w-10 h-10 rounded-full transition-colors mb-1
+                          ${currentStep >= step.id 
+                            ? 'bg-primary text-white' 
+                            : 'bg-muted text-muted-foreground'
+                          }
+                        `}>
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <span className="text-xs font-medium text-center">{step.name}</span>
+                        {index < steps.length - 1 && (
+                          <div className={`w-8 h-1 mx-2 rounded transition-colors ${
+                            currentStep > step.id ? 'bg-primary' : 'bg-muted'
+                          }`} />
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              ) : (
+                // Desktop progress steps
+                <div className="flex items-center justify-between">
+                  {steps.map((step, index) => {
+                    const Icon = step.icon
+                    return (
+                      <div key={step.id} className="flex items-center w-full">
+                        <div className={`
+                          flex items-center justify-center w-28 h-10 rounded-full transition-colors
+                          ${currentStep >= step.id 
+                            ? 'bg-primary text-white' 
+                            : 'bg-muted text-muted-foreground'
+                          }
+                        `}>
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <div className="ml-2">
+                          <span className="text-sm font-medium">{step.name}</span>
+                        </div>
+                        {index < steps.length - 1 && (
+                          <div className={`w-full h-1 mx-3 rounded transition-colors ${
+                            currentStep > step.id ? 'bg-primary' : 'bg-muted'
+                          }`} />
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
             </div>
             
             {/* Step Content */}
@@ -649,18 +679,23 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
             </div>
             
             {/* Navigation Buttons */}
-            <div className="flex justify-between mt-6 pt-4 border-t">
+            <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6 pt-4 border-t">
               <Button
                 variant="outline"
                 onClick={handleBack}
                 disabled={currentStep === 1 || isProcessing}
+                className="w-full sm:w-auto"
               >
                 <ChevronLeft className="h-4 w-4 mr-2" />
                 Back
               </Button>
               
               {currentStep < steps.length ? (
-                <Button onClick={handleNext} disabled={!validateStep()}>
+                <Button 
+                  onClick={handleNext} 
+                  disabled={!validateStep()}
+                  className="w-full sm:w-auto"
+                >
                   Next
                   <ChevronRight className="h-4 w-4 ml-2" />
                 </Button>
@@ -668,7 +703,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
                 <Button 
                   onClick={handleSubmitBooking} 
                   disabled={!validateStep() || isProcessing}
-                  className="bg-primary hover:bg-primary/90"
+                  className="bg-primary hover:bg-primary/90 w-full sm:w-auto"
                 >
                   {isProcessing ? (
                     <>
@@ -691,9 +726,9 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
             animate={{ opacity: 1, scale: 1 }}
             className="text-center py-8"
           >
-            <CheckCircle2 className="h-20 w-20 text-primary mx-auto mb-4" />
-            <DialogTitle className="text-2xl mb-2">Booking Confirmed!</DialogTitle>
-            <DialogDescription className="text-lg mb-4">
+            <CheckCircle2 className="h-16 w-16 sm:h-20 sm:w-20 text-primary mx-auto mb-4" />
+            <DialogTitle className="text-xl sm:text-2xl mb-2">Booking Confirmed!</DialogTitle>
+            <DialogDescription className="text-base sm:text-lg mb-4">
               Your booking reference is <span className="font-semibold">{bookingId}</span>
             </DialogDescription>
             <p className="text-muted-foreground mb-6">

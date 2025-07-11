@@ -44,8 +44,8 @@ export default function BookingConfirmationPage() {
 
   if (!booking) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Card className="max-w-md">
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <Card className="max-w-md w-full">
           <CardHeader>
             <AlertCircle className="h-12 w-12 text-destructive mx-auto mb-4" />
             <CardTitle className="text-center">Booking Not Found</CardTitle>
@@ -86,7 +86,7 @@ export default function BookingConfirmationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-muted/10 py-12">
+    <div className="min-h-screen bg-muted/10 py-6 sm:py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -94,35 +94,35 @@ export default function BookingConfirmationPage() {
           transition={{ duration: 0.5 }}
         >
           {/* Header */}
-          <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-            <div className="flex items-center justify-between mb-4">
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
               <Button 
                 variant="ghost" 
                 onClick={() => router.push('/')}
-                className="mb-4"
+                className="w-full sm:w-auto"
               >
                 <ChevronLeft className="h-4 w-4 mr-2" />
                 Back to Tours
               </Button>
-              <div className="flex gap-2">
-                <Button variant="outline" size="icon" onClick={handlePrint}>
+              <div className="flex gap-2 justify-center sm:justify-end">
+                <Button variant="outline" size="icon" onClick={handlePrint} className="h-10 w-10">
                   <Printer className="h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="icon" onClick={handleShare}>
+                <Button variant="outline" size="icon" onClick={handleShare} className="h-10 w-10">
                   <Share2 className="h-4 w-4" />
                 </Button>
               </div>
             </div>
 
             <div className="text-center">
-              <CheckCircle2 className="h-16 w-16 text-primary mx-auto mb-4" />
-              <h1 className="text-3xl font-bold mb-2">Booking Confirmed!</h1>
+              <CheckCircle2 className="h-12 w-12 sm:h-16 sm:w-16 text-primary mx-auto mb-4" />
+              <h1 className="text-2xl sm:text-3xl font-bold mb-2">Booking Confirmed!</h1>
               <p className="text-muted-foreground mb-4">
                 Thank you for booking with us. Your adventure awaits!
               </p>
-              <div className="bg-primary/10 inline-block px-6 py-3 rounded-lg">
+              <div className="bg-primary/10 inline-block px-4 sm:px-6 py-3 rounded-lg">
                 <p className="text-sm text-muted-foreground">Booking Reference</p>
-                <p className="text-2xl font-bold text-primary">{booking.id}</p>
+                <p className="text-xl sm:text-2xl font-bold text-primary break-all">{booking.id}</p>
               </div>
             </div>
           </div>
@@ -133,31 +133,31 @@ export default function BookingConfirmationPage() {
               <CardTitle>Tour Details</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">{booking.tour.title}</h3>
+                  <h3 className="text-lg sm:text-xl font-semibold mb-2">{booking.tour.title}</h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-muted-foreground" />
-                      <span>{booking.tour.destination}</span>
+                      <MapPin className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                      <span className="break-words">{booking.tour.destination}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-muted-foreground" />
+                      <Calendar className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                       <span>{booking.tour.duration}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Users className="h-4 w-4 text-muted-foreground" />
+                      <Users className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                       <span>{booking.numberOfPassengers} Passenger{booking.numberOfPassengers > 1 ? 's' : ''}</span>
                     </div>
                     {booking.tour.nextDeparture && (
                       <div className="flex items-center gap-2">
-                        <Clock className="h-4 w-4 text-muted-foreground" />
+                        <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                         <span>Departure: {format(new Date(booking.tour.nextDeparture), 'MMMM d, yyyy')}</span>
                       </div>
                     )}
                   </div>
                 </div>
-                <div className="relative h-48 rounded-lg overflow-hidden">
+                <div className="relative h-48 sm:h-64 rounded-lg overflow-hidden">
                   <Image
                     src={booking.tour.image}
                     alt={booking.tour.title}
@@ -178,63 +178,25 @@ export default function BookingConfirmationPage() {
               <div className="space-y-4">
                 {booking.passengers.map((passenger: any, index: number) => (
                   <div key={index} className="p-4 bg-muted/20 rounded-lg">
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
                       <h4 className="font-medium">
                         {passenger.firstName} {passenger.lastName}
                       </h4>
                       <Badge variant="secondary">Passenger {index + 1}</Badge>
                     </div>
-                    <div className="grid md:grid-cols-2 gap-2 text-sm text-muted-foreground">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-muted-foreground">
                       <div className="flex items-center gap-2">
-                        <Mail className="h-3 w-3" />
-                        <span>{passenger.email}</span>
+                        <Mail className="h-3 w-3 flex-shrink-0" />
+                        <span className="break-all">{passenger.email}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Phone className="h-3 w-3" />
-                        <span>{passenger.phone}</span>
+                        <Phone className="h-3 w-3 flex-shrink-0" />
+                        <span className="break-all">{passenger.phone}</span>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Payment Summary */}
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle>Payment Summary</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span>Tour Price (per person)</span>
-                  <span>${booking.tour.price}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Number of Passengers</span>
-                  <span>{booking.numberOfPassengers}</span>
-                </div>
-                <Separator />
-                <div className="flex justify-between text-lg font-semibold">
-                  <span>Total Paid</span>
-                  <span className="text-primary">${booking.totalPrice}</span>
-                </div>
-                <div className="flex items-center gap-2 pt-2">
-                  <CreditCard className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm text-muted-foreground">
-                    Payment Method: {booking.paymentMethod === 'card' ? 'Credit/Debit Card' : 
-                                   booking.paymentMethod === 'paypal' ? 'PayPal' : 'Bank Transfer'}
-                  </span>
-                </div>
-              </div>
-              <Badge 
-                className="mt-4" 
-                variant={booking.status === 'confirmed' ? 'default' : 
-                        booking.status === 'pending' ? 'secondary' : 'destructive'}
-              >
-                {booking.status.toUpperCase()}
-              </Badge>
             </CardContent>
           </Card>
 
@@ -244,19 +206,55 @@ export default function BookingConfirmationPage() {
               <CardTitle>Contact Information</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-muted-foreground" />
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <Mail className="h-5 w-5 text-muted-foreground flex-shrink-0" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="font-medium">{booking.contactDetails.email}</p>
+                    <p className="font-medium">Email</p>
+                    <p className="text-sm text-muted-foreground break-all">{booking.contactDetails.email}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-muted-foreground" />
+                <div className="flex items-center gap-3">
+                  <Phone className="h-5 w-5 text-muted-foreground flex-shrink-0" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Phone</p>
-                    <p className="font-medium">{booking.contactDetails.phone}</p>
+                    <p className="font-medium">Phone</p>
+                    <p className="text-sm text-muted-foreground break-all">{booking.contactDetails.phone}</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Payment Information */}
+          <Card className="mb-6">
+            <CardHeader>
+              <CardTitle>Payment Information</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <CreditCard className="h-5 w-5 text-muted-foreground" />
+                    <span className="capitalize">{booking.paymentMethod}</span>
+                  </div>
+                  <Badge variant="default">Paid</Badge>
+                </div>
+                
+                <Separator />
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span>Price per person</span>
+                    <span>${booking.tour.price}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Number of passengers</span>
+                    <span>{booking.numberOfPassengers}</span>
+                  </div>
+                  <Separator />
+                  <div className="flex justify-between text-lg font-semibold">
+                    <span>Total Amount</span>
+                    <span className="text-primary">${booking.totalPrice}</span>
                   </div>
                 </div>
               </div>
@@ -270,35 +268,39 @@ export default function BookingConfirmationPage() {
                 <CardTitle>Special Requests</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">{booking.specialRequests}</p>
+                <p className="text-sm text-muted-foreground bg-muted/20 p-3 rounded">
+                  {booking.specialRequests}
+                </p>
               </CardContent>
             </Card>
           )}
 
           {/* Important Information */}
-          <Alert>
+          <Alert className="mb-6">
             <Info className="h-4 w-4" />
             <AlertDescription>
-              <strong>Important:</strong> A confirmation email has been sent to {booking.contactDetails.email}. 
-              Please check your email for detailed information about your tour, including meeting points, 
-              what to bring, and cancellation policy.
+              <div className="space-y-2">
+                <p><strong>Important:</strong> Please arrive 30 minutes before departure time.</p>
+                <p>Bring your booking confirmation and valid ID for check-in.</p>
+                <p>For any changes or cancellations, contact us at least 24 hours before departure.</p>
+              </div>
             </AlertDescription>
           </Alert>
 
           {/* Action Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <Button 
-              onClick={() => router.push('/')} 
-              className="flex-1"
+              onClick={() => router.push('/my-bookings')} 
+              className="w-full sm:w-auto"
             >
-              Book Another Tour
+              View All Bookings
             </Button>
             <Button 
               variant="outline" 
-              className="flex-1"
-              onClick={() => router.push('/my-bookings')}
+              onClick={() => router.push('/')}
+              className="w-full sm:w-auto"
             >
-              View All My Bookings
+              Book Another Tour
             </Button>
           </div>
         </motion.div>

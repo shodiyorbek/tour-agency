@@ -87,8 +87,8 @@ export default function MyBookingsPage() {
       transition={{ duration: 0.3 }}
     >
       <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-        <div className="flex flex-col md:flex-row">
-          <div className="relative w-full md:w-48 h-48">
+        <div className="flex flex-col lg:flex-row">
+          <div className="relative w-full lg:w-48 h-48 lg:h-auto">
             <Image
               src={booking.tour.image}
               alt={booking.tour.title}
@@ -98,18 +98,18 @@ export default function MyBookingsPage() {
           </div>
           <div className="flex-1">
             <CardHeader>
-              <div className="flex items-start justify-between">
-                <div>
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                <div className="flex-1">
                   <CardTitle className="text-lg">{booking.tour.title}</CardTitle>
                   <CardDescription className="flex items-center gap-2 mt-1">
-                    <MapPin className="h-3 w-3" />
-                    {booking.tour.destination}
+                    <MapPin className="h-3 w-3 flex-shrink-0" />
+                    <span className="break-words">{booking.tour.destination}</span>
                   </CardDescription>
                 </div>
                 <Badge 
                   variant={booking.status === 'confirmed' ? 'default' : 
                           booking.status === 'pending' ? 'secondary' : 'destructive'}
-                  className="flex items-center gap-1"
+                  className="flex items-center gap-1 w-fit"
                 >
                   {getStatusIcon(booking.status)}
                   {booking.status}
@@ -117,10 +117,10 @@ export default function MyBookingsPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
                 <div>
                   <p className="text-xs text-muted-foreground">Booking Ref</p>
-                  <p className="font-medium text-sm">{booking.id}</p>
+                  <p className="font-medium text-sm break-all">{booking.id}</p>
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Booking Date</p>
@@ -142,14 +142,15 @@ export default function MyBookingsPage() {
               </div>
               {booking.tour.nextDeparture && (
                 <div className="flex items-center gap-2 mb-4 text-sm text-muted-foreground">
-                  <Calendar className="h-3 w-3" />
+                  <Calendar className="h-3 w-3 flex-shrink-0" />
                   <span>Departure: {format(new Date(booking.tour.nextDeparture), 'MMM d, yyyy')}</span>
                 </div>
               )}
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <Button
                   size="sm"
                   onClick={() => router.push(`/bookings/${booking.id}`)}
+                  className="w-full sm:w-auto"
                 >
                   <Eye className="h-4 w-4 mr-2" />
                   View Details
@@ -159,6 +160,7 @@ export default function MyBookingsPage() {
                     size="sm"
                     variant="outline"
                     onClick={() => handleCancelBooking(booking.id)}
+                    className="w-full sm:w-auto"
                   >
                     <X className="h-4 w-4 mr-2" />
                     Cancel
@@ -173,7 +175,7 @@ export default function MyBookingsPage() {
   )
 
   return (
-    <div className="min-h-screen bg-muted/10 py-12">
+    <div className="min-h-screen bg-muted/10 py-6 sm:py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -190,60 +192,60 @@ export default function MyBookingsPage() {
               <ChevronLeft className="h-4 w-4 mr-2" />
               Back to Tours
             </Button>
-            <h1 className="text-3xl font-bold mb-2">My Bookings</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2">My Bookings</h1>
             <p className="text-muted-foreground">Manage and view all your tour bookings</p>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <Card>
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Total Bookings</p>
-                    <p className="text-2xl font-bold">{bookings.length}</p>
+                <div className="flex items-center gap-2">
+                  <div className="p-2 bg-primary/10 rounded-full">
+                    <Calendar className="h-4 w-4 text-primary" />
                   </div>
-                  <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Calendar className="h-6 w-6 text-primary" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground">Active</p>
                     <p className="text-2xl font-bold">{activeBookings.length}</p>
-                  </div>
-                                      <div className="h-12 w-12 bg-primary/15 rounded-full flex items-center justify-center">
-                      <CheckCircle2 className="h-6 w-6 text-primary" />
+                    <p className="text-xs text-muted-foreground">Active</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="p-2 bg-primary/10 rounded-full">
+                    <Clock className="h-4 w-4 text-primary" />
+                  </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Pending</p>
                     <p className="text-2xl font-bold">{pendingBookings.length}</p>
-                  </div>
-                  <div className="h-12 w-12 bg-primary/20 rounded-full flex items-center justify-center">
-                    <Clock className="h-6 w-6 text-primary/70" />
+                    <p className="text-xs text-muted-foreground">Pending</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Cancelled</p>
-                    <p className="text-2xl font-bold">{cancelledBookings.length}</p>
+                <div className="flex items-center gap-2">
+                  <div className="p-2 bg-primary/10 rounded-full">
+                    <CheckCircle2 className="h-4 w-4 text-primary" />
                   </div>
-                  <div className="h-12 w-12 bg-destructive/10 rounded-full flex items-center justify-center">
-                    <X className="h-6 w-6 text-destructive" />
+                  <div>
+                    <p className="text-2xl font-bold">{confirmedBookings.length}</p>
+                    <p className="text-xs text-muted-foreground">Confirmed</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2">
+                  <div className="p-2 bg-destructive/10 rounded-full">
+                    <X className="h-4 w-4 text-destructive" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold">{cancelledBookings.length}</p>
+                    <p className="text-xs text-muted-foreground">Cancelled</p>
                   </div>
                 </div>
               </CardContent>
@@ -251,31 +253,37 @@ export default function MyBookingsPage() {
           </div>
 
           {/* Filters */}
-          <Card className="mb-8">
-            <CardContent className="p-4">
-              <div className="flex flex-col md:flex-row gap-4">
-                <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Card className="mb-6">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Filter className="h-4 w-4" />
+                Filters & Search
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
-                    placeholder="Search by booking ref, destination, or tour name..."
+                    placeholder="Search bookings..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-10"
                   />
                 </div>
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-full md:w-[180px]">
+                  <SelectTrigger>
                     <SelectValue placeholder="Filter by status" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All Bookings</SelectItem>
+                    <SelectItem value="all">All Status</SelectItem>
                     <SelectItem value="confirmed">Confirmed</SelectItem>
                     <SelectItem value="pending">Pending</SelectItem>
                     <SelectItem value="cancelled">Cancelled</SelectItem>
                   </SelectContent>
                 </Select>
                 <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="w-full md:w-[180px]">
+                  <SelectTrigger>
                     <SelectValue placeholder="Sort by" />
                   </SelectTrigger>
                   <SelectContent>
@@ -285,32 +293,44 @@ export default function MyBookingsPage() {
                     <SelectItem value="price-low">Price: Low to High</SelectItem>
                   </SelectContent>
                 </Select>
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    setSearchQuery("")
+                    setStatusFilter("all")
+                    setSortBy("recent")
+                  }}
+                  className="w-full"
+                >
+                  Clear Filters
+                </Button>
               </div>
             </CardContent>
           </Card>
 
           {/* Bookings List */}
-          {filteredBookings.length > 0 ? (
-            <div className="space-y-4">
-              {filteredBookings.map((booking) => (
-                <BookingCard key={booking.id} booking={booking} />
-              ))}
-            </div>
-          ) : (
+          {filteredBookings.length === 0 ? (
             <Card>
-              <CardContent className="p-12 text-center">
-                <AlertCircle className="h-12 w-12 text-muted mx-auto mb-4" />
+              <CardContent className="p-8 text-center">
+                <AlertCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-2">No bookings found</h3>
                 <p className="text-muted-foreground mb-4">
-                  {bookings.length === 0 
-                    ? "You haven't made any bookings yet." 
-                    : "No bookings match your search criteria."}
+                  {searchQuery || statusFilter !== "all" 
+                    ? "Try adjusting your search or filter criteria."
+                    : "You haven't made any bookings yet."
+                  }
                 </p>
                 <Button onClick={() => router.push('/')}>
                   Browse Tours
                 </Button>
               </CardContent>
             </Card>
+          ) : (
+            <div className="space-y-6">
+              {filteredBookings.map((booking) => (
+                <BookingCard key={booking.id} booking={booking} />
+              ))}
+            </div>
           )}
         </motion.div>
       </div>
