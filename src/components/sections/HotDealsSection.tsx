@@ -15,8 +15,13 @@ import {
 } from "@/components/ui/carousel"
 import { Clock, MapPin, Users, Star, Flame, Calendar, Heart, ArrowRight, Zap } from "lucide-react"
 import Autoplay from "embla-carousel-autoplay"
+
 import { useWishlistContext } from "@/components/wishlist-provider"
 import { useToast } from "@/components/ui/use-toast"
+
+import { useBookingContext } from "@/components/booking-provider"
+import BookingModal from "@/components/booking-modal"
+
 import { Tour } from "@/hooks/use-wishlist"
 
 const hotDeals = [
@@ -122,8 +127,52 @@ export default function HotDealsSection() {
   const [current, setCurrent] = useState(0)
   const [count, setCount] = useState(0)
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+
   const { wishlist, addToWishlist, removeFromWishlist, isInWishlist } = useWishlistContext()
   const { toast } = useToast()
+
+  const [selectedTour, setSelectedTour] = useState<Tour | null>(null)
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false)
+  const { startBooking } = useBookingContext()
+
+  // Convert hotDeals to Tour format
+  const tours: Tour[] = hotDeals.map(deal => ({
+    id: deal.id,
+    title: deal.title,
+    destination: deal.destination,
+    price: deal.salePrice, // Use sale price as the current price
+    duration: deal.duration,
+    groupSize: deal.groupSize,
+    rating: deal.rating,
+    reviews: deal.reviews,
+    image: deal.image,
+    description: deal.description,
+    highlights: deal.highlights,
+    category: deal.category,
+    spotsLeft: 10, // Default value for demo
+    totalSpots: 20, // Default value for demo
+    nextDeparture: deal.validUntil,
+    included: deal.highlights,
+    notIncluded: ["Flights", "Travel Insurance", "Personal Expenses"]
+  }))
+
+  // Create a mapping to access original deal data
+  const dealData = hotDeals.reduce((acc, deal) => {
+    acc[deal.id] = deal
+    return acc
+  }, {} as Record<number, typeof hotDeals[0]>)
+
+  const handleBookNow = (tour: Tour) => {
+    setSelectedTour(tour)
+    setIsBookingModalOpen(true)
+    startBooking(tour)
+  }
+
+  const handleCloseBookingModal = () => {
+    setIsBookingModalOpen(false)
+    setSelectedTour(null)
+  }
+
 
   useEffect(() => {
     if (!api) {
@@ -227,11 +276,11 @@ export default function HotDealsSection() {
             }}
           >
             <CarouselContent>
-              {hotDeals.map((deal, index) => (
-                <CarouselItem key={deal.id}>
+              {tours.map((tour, index) => (
+                <CarouselItem key={tour.id}>
                   <Card 
                     className="group overflow-hidden border-0 bg-white/80 backdrop-blur-sm hover:bg-white shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
-                    onMouseEnter={() => setHoveredCard(deal.id)}
+                    onMouseEnter={() => setHoveredCard(tour.id)}
                     onMouseLeave={() => setHoveredCard(null)}
                   >
                     <CardContent className="p-0">
@@ -239,8 +288,8 @@ export default function HotDealsSection() {
                         {/* Mobile: Image First */}
                         <div className="relative h-64 sm:h-80 lg:h-auto overflow-hidden group order-1 lg:order-2">
                           <Image
-                            src={deal.image || "/placeholder.svg"}
-                            alt={deal.title}
+                            src={tour.image || "/placeholder.svg"}
+                            alt={tour.title}
                             width={600}
                             height={600}
                             className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
@@ -266,11 +315,15 @@ export default function HotDealsSection() {
                               <div className="flex items-center justify-between">
                                 <div>
                                   <div className="text-sm text-muted-foreground">Starting from</div>
-                                  <div className="text-2xl font-bold text-foreground">${deal.salePrice}</div>
+                                  <div className="text-2xl font-bold text-foreground">${tour.price}</div>
                                 </div>
-                                <Button size="sm" className="bg-primary hover:bg-primary/90">
-                                  Quick Book
-                                </Button>
+                                                                  <Button 
+                                    size="sm" 
+                                    className="bg-primary hover:bg-primary/90"
+                                    onClick={() => handleBookNow(tour)}
+                                  >
+                                    Quick Book
+                                  </Button>
                               </div>
                             </div>
                           </div>
@@ -289,10 +342,10 @@ export default function HotDealsSection() {
                             <div className="flex items-center justify-between mb-4 sm:mb-6">
                               <div className="flex gap-2 flex-wrap">
                                 <Badge className="bg-gradient-to-r from-red-500 to-red-600 text-white text-sm sm:text-base lg:text-lg px-3 sm:px-4 py-1 sm:py-2 animate-pulse shadow-lg">
-                                  -{deal.discount}% OFF
+                                  -{dealData[tour.id]?.discount}% OFF
                                 </Badge>
                                 <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 sm:px-3 py-1 sm:py-2 text-xs sm:text-sm">
-                                  {deal.category}
+                                  {tour.category}
                                 </Badge>
                               </div>
                               <Button 
@@ -308,11 +361,11 @@ export default function HotDealsSection() {
                             {/* Title and location */}
                             <div className="mb-4 sm:mb-6">
                               <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-2 sm:mb-3 group-hover:text-primary transition-colors duration-300">
-                                {deal.title}
+                                {tour.title}
                               </h3>
                               <div className="flex items-center text-muted-foreground mb-3 sm:mb-4">
                                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-primary" />
-                                <span className="text-base sm:text-lg font-medium">{deal.destination}</span>
+                                <span className="text-base sm:text-lg font-medium">{tour.destination}</span>
                               </div>
                               
                               {/* Rating */}
@@ -322,14 +375,14 @@ export default function HotDealsSection() {
                                     <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 fill-primary text-primary" />
                                   ))}
                                 </div>
-                                <span className="text-base sm:text-lg font-semibold text-foreground">{deal.rating}</span>
-                                <span className="text-sm sm:text-base text-muted-foreground">({deal.reviews} reviews)</span>
+                                <span className="text-base sm:text-lg font-semibold text-foreground">{tour.rating}</span>
+                                <span className="text-sm sm:text-base text-muted-foreground">({tour.reviews} reviews)</span>
                               </div>
                             </div>
 
                             {/* Description - Hidden on mobile */}
                             <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-4 sm:mb-6 hidden sm:block">
-                              {deal.description}
+                              {tour.description}
                             </p>
 
                             {/* Details grid */}
@@ -338,14 +391,14 @@ export default function HotDealsSection() {
                                 <Clock className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 text-primary" />
                                 <div>
                                   <div className="text-xs sm:text-sm text-muted-foreground">Duration</div>
-                                  <div className="text-sm sm:text-base font-semibold">{deal.duration}</div>
+                                  <div className="text-sm sm:text-base font-semibold">{tour.duration}</div>
                                 </div>
                               </div>
                               <div className="flex items-center text-muted-foreground bg-muted/20 rounded-lg p-2 sm:p-3 group-hover:bg-primary/10 transition-colors duration-300">
                                 <Users className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 text-primary" />
                                 <div>
                                   <div className="text-xs sm:text-sm text-muted-foreground">Group Size</div>
-                                  <div className="text-sm sm:text-base font-semibold">{deal.groupSize}</div>
+                                  <div className="text-sm sm:text-base font-semibold">{tour.groupSize}</div>
                                 </div>
                               </div>
                             </div>
@@ -353,14 +406,14 @@ export default function HotDealsSection() {
                             {/* Highlights - Hidden on mobile */}
                             <div className="mb-6 sm:mb-8 hidden lg:block">
                               <h4 className="font-bold text-foreground mb-3 text-lg">What's Included:</h4>
-                              <div className="grid grid-cols-2 gap-2">
-                                {deal.highlights.map((highlight, idx) => (
-                                  <div key={idx} className="flex items-center text-sm text-muted-foreground">
-                                    <div className="w-2 h-2 bg-primary rounded-full mr-2"></div>
-                                    {highlight}
-                                  </div>
-                                ))}
-                              </div>
+                                                              <div className="grid grid-cols-2 gap-2">
+                                  {tour.included?.map((highlight, idx) => (
+                                    <div key={idx} className="flex items-center text-sm text-muted-foreground">
+                                      <div className="w-2 h-2 bg-primary rounded-full mr-2"></div>
+                                      {highlight}
+                                    </div>
+                                  ))}
+                                </div>
                             </div>
                           </div>
 
@@ -370,9 +423,9 @@ export default function HotDealsSection() {
                             <div className="bg-gradient-to-r from-primary/90 to-primary text-white p-2 sm:p-3 rounded-lg mb-4 sm:mb-6 text-center">
                               <div className="flex items-center justify-center gap-2">
                                 <Calendar className="h-4 w-4 sm:h-5 sm:w-5 animate-pulse" />
-                                <span className="text-sm sm:text-base font-bold">{deal.urgency}</span>
+                                <span className="text-sm sm:text-base font-bold">{dealData[tour.id]?.urgency}</span>
                               </div>
-                              <div className="text-xs sm:text-sm opacity-90">Valid until {deal.validUntil}</div>
+                              <div className="text-xs sm:text-sm opacity-90">Valid until {tour.nextDeparture}</div>
                             </div>
 
                             {/* Price section */}
@@ -382,18 +435,18 @@ export default function HotDealsSection() {
                                 <div className="flex items-end justify-between">
                                   <div>
                                     <div className="text-xs sm:text-sm text-muted line-through mb-1">
-                                      Was ${deal.originalPrice}
+                                      Was ${dealData[tour.id]?.originalPrice}
                                     </div>
                                     <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
-                                      ${deal.salePrice}
+                                      ${tour.price}
                                     </div>
                                     <div className="text-sm sm:text-base text-primary font-semibold">
-                                      You save ${deal.savings}!
+                                      You save ${dealData[tour.id]?.savings}!
                                     </div>
                                   </div>
                                   <div className="text-right">
                                     <div className="text-xl sm:text-2xl font-bold text-primary/80">
-                                      {deal.discount}%
+                                      {dealData[tour.id]?.discount}%
                                     </div>
                                     <div className="text-xs sm:text-sm text-muted">OFF</div>
                                   </div>
@@ -406,6 +459,7 @@ export default function HotDealsSection() {
                               <Button 
                                 size="lg" 
                                 className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-sm sm:text-base lg:text-lg py-5 sm:py-6 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group"
+                                onClick={() => handleBookNow(tour)}
                               >
                                 <span>Book Now & Save</span>
                                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-300" />
@@ -473,6 +527,13 @@ export default function HotDealsSection() {
           </div>
         </div>
       </div>
+              {selectedTour && (
+          <BookingModal 
+            isOpen={isBookingModalOpen} 
+            onClose={handleCloseBookingModal} 
+            tour={selectedTour} 
+          />
+        )}
     </section>
   )
 }
