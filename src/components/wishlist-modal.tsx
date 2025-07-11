@@ -20,134 +20,137 @@ export default function WishlistModal({ isOpen, onClose }: WishlistModalProps) {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="fixed inset-0 bg-black/50" onClick={onClose} />
       
-      <div className="relative w-full max-w-6xl max-h-[90vh] m-4 bg-white rounded-2xl shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <div className="flex items-center space-x-3">
-            <Heart className="h-6 w-6 text-red-500 fill-current" />
-            <h2 className="text-2xl font-bold text-gray-900">
+      <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-lg sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 bg-white">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <Heart className="h-5 w-5 sm:h-6 sm:w-6 text-red-500 fill-current" />
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">
               My Wishlist ({getWishlistCount()})
             </h2>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1 sm:space-x-2">
             {wishlist.length > 0 && (
               <Button
                 variant="outline"
                 size="sm"
                 onClick={clearWishlist}
-                className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                className="text-red-600 hover:text-red-700 hover:bg-red-50 text-xs sm:text-sm"
               >
-                <Trash2 className="h-4 w-4 mr-1" />
-                Clear All
+                <Trash2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                <span className="hidden sm:inline">Clear All</span>
+                <span className="sm:hidden">Clear</span>
               </Button>
             )}
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
-              <X className="h-6 w-6 text-gray-500" />
+              <X className="h-5 w-5 sm:h-6 sm:w-6 text-gray-500" />
             </button>
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-100px)]">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6">
           {wishlist.length === 0 ? (
-            <div className="text-center py-12">
-              <Heart className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-600 mb-2">
+            <div className="text-center py-8 sm:py-12">
+              <Heart className="h-12 w-12 sm:h-16 sm:w-16 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-600 mb-2">
                 Your wishlist is empty
               </h3>
-              <p className="text-gray-500 mb-6">
+              <p className="text-sm sm:text-base text-gray-500 mb-4 sm:mb-6 px-4">
                 Start adding tours to your wishlist to see them here
               </p>
-              <Button onClick={onClose} className="bg-blue-600 hover:bg-blue-700">
+              <Button onClick={onClose} className="bg-blue-600 hover:bg-blue-700 text-sm sm:text-base">
                 Explore Tours
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               {wishlist.map((tour: Tour) => (
-                <Card key={tour.id} className="group overflow-hidden border shadow-lg">
+                <Card key={tour.id} className="group overflow-hidden border shadow-md hover:shadow-lg transition-shadow">
                   <div className="relative overflow-hidden">
                     <Image
                       src={tour.image || "/placeholder.svg"}
                       alt={tour.title}
                       width={400}
                       height={200}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-40 sm:h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                    <div className="absolute top-3 left-3">
-                      <Badge className="bg-blue-600 text-white">{tour.category}</Badge>
+                    <div className="absolute top-2 sm:top-3 left-2 sm:left-3">
+                      <Badge className="bg-blue-600 text-white text-xs sm:text-sm">{tour.category}</Badge>
                     </div>
-                    <div className="absolute top-3 right-3">
+                    <div className="absolute top-2 sm:top-3 right-2 sm:right-3">
                       <button
                         onClick={() => removeFromWishlist(tour.id)}
-                        className="p-2 bg-white/90 rounded-full hover:bg-white transition-colors duration-200 group"
+                        className="p-1.5 sm:p-2 bg-white/90 rounded-full hover:bg-white transition-colors duration-200 group"
                       >
-                        <Heart className="h-4 w-4 text-red-500 fill-current group-hover:scale-110 transition-transform" />
+                        <Heart className="h-3 w-3 sm:h-4 sm:w-4 text-red-500 fill-current group-hover:scale-110 transition-transform" />
                       </button>
                     </div>
                   </div>
 
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between mb-2">
+                  <CardHeader className="p-3 sm:p-4 pb-2 sm:pb-3">
+                    <div className="flex items-center justify-between mb-1 sm:mb-2">
                       <div className="flex items-center space-x-1">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        <span className="text-sm font-medium">{tour.rating}</span>
-                        <span className="text-sm text-gray-500">({tour.reviews} reviews)</span>
+                        <Star className="h-3 w-3 sm:h-4 sm:w-4 fill-yellow-400 text-yellow-400" />
+                        <span className="text-xs sm:text-sm font-medium">{tour.rating}</span>
+                        <span className="text-xs sm:text-sm text-gray-500">({tour.reviews})</span>
                       </div>
-                      <div className="text-xl font-bold text-blue-600">${tour.price}</div>
+                      <div className="text-lg sm:text-xl font-bold text-blue-600">${tour.price}</div>
                     </div>
-                    <CardTitle className="text-lg leading-tight">{tour.title}</CardTitle>
-                    <CardDescription className="flex items-center text-gray-600">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      {tour.destination}
+                    <CardTitle className="text-base sm:text-lg leading-tight line-clamp-2">{tour.title}</CardTitle>
+                    <CardDescription className="flex items-center text-gray-600 text-xs sm:text-sm mt-1">
+                      <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-1 flex-shrink-0" />
+                      <span className="truncate">{tour.destination}</span>
                     </CardDescription>
                   </CardHeader>
 
-                  <CardContent className="pt-0">
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">{tour.description}</p>
+                  <CardContent className="p-3 sm:p-4 pt-0">
+                    <p className="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2">{tour.description}</p>
 
-                    <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
+                    <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3">
                       <div className="flex items-center">
-                        <Clock className="h-4 w-4 mr-1" />
-                        {tour.duration}
+                        <Clock className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                        <span className="truncate">{tour.duration}</span>
                       </div>
                       <div className="flex items-center">
-                        <Users className="h-4 w-4 mr-1" />
-                        {tour.groupSize}
+                        <Users className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                        <span className="truncate">{tour.groupSize}</span>
                       </div>
                     </div>
 
-                    <div className="mb-4">
+                    <div className="mb-3 sm:mb-4">
                       <div className="flex flex-wrap gap-1">
                         {tour.highlights.slice(0, 2).map((highlight, idx) => (
-                          <Badge key={idx} variant="secondary" className="text-xs">
+                          <Badge key={idx} variant="secondary" className="text-xs px-2 py-0.5">
                             {highlight}
                           </Badge>
                         ))}
                         {tour.highlights.length > 2 && (
-                          <Badge variant="secondary" className="text-xs">
-                            +{tour.highlights.length - 2} more
+                          <Badge variant="secondary" className="text-xs px-2 py-0.5">
+                            +{tour.highlights.length - 2}
                           </Badge>
                         )}
                       </div>
                     </div>
 
-                    <div className="flex space-x-2">
-                      <Button className="flex-1 bg-blue-600 hover:bg-blue-700">
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <Button className="flex-1 bg-blue-600 hover:bg-blue-700 text-xs sm:text-sm h-8 sm:h-9">
                         View Details
                       </Button>
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => removeFromWishlist(tour.id)}
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50 text-xs sm:text-sm h-8 sm:h-9"
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                        Remove
                       </Button>
                     </div>
                   </CardContent>
