@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { ScrollToPlugin } from "gsap/ScrollToPlugin"
 import Navigation from "@/components/sections/Navigation"
 import HeroSection from "@/components/sections/HeroSection"
 import StatsSection from "@/components/sections/StatsSection"
@@ -14,7 +15,7 @@ import Footer from "@/components/sections/Footer"
 import ImageGallery from "@/components/image-gallery"
 import FloatingElements from "@/components/floating-elements"
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
 export default function TravelAgency() {
   const [isVisible, setIsVisible] = useState(false)
@@ -192,23 +193,60 @@ export default function TravelAgency() {
   }, [])
 
   const scrollToSection = (sectionId: string) => {
+    console.log('scrollToSection called with:', sectionId)
+    
+    // Ensure scrolling is enabled
+    document.body.style.overflow = 'auto'
+    document.documentElement.style.overflow = 'auto'
+    
     const element = document.getElementById(sectionId)
-    console.log(element,sectionId)
+    console.log('Element found:', element)
+    
     if (element) {
-      const headerOffset = 80 ;
-      const elementPosition = element.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+      // Force ScrollTrigger refresh to prevent conflicts
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh()
+      }
       
-      // Use native smooth scrolling
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      })
+      const yOffset = -80 // Account for fixed header height
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
+      console.log('Scrolling to position:', y)
+      
+      // Try multiple scroll methods for better compatibility
+      try {
+        // Method 1: Native smooth scrolling
+        window.scrollTo({
+          top: y,
+          behavior: 'smooth'
+        })
+        
+        // Method 2: Fallback with GSAP if native doesn't work
+        setTimeout(() => {
+          const currentScroll = window.pageYOffset
+          const targetScroll = y
+          if (Math.abs(currentScroll - targetScroll) > 10) {
+            console.log('Using GSAP fallback scroll')
+            gsap.to(window, {
+              scrollTo: { y: y, autoKill: false },
+              duration: 1,
+              ease: "power2.out"
+            })
+          }
+        }, 100)
+        
+      } catch (error) {
+        console.error('Scroll error:', error)
+        // Method 3: Direct scroll as last resort
+        window.scrollTo(0, y)
+      }
+    } else {
+      console.error('Element not found for sectionId:', sectionId)
+
     }
   }
 
   return (
-    <div className="min-h-screen bg-white relative overflow-y-auto">
+    <div className="min-h-screen bg-white relative">
       <Navigation scrollToSection={scrollToSection} />
       <HeroSection />
       <AboutSection />
