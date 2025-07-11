@@ -21,6 +21,7 @@ import { Tour } from "@/hooks/use-wishlist"
 import BookingModal from "@/components/booking-modal"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 const tours = [
   {
@@ -880,7 +881,14 @@ export default function ToursSection() {
             <Button
               variant="outline"
               size="lg"
-              onClick={() => setDisplayCount(filteredTours.length)}
+              onClick={() => {
+                // Add a small delay to allow other animations to settle
+                setTimeout(() => {
+                  setDisplayCount(filteredTours.length)
+                  // Refresh ScrollTrigger after content changes
+                  ScrollTrigger.refresh()
+                }, 100)
+              }}
               className="px-8 py-3 hover:bg-primary/10 transition-colors duration-200"
             >
               <Sparkles className="h-4 w-4 mr-2" />
