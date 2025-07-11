@@ -181,7 +181,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
     setIsProcessing(true)
     
     try {
-      // Simulate payment processing
+      
       await new Promise(resolve => setTimeout(resolve, 2000))
       
       const booking = createBooking({
@@ -607,21 +607,21 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
               {steps.map((step, index) => {
                 const Icon = step.icon
                 return (
-                  <div key={step.id} className="flex items-center">
+                  <div key={step.id} className="flex items-center w-full">
                     <div className={`
-                      flex items-center justify-center w-10 h-10 rounded-full transition-colors
+                      flex items-center justify-center w-28 h-10 rounded-full transition-colors
                       ${currentStep >= step.id 
                         ? 'bg-blue-600 text-white' 
                         : 'bg-gray-200 text-gray-500'
-                      }
+                      } 
                     `}>
                       <Icon className="h-5 w-5" />
                     </div>
-                    <div className={`ml-2 ${index === steps.length - 1 ? 'hidden' : 'block'}`}>
+                    <div className={`ml-2`}>
                       <span className="text-sm font-medium">{step.name}</span>
                     </div>
                     {index < steps.length - 1 && (
-                      <div className={`w-full h-1 mx-3 rounded transition-colors ${
+                      <div className={`w-full  h-1 mx-3 rounded transition-colors ${
                         currentStep > step.id ? 'bg-blue-600' : 'bg-gray-200'
                       }`} />
                     )}

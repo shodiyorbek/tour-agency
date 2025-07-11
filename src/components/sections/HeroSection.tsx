@@ -130,7 +130,7 @@ export default function HeroSection() {
         
       </div>
 
-      <div className="z-50 absolute w-full translate-y-[-100px]">
+      <div className="z-10 absolute w-full translate-y-[-100px]">
       <motion.div
         className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-2xl max-w-5xl mx-auto"
         initial={{ opacity: 0, y: 50 }}
@@ -188,35 +188,7 @@ export default function HeroSection() {
           </Button>
         </div>
 
-        {/* Quick Action Buttons */}
-        <div className="flex flex-wrap justify-center gap-4 mt-8 pt-6 border-t border-gray-200">
-          <Button
-            variant="outline"
-            className="flex items-center gap-2 hover:bg-primary/10 hover:border-primary transition-colors bg-transparent"
-          >
-            <Plane className="w-4 h-4" />
-            Flights
-          </Button>
-          <Button
-            variant="outline"
-            className="flex items-center gap-2 hover:bg-primary/10 hover:border-primary transition-colors bg-transparent"
-          >
-            <MapPin className="w-4 h-4" />
-            Hotels
-          </Button>
-          <Button
-            variant="outline"
-            className="flex items-center gap-2 hover:bg-primary/10 hover:border-primary transition-colors bg-transparent"
-          >
-            Popular Destinations
-          </Button>
-          <Button
-            variant="outline"
-            className="flex items-center gap-2 hover:bg-primary/10 hover:border-primary transition-colors bg-transparent"
-          >
-            Last Minute Deals
-          </Button>
-        </div>
+      
       </motion.div>
       </div>
     </section>
