@@ -10,6 +10,12 @@ import StatsSection from "@/components/sections/StatsSection"
 import HotDealsSection from "@/components/sections/HotDealsSection"
 import ToursSection from "@/components/sections/ToursSection"
 import AboutSection from "@/components/sections/AboutSection"
+import ServicesSection from "@/components/sections/ServicesSection"
+import DestinationSection from "@/components/sections/DestinationSection"
+import WhyChooseUsSection from "@/components/sections/WhyChooseUsSection"
+import TestimonialsSection from "@/components/sections/TestimonialsSection"
+import NewsletterSection from "@/components/sections/NewsletterSection"
+import PartnersSection from "@/components/sections/PartnersSection"
 import ContactSection from "@/components/sections/ContactSection"
 import Footer from "@/components/sections/Footer"
 import ImageGallery from "@/components/image-gallery"
@@ -250,12 +256,17 @@ export default function TravelAgency() {
       <Navigation scrollToSection={scrollToSection} />
       <HeroSection />
       <AboutSection />
+      <ServicesSection />
       <HotDealsSection />
       <ToursSection />
+      <DestinationSection />
+      <WhyChooseUsSection />
+      <TestimonialsSection />
       <div id="gallery">
         <ImageGallery />
       </div>
-    
+      <NewsletterSection />
+      <PartnersSection />
       <StatsSection />
       <ContactSection />
       <Footer scrollToSection={scrollToSection} />

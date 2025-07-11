@@ -23,11 +23,12 @@ export default function HeroSection() {
       {/* Centered Content */}
       <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 pt-24 pb-32">
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white leading-tight mb-4 drop-shadow-lg">
-          Discover <span className="text-yellow-400">The beauty</span> <br className="hidden md:block" />
-          of world
+          Discover <span className="text-yellow-400">Amazing</span> <br className="hidden md:block" />
+          Destinations
         </h1>
         <p className="text-lg sm:text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-          Tourm an international travel management company with 25 years of experience, specializing in business and maritime travel.
+          Experience the world's most beautiful destinations with our expert travel services. 
+          From tropical paradises to cultural gems, we make your dream vacation a reality.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
           <Button className="bg-yellow-400 text-black px-8 py-4 rounded-full text-lg font-bold shadow-lg hover:bg-yellow-300 transition">
