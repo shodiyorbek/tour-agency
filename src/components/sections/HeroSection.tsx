@@ -1,78 +1,119 @@
 "use client"
 
+import * as React from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { MapPin, Users, Calendar, Search } from "lucide-react"
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
+import { ArrowDown } from "lucide-react"
+
+const tourCards = [
+  {
+    title: "Mountain Tour",
+    subtitle: "$850.00/Person",
+    description: "Provide a detailed itinerary of the tour, including the places you'll visit each day, any activities planned, approximate times.",
+    duration: "7 Days",
+    image: "/public/gallery/macho.jpg",
+    bg: "/public/gallery/macho.jpg"
+  },
+  {
+    title: "Yachts Tour",
+    subtitle: "$750.00/Person",
+    description: "Enjoy a luxury yacht experience with beautiful views and premium service.",
+    duration: "6 Days",
+    image: "/public/gallery/over-water.jpg",
+    bg: "/public/gallery/over-water.jpg"
+  },
+  {
+    title: "Aurora Adventure",
+    subtitle: "$950.00/Person",
+    description: "Chase the northern lights and explore arctic wonders.",
+    duration: "5 Days",
+    image: "/public/gallery/aurora.jpg",
+    bg: "/public/gallery/aurora.jpg"
+  }
+]
 
 export default function HeroSection() {
+  const [activeIdx, setActiveIdx] = React.useState(0)
+  const activeCard = tourCards[activeIdx]
+
+  // Embla carousel API sync
+  const handleSelect = (api: any) => {
+    if (!api) return
+    setActiveIdx(api.selectedScrollSnap())
+  }
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
+    <section className="relative min-h-screen flex items-center bg-black overflow-hidden rounded-3xl">
+      {/* Dynamic Background Image */}
+      <div className="absolute inset-0 z-0 transition-all duration-700">
         <Image
-          src="/images/bg.jpg"
-          alt="Hero background"
+          src={activeCard.bg.replace('/public', '')}
+          alt={activeCard.title}
           fill
           className="object-cover w-full h-full"
           priority
         />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
-      {/* Centered Content */}
-      <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 pt-24 pb-32">
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white leading-tight mb-4 drop-shadow-lg">
-          Discover <span className="text-yellow-400">Amazing</span> <br className="hidden md:block" />
-          Destinations
-        </h1>
-        <p className="text-lg sm:text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-          Experience the world's most beautiful destinations with our expert travel services. 
-          From tropical paradises to cultural gems, we make your dream vacation a reality.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <Button className="bg-yellow-400 text-black px-8 py-4 rounded-full text-lg font-bold shadow-lg hover:bg-yellow-300 transition">
+      {/* Content */}
+      <div className="relative z-10 flex flex-col md:flex-row w-full h-full px-8 py-20 gap-4">
+        {/* Left Side: Title, Subtitle, Description, Button */}
+        <div className="flex-1 flex flex-col justify-center items-start max-w-xl text-white gap-4">
+          <h1 className="text-6xl font-extrabold leading-tight mb-2 drop-shadow-lg">
+            Explore
+          </h1>
+          <h2 className="text-2xl font-semibold mb-2 drop-shadow-lg">
+            beauty of the whole world
+          </h2>
+          <p className="text-lg mb-6 drop-shadow-lg">
+            {activeCard.description}
+          </p>
+          <Button className="bg-white text-black px-8 py-4 rounded-full text-lg font-bold shadow-lg flex items-center gap-2">
             Explore Tours
+            <span className="ml-2">→</span>
           </Button>
-          <Button variant="outline" className="border-white text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white hover:text-black transition">
-            Book Now
-          </Button>
+        </div>
+
+        {/* Right Side: Carousel at bottom right */}
+        <div className="flex-1 flex flex-col justify-end items-end relative min-h-[400px]">
+          <div className="absolute bottom-0 right-0 w-full max-w-2xl">
+            <Carousel opts={{ align: "start" }} setApi={handleSelect}>
+              <CarouselContent>
+                {tourCards.map((card, idx) => (
+                  <CarouselItem key={card.title} className="basis-1/2 px-2">
+                    <div className={`rounded-2xl bg-white/80 shadow-xl flex flex-row items-center gap-4 p-4 border-2 ${activeIdx === idx ? 'border-yellow-400' : 'border-transparent'} transition-all`}>
+                      <div className="w-32 h-24 rounded-xl overflow-hidden flex-shrink-0">
+                        <Image src={card.image.replace('/public', '')} alt={card.title} width={128} height={96} className="object-cover w-full h-full" />
+                      </div>
+                      <div className="flex flex-col flex-1">
+                        <h3 className="text-lg font-bold text-gray-900">{card.title}</h3>
+                        <span className="text-sm text-gray-700">{card.subtitle}</span>
+                        <span className="text-xs text-gray-500 mt-1">{card.duration}</span>
+                        <Button className="mt-2 bg-yellow-400 text-black rounded-full px-4 py-2 text-sm font-bold w-fit">Book Now</Button>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="absolute -top-10 right-8 flex gap-2 z-20">
+                <CarouselPrevious className="bg-white/80 border-none text-black hover:bg-yellow-400" />
+                <CarouselNext className="bg-white/80 border-none text-black hover:bg-yellow-400" />
+              </div>
+            </Carousel>
+            {/* Progress bar */}
+            <div className="w-full h-1 bg-white/30 rounded-full mt-4 relative">
+              <div className="h-1 bg-yellow-400 rounded-full transition-all" style={{ width: `${((activeIdx + 1) / tourCards.length) * 100}%` }} />
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Search Form */}
-      <div className="absolute left-1/2 bottom-0 translate-x-[-50%] translate-y-1/2 z-20 w-full max-w-5xl px-4">
-        <form className="bg-white rounded-2xl shadow-2xl p-6 flex flex-col md:flex-row gap-4 items-center">
-          {/* Destination */}
-          <div className="flex-1 w-full">
-            <label className="text-xs font-semibold text-gray-600 mb-1 block flex items-center gap-1"><MapPin className="w-4 h-4" />Destination</label>
-            <Input placeholder="Where to?" className="h-12" />
-          </div>
-          {/* Departure */}
-          <div className="flex-1 w-full">
-            <label className="text-xs font-semibold text-gray-600 mb-1 block flex items-center gap-1"><Calendar className="w-4 h-4" />Departure</label>
-            <Input type="date" className="h-12" />
-          </div>
-          {/* Return */}
-          <div className="flex-1 w-full">
-            <label className="text-xs font-semibold text-gray-600 mb-1 block flex items-center gap-1"><Calendar className="w-4 h-4" />Return</label>
-            <Input type="date" className="h-12" />
-          </div>
-          {/* Travelers */}
-          <div className="flex-1 w-full">
-            <label className="text-xs font-semibold text-gray-600 mb-1 block flex items-center gap-1"><Users className="w-4 h-4" />Travelers</label>
-            <select className="h-12 w-full rounded-md border border-gray-200 px-3 py-2 text-sm">
-              <option>1 Adult</option>
-              <option>2 Adults</option>
-              <option>Family</option>
-            </select>
-          </div>
-          {/* Search Button */}
-          <Button type="submit" className="h-12 px-8 bg-yellow-400 text-black font-bold rounded-full hover:bg-yellow-300 transition flex items-center gap-2">
-            <Search className="w-4 h-4" />
-            Search
-          </Button>
-        </form>
+      {/* Scroll Down Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-20">
+        <span className="text-white text-sm mb-1">Scroll Down</span>
+        <ArrowDown className="w-8 h-8 text-white animate-bounce" />
       </div>
     </section>
   )
