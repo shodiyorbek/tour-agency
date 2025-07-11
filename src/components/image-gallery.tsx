@@ -193,20 +193,20 @@ export default function ImageGallery() {
   }
 
   return (
-    <section className="gallery-section py-20 bg-muted/20 overflow-hidden" ref={galleryRef}>
+    <section className="gallery-section py-12 sm:py-16 lg:py-20 bg-muted/20 overflow-hidden" ref={galleryRef}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-24">
-          <h2 className="gallery-title text-4xl md:text-5xl font-bold text-foreground mb-4">Destination Gallery</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+        <div className="text-center mb-12 sm:mb-16 lg:mb-24">
+          <h2 className="gallery-title text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 sm:mb-4">Destination Gallery</h2>
+          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto">
             Immerse yourself in the beauty of our carefully curated destinations
           </p>
         </div>
 
-        <div className="gallery-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="gallery-grid grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
           {galleryImages.map((image, index) => (
             <div
               key={image.id}
-              className="gallery-item group relative overflow-hidden rounded-2xl cursor-pointer aspect-[4/5]"
+              className="gallery-item group relative overflow-hidden rounded-lg sm:rounded-xl lg:rounded-2xl cursor-pointer aspect-[4/5]"
               onClick={() => openLightbox(image, index)}
             >
               <Image
@@ -216,12 +216,12 @@ export default function ImageGallery() {
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <h3 className="text-lg font-semibold mb-1">{image.title}</h3>
-                <p className="text-sm text-white/90">{image.location}</p>
+              <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 lg:p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                <h3 className="text-sm sm:text-base lg:text-lg font-semibold mb-0.5 sm:mb-1">{image.title}</h3>
+                <p className="text-xs sm:text-sm text-white/90">{image.location}</p>
               </div>
-              <div className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <ZoomIn className="h-5 w-5 text-white" />
+              <div className="absolute top-2 right-2 sm:top-3 sm:right-3 lg:top-4 lg:right-4 w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <ZoomIn className="h-4 w-4 sm:h-4.5 sm:w-4.5 lg:h-5 lg:w-5 text-white" />
               </div>
             </div>
           ))}
@@ -231,17 +231,19 @@ export default function ImageGallery() {
       {/* Lightbox */}
       {selectedImage && (
         <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
-          <div ref={lightboxRef} className="relative max-w-5xl max-h-full">
-            <Image
-              src={selectedImage.src || "/placeholder.svg"}
-              alt={selectedImage.alt}
-              width={1200}
-              height={800}
-              className="max-w-full max-h-[80vh] object-contain rounded-lg"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white rounded-b-lg">
-              <h3 className="text-2xl font-bold mb-2">{selectedImage.title}</h3>
-              <p className="text-white/90">{selectedImage.location}</p>
+          <div ref={lightboxRef} className="relative w-full max-w-5xl">
+            <div className="relative">
+              <Image
+                src={selectedImage.src || "/placeholder.svg"}
+                alt={selectedImage.alt}
+                width={1200}
+                height={800}
+                className="w-full h-auto max-h-[70vh] sm:max-h-[80vh] object-contain rounded-lg"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 sm:p-6 text-white rounded-b-lg">
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-1 sm:mb-2">{selectedImage.title}</h3>
+                <p className="text-sm sm:text-base text-white/90">{selectedImage.location}</p>
+              </div>
             </div>
           </div>
 
@@ -249,28 +251,28 @@ export default function ImageGallery() {
           <Button
             variant="ghost"
             size="icon"
-            className="absolute top-4 right-4 text-white hover:bg-white/20"
+            className="absolute top-2 right-2 sm:top-4 sm:right-4 text-white hover:bg-white/20 w-8 h-8 sm:w-10 sm:h-10"
             onClick={closeLightbox}
           >
-            <X className="h-6 w-6" />
+            <X className="h-5 w-5 sm:h-6 sm:w-6" />
           </Button>
 
           <Button
             variant="ghost"
             size="icon"
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 w-8 h-8 sm:w-10 sm:h-10"
             onClick={() => navigateImage("prev")}
           >
-            <ChevronLeft className="h-8 w-8" />
+            <ChevronLeft className="h-6 w-6 sm:h-8 sm:w-8" />
           </Button>
 
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 w-8 h-8 sm:w-10 sm:h-10"
             onClick={() => navigateImage("next")}
           >
-            <ChevronRight className="h-8 w-8" />
+            <ChevronRight className="h-6 w-6 sm:h-8 sm:w-8" />
           </Button>
         </div>
       )}
