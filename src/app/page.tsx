@@ -22,6 +22,25 @@ export default function TravelAgency() {
   useEffect(() => {
     setIsVisible(true)
 
+    // Global ScrollTrigger refresh to handle conflicts between sections
+    const handleGlobalRefresh = () => {
+      ScrollTrigger.refresh()
+    }
+
+    // Listen for potential DOM changes that might affect animations
+    const observer = new MutationObserver(() => {
+      // Debounce the refresh to avoid excessive calls
+      clearTimeout((window as any).refreshTimeout)
+      ;(window as any).refreshTimeout = setTimeout(handleGlobalRefresh, 100)
+    })
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class', 'style']
+    })
+
     const ctx = gsap.context(() => {
       // Enhanced hover animations for tour cards
       gsap.utils.toArray(".tour-card").forEach((card: any) => {
@@ -154,7 +173,11 @@ export default function TravelAgency() {
       })
     })
 
-    return () => ctx.revert()
+    return () => {
+      observer.disconnect()
+      clearTimeout((window as any).refreshTimeout)
+      ctx.revert()
+    }
   }, [])
 
   const scrollToSection = (sectionId: string) => {

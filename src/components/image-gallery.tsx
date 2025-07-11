@@ -81,14 +81,26 @@ export default function ImageGallery() {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
   const lightboxRef = useRef<HTMLDivElement>(null)
+  const scrollTriggersRef = useRef<any[]>([])
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Parallax effect for gallery items
-      gsap.utils.toArray(".gallery-item").forEach((item: any, index) => {
-        const speed = 0.5 + (index % 3) * 0.2
+    // Kill any existing ScrollTriggers to prevent conflicts
+    ScrollTrigger.getAll().forEach(trigger => {
+      const triggerElement = trigger.vars.trigger as Element
+      if (triggerElement?.classList?.contains('gallery-item') || 
+          triggerElement?.classList?.contains('gallery-grid') ||
+          triggerElement?.classList?.contains('gallery-section')) {
+        trigger.kill()
+      }
+    })
 
-        gsap.to(item, {
+    const ctx = gsap.context(() => {
+      // Parallax effect for gallery items with more specific targeting
+      const galleryItems = gsap.utils.toArray(".gallery-item")
+      galleryItems.forEach((item: any, index) => {
+        const speed = 0.5 + (index % 3) * 0.2
+        
+        const parallaxTrigger = gsap.to(item, {
           yPercent: -50 * speed,
           ease: "none",
           scrollTrigger: {
@@ -96,12 +108,15 @@ export default function ImageGallery() {
             start: "top bottom",
             end: "bottom top",
             scrub: true,
+            invalidateOnRefresh: true,
+            refreshPriority: -1, // Lower priority to avoid conflicts
           },
         })
+        scrollTriggersRef.current.push(parallaxTrigger.scrollTrigger)
       })
 
-      // Staggered fade-in animation
-      gsap.fromTo(
+      // Staggered fade-in animation with better refresh handling
+      const fadeInTrigger = gsap.fromTo(
         ".gallery-item",
         {
           opacity: 0,
@@ -119,12 +134,15 @@ export default function ImageGallery() {
             trigger: ".gallery-grid",
             start: "top 80%",
             toggleActions: "play none none reverse",
+            invalidateOnRefresh: true,
+            refreshPriority: -1,
           },
         },
       )
+      scrollTriggersRef.current.push(fadeInTrigger.scrollTrigger)
 
       // Gallery title animation
-      gsap.fromTo(
+      const titleTrigger = gsap.fromTo(
         ".gallery-title",
         {
           opacity: 0,
@@ -139,12 +157,56 @@ export default function ImageGallery() {
             trigger: ".gallery-section",
             start: "top 80%",
             toggleActions: "play none none reverse",
+            invalidateOnRefresh: true,
+            refreshPriority: -1,
           },
         },
       )
+      scrollTriggersRef.current.push(titleTrigger.scrollTrigger)
+
+      // Refresh ScrollTrigger after a short delay to ensure proper positioning
+      setTimeout(() => {
+        ScrollTrigger.refresh()
+      }, 100)
+
     }, galleryRef)
 
-    return () => ctx.revert()
+    return () => {
+      // Clean up all ScrollTriggers created in this context
+      scrollTriggersRef.current.forEach(trigger => {
+        if (trigger && !trigger.killed) {
+          trigger.kill()
+        }
+      })
+      scrollTriggersRef.current = []
+      ctx.revert()
+    }
+  }, [])
+
+  // Add a refresh effect when the component mounts or when other sections might affect it
+  useEffect(() => {
+    const handleResize = () => {
+      ScrollTrigger.refresh()
+    }
+
+    const handleScroll = () => {
+      // Refresh ScrollTrigger when scroll position changes significantly
+      ScrollTrigger.refresh()
+    }
+
+    window.addEventListener('resize', handleResize)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    // Refresh after a delay to ensure proper positioning
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh()
+    }, 500)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('scroll', handleScroll)
+      clearTimeout(refreshTimer)
+    }
   }, [])
 
   useEffect(() => {
