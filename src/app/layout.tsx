@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { WishlistProvider } from '@/components/wishlist-provider'
 import { BookingProvider } from '@/components/booking-provider'
+import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
   title: 'Big Tour - Your Dream Travel Agency',
@@ -27,6 +28,7 @@ export default function RootLayout({
             {children}
           </BookingProvider>
         </WishlistProvider>
+        <Toaster />
       </body>
     </html>
   )

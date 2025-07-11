@@ -15,6 +15,9 @@ import {
 } from "@/components/ui/carousel"
 import { Clock, MapPin, Users, Star, Flame, Calendar, Heart, ArrowRight, Zap } from "lucide-react"
 import Autoplay from "embla-carousel-autoplay"
+import { useWishlistContext } from "@/components/wishlist-provider"
+import { useToast } from "@/components/ui/use-toast"
+import { Tour } from "@/hooks/use-wishlist"
 
 const hotDeals = [
   {
@@ -119,6 +122,8 @@ export default function HotDealsSection() {
   const [current, setCurrent] = useState(0)
   const [count, setCount] = useState(0)
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+  const { wishlist, addToWishlist, removeFromWishlist, isInWishlist } = useWishlistContext()
+  const { toast } = useToast()
 
   useEffect(() => {
     if (!api) {
@@ -132,6 +137,47 @@ export default function HotDealsSection() {
       setCurrent(api.selectedScrollSnap() + 1)
     })
   }, [api])
+
+  const handleWishlistToggle = (deal: any) => {
+    const tour: Tour = {
+      id: deal.id,
+      title: deal.title,
+      destination: deal.destination,
+      price: deal.salePrice,
+      duration: deal.duration,
+      groupSize: deal.groupSize,
+      rating: deal.rating,
+      reviews: deal.reviews,
+      image: deal.image,
+      description: deal.description,
+      highlights: deal.highlights,
+      category: deal.category
+    }
+
+    if (isInWishlist(deal.id)) {
+      removeFromWishlist(deal.id)
+      toast({
+        title: "Removed from Wishlist!",
+        description: `${deal.title} has been removed from your wishlist.`,
+      })
+    } else {
+      addToWishlist(tour)
+      toast({
+        title: "Added to Wishlist!",
+        description: `${deal.title} has been added to your wishlist.`,
+      })
+    }
+  }
+
+  const handleDetailsClick = (deal: any) => {
+    // For now, we'll show a toast with tour details
+    // In a real app, this would open a modal or navigate to a details page
+    toast({
+      title: deal.title,
+      description: `${deal.description}\n\nDestination: ${deal.destination}\nDuration: ${deal.duration}\nGroup Size: ${deal.groupSize}\nRating: ${deal.rating}/5 (${deal.reviews} reviews)`,
+      duration: 5000,
+    })
+  }
 
   return (
     <section id="hot-deals" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 relative overflow-hidden">
@@ -206,8 +252,11 @@ export default function HotDealsSection() {
 
                           {/* Floating elements on image */}
                           <div className="absolute top-4 sm:top-6 right-4 sm:right-6">
-                            <div className="bg-white/90 backdrop-blur-sm rounded-full p-2 sm:p-3 shadow-lg transform hover:scale-110 transition-transform duration-300">
-                              <Heart className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                            <div className="bg-white/90 backdrop-blur-sm rounded-full p-2 sm:p-3 shadow-lg transform hover:scale-110 transition-transform duration-300 cursor-pointer">
+                              <Heart 
+                                className={`h-5 w-5 sm:h-6 sm:w-6 text-primary ${isInWishlist(deal.id) ? 'fill-primary' : ''}`} 
+                                onClick={() => handleWishlistToggle(deal)}
+                              />
                             </div>
                           </div>
 
@@ -246,8 +295,13 @@ export default function HotDealsSection() {
                                   {deal.category}
                                 </Badge>
                               </div>
-                              <Button variant="ghost" size="icon" className="hover:bg-primary/10 group lg:hidden">
-                                <Heart className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:fill-primary transition-all duration-300" />
+                              <Button 
+                                variant="ghost" 
+                                size="icon" 
+                                className="hover:bg-primary/10 group lg:hidden"
+                                onClick={() => handleWishlistToggle(deal)}
+                              >
+                                <Heart className={`h-5 w-5 text-muted-foreground group-hover:text-primary transition-all duration-300 ${isInWishlist(deal.id) ? 'fill-primary text-primary' : ''}`} />
                               </Button>
                             </div>
 
@@ -360,6 +414,7 @@ export default function HotDealsSection() {
                                 variant="outline" 
                                 size="lg" 
                                 className="px-4 sm:px-6 py-5 sm:py-6 border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300 hover:scale-105"
+                                onClick={() => handleDetailsClick(deal)}
                               >
                                 Details
                               </Button>
