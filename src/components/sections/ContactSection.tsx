@@ -12,15 +12,15 @@ export default function ContactSection() {
     <section id="contact" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Start Your Journey</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Start Your Journey</h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Ready to explore the world? Get in touch with our travel experts to plan your perfect adventure.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h3>
+            <h3 className="text-2xl font-bold text-foreground mb-6">Get in Touch</h3>
 
             <div className="space-y-6">
               <div className="flex items-center space-x-4">
@@ -28,10 +28,10 @@ export default function ContactSection() {
               <Phone className="h-6 w-6 text-primary" />
             </div>
                 <div>
-                  <div className="font-semibold text-gray-900">Phone</div>
+                  <div className="font-semibold text-foreground">Phone</div>
                   <Link
                     href="tel:+1-555-0123"
-                    className="text-blue-600 hover:text-blue-700 transition-colors duration-200"
+                    className="text-primary hover:text-primary/80 transition-colors duration-200"
                   >
                     +1 (555) 012-3456
                   </Link>
@@ -43,7 +43,7 @@ export default function ContactSection() {
               <Mail className="h-6 w-6 text-primary" />
             </div>
                 <div>
-                  <div className="font-semibold text-gray-900">Email</div>
+                  <div className="font-semibold text-foreground">Email</div>
                                       <Link
                       href="mailto:hello@wanderlust.com"
                       className="text-primary hover:text-primary/80 transition-colors duration-200"
@@ -58,30 +58,30 @@ export default function ContactSection() {
               <MapPin className="h-6 w-6 text-primary" />
             </div>
                 <div>
-                  <div className="font-semibold text-gray-900">Office</div>
-                  <div className="text-gray-600">123 Travel Street, Adventure City, AC 12345</div>
+                  <div className="font-semibold text-foreground">Office</div>
+                  <div className="text-muted-foreground">123 Travel Street, Adventure City, AC 12345</div>
                 </div>
               </div>
             </div>
 
             <div className="mt-8">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4">Follow Us</h4>
+              <h4 className="text-lg font-semibold text-foreground mb-4">Follow Us</h4>
               <div className="flex space-x-4">
                 <Link
                   href="https://instagram.com/wanderlust"
-                  className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform duration-200"
+                  className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform duration-200"
                 >
                   <Instagram className="h-5 w-5" />
                 </Link>
                 <Link
                   href="https://facebook.com/wanderlust"
-                  className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform duration-200"
+                  className="w-10 h-10 bg-primary/90 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform duration-200"
                 >
                   <Facebook className="h-5 w-5" />
                 </Link>
                 <Link
                   href="https://twitter.com/wanderlust"
-                  className="w-10 h-10 bg-sky-500 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform duration-200"
+                  className="w-10 h-10 bg-primary/90 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform duration-200"
                 >
                   <Twitter className="h-5 w-5" />
                 </Link>
@@ -101,14 +101,14 @@ export default function ContactSection() {
                 <form className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                      <label className="block text-sm font-medium text-foreground mb-1">First Name</label>
                       <Input
                         placeholder="John"
                         className="transition-all duration-200 focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                      <label className="block text-sm font-medium text-foreground mb-1">Last Name</label>
                       <Input
                         placeholder="Doe"
                         className="transition-all duration-200 focus:ring-2 focus:ring-blue-500"
@@ -116,7 +116,7 @@ export default function ContactSection() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <label className="block text-sm font-medium text-foreground mb-1">Email</label>
                     <Input
                       type="email"
                       placeholder="john@example.com"
@@ -124,7 +124,7 @@ export default function ContactSection() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                    <label className="block text-sm font-medium text-foreground mb-1">Phone</label>
                     <Input
                       type="tel"
                       placeholder="+1 (555) 000-0000"
@@ -132,7 +132,7 @@ export default function ContactSection() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                    <label className="block text-sm font-medium text-foreground mb-1">Message</label>
                     <Textarea
                       placeholder="Tell us about your dream trip..."
                       rows={4}

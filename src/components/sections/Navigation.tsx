@@ -51,55 +51,55 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
                 className="object-contain"
               />
             </div>
-            <span className="text-xl sm:text-2xl font-bold text-gray-900">Big Trip</span>
+            <span className="text-xl sm:text-2xl font-bold text-foreground">Big Trip</span>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
             <button
               onClick={() => scrollToSection("home")}
-              className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
+              className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Home
             </button>
             <button
               onClick={() => scrollToSection("hot-deals")}
-              className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
+              className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Hot deals
             </button>
             <button
               onClick={() => scrollToSection("tours")}
-              className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
+              className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Special Deals
             </button>
             <button
               onClick={() => scrollToSection("gallery")}
-              className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
+              className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Gallery
             </button>
             <button
               onClick={() => scrollToSection("about")}
-              className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
+              className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Why we?
             </button>
             <button
               onClick={() => scrollToSection("contact")}
-              className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
+              className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Contact
             </button>
           
             <button
               onClick={handleBookingsClick}
-              className="relative text-gray-700 hover:text-blue-600 transition-colors duration-200 p-2"
+              className="relative text-foreground hover:text-primary transition-colors duration-200 p-2"
             >
               <Calendar className="h-5 w-5 lg:h-6 lg:w-6" />
               {getTotalBookings() > 0 && (
-                <span className="absolute -top-1 -right-1 bg-blue-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
                   {getTotalBookings()}
                 </span>
               )}
@@ -107,11 +107,11 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
             
             <button
               onClick={handleWishlistOpen}
-              className="relative text-gray-700 hover:text-purple-600 transition-colors duration-200 p-2"
+              className="relative text-foreground hover:text-primary transition-colors duration-200 p-2"
             >
               <Heart className="h-5 w-5 lg:h-6 lg:w-6" />
               {getWishlistCount() > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                <span className="absolute -top-1 -right-1 bg-primary/80 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
                   {getWishlistCount()}
                 </span>
               )}
@@ -128,11 +128,11 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
           <div className="md:hidden flex items-center space-x-2">
             <button
               onClick={handleBookingsClick}
-              className="relative text-gray-700 hover:text-blue-600 transition-colors duration-200 p-2"
+              className="relative text-foreground hover:text-primary transition-colors duration-200 p-2"
             >
               <Calendar className="h-5 w-5" />
               {getTotalBookings() > 0 && (
-                <span className="absolute -top-1 -right-1 bg-blue-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center text-[10px] font-medium">
+                <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-4 w-4 flex items-center justify-center text-[10px] font-medium">
                   {getTotalBookings()}
                 </span>
               )}
@@ -140,18 +140,18 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
             
             <button
               onClick={handleWishlistOpen}
-              className="relative text-gray-700 hover:text-purple-600 transition-colors duration-200 p-2"
+              className="relative text-foreground hover:text-primary transition-colors duration-200 p-2"
             >
               <Heart className="h-5 w-5" />
               {getWishlistCount() > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center text-[10px] font-medium">
+                <span className="absolute -top-1 -right-1 bg-primary/80 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center text-[10px] font-medium">
                   {getWishlistCount()}
                 </span>
               )}
             </button>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-primary transition-colors duration-200 p-2"
+              className="text-foreground hover:text-primary transition-colors duration-200 p-2"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -164,48 +164,48 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
             <div className="px-2 pt-2 pb-3 space-y-1">
               <button
                 onClick={() => handleMobileNavClick("home")}
-                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors duration-200 font-medium"
+                className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
               >
                 Home
               </button>
               <button
                 onClick={() => handleMobileNavClick("hot-deals")}
-                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors duration-200 font-medium"
+                className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
               >
                 Hot deals
               </button>
               <button
                 onClick={() => handleMobileNavClick("tours")}
-                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors duration-200 font-medium"
+                className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
               >
                 Special Deals
               </button>
               <button
                 onClick={() => handleMobileNavClick("gallery")}
-                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors duration-200 font-medium"
+                className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
               >
                 Gallery
               </button>
               <button
                 onClick={() => handleMobileNavClick("about")}
-                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors duration-200 font-medium"
+                className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
               >
                 Why we?
               </button>
               <button
                 onClick={() => handleMobileNavClick("contact")}
-                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors duration-200 font-medium"
+                className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
               >
                 Contact
               </button>
               <div className="border-t border-gray-200 mt-2 pt-2">
                 <button
                   onClick={handleBookingsClick}
-                  className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors duration-200 font-medium"
+                  className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
                 >
                   My Bookings
                   {getTotalBookings() > 0 && (
-                    <span className="ml-2 text-sm text-blue-600">({getTotalBookings()})</span>
+                    <span className="ml-2 text-sm text-primary">({getTotalBookings()})</span>
                   )}
                 </button>
                 <Button 

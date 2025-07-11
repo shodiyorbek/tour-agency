@@ -193,11 +193,11 @@ export default function ImageGallery() {
   }
 
   return (
-    <section className="gallery-section py-20 bg-gray-50 overflow-hidden" ref={galleryRef}>
+    <section className="gallery-section py-20 bg-muted/20 overflow-hidden" ref={galleryRef}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-24">
-          <h2 className="gallery-title text-4xl md:text-5xl font-bold text-gray-900 mb-4">Destination Gallery</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <h2 className="gallery-title text-4xl md:text-5xl font-bold text-foreground mb-4">Destination Gallery</h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Immerse yourself in the beauty of our carefully curated destinations
           </p>
         </div>
@@ -218,7 +218,7 @@ export default function ImageGallery() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                 <h3 className="text-lg font-semibold mb-1">{image.title}</h3>
-                <p className="text-sm text-gray-200">{image.location}</p>
+                <p className="text-sm text-white/90">{image.location}</p>
               </div>
               <div className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <ZoomIn className="h-5 w-5 text-white" />
@@ -241,7 +241,7 @@ export default function ImageGallery() {
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white rounded-b-lg">
               <h3 className="text-2xl font-bold mb-2">{selectedImage.title}</h3>
-              <p className="text-gray-200">{selectedImage.location}</p>
+              <p className="text-white/90">{selectedImage.location}</p>
             </div>
           </div>
 
