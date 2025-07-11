@@ -12,6 +12,7 @@ import ToursSection from "@/components/sections/ToursSection"
 import AboutSection from "@/components/sections/AboutSection"
 import ServicesSection from "@/components/sections/ServicesSection"
 import DestinationSection from "@/components/sections/DestinationSection"
+import BestRecommendedSection from "@/components/sections/BestRecommendedSection"
 import WhyChooseUsSection from "@/components/sections/WhyChooseUsSection"
 import TestimonialsSection from "@/components/sections/TestimonialsSection"
 import NewsletterSection from "@/components/sections/NewsletterSection"
@@ -260,6 +261,7 @@ export default function TravelAgency() {
       <HotDealsSection />
       <ToursSection />
       <DestinationSection />
+      <BestRecommendedSection />
       <WhyChooseUsSection />
       <TestimonialsSection />
       <div id="gallery">
