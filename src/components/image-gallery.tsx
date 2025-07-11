@@ -264,29 +264,63 @@ export default function ImageGallery() {
           </p>
         </div>
 
-        <div className="gallery-grid grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
-          {galleryImages.map((image, index) => (
-            <div
-              key={image.id}
-              className="gallery-item group relative overflow-hidden rounded-lg sm:rounded-xl lg:rounded-2xl cursor-pointer aspect-[4/5]"
-              onClick={() => openLightbox(image, index)}
-            >
-              <Image
-                src={image.src || "/placeholder.svg"}
-                alt={image.alt}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 lg:p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <h3 className="text-sm sm:text-base lg:text-lg font-semibold mb-0.5 sm:mb-1">{image.title}</h3>
-                <p className="text-xs sm:text-sm text-white/90">{image.location}</p>
-              </div>
-              <div className="absolute top-2 right-2 sm:top-3 sm:right-3 lg:top-4 lg:right-4 w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <ZoomIn className="h-4 w-4 sm:h-4.5 sm:w-4.5 lg:h-5 lg:w-5 text-white" />
+        <div
+          className="gallery-grid grid grid-cols-2 grid-rows-2 gap-4 h-[700px]"
+          style={{ gridTemplateRows: '1fr 1fr', gridTemplateColumns: '1fr 1fr' }}
+        >
+          {/* Top-left: 2 images stacked */}
+          <div className="flex flex-col gap-4 h-full">
+            <div className="flex-1 relative overflow-hidden rounded-xl cursor-pointer" onClick={() => openLightbox(galleryImages[0], 0)}>
+              <Image src={galleryImages[0].src} alt={galleryImages[0].alt} fill className="object-cover" />
+              <div className="absolute bottom-0 left-0 right-0 p-3 text-white bg-gradient-to-t from-black/70 via-transparent to-transparent">
+                <h3 className="text-lg font-semibold">{galleryImages[0].title}</h3>
+                <p className="text-xs">{galleryImages[0].location}</p>
               </div>
             </div>
-          ))}
+            <div className="flex-1 relative overflow-hidden rounded-xl cursor-pointer" onClick={() => openLightbox(galleryImages[1], 1)}>
+              <Image src={galleryImages[1].src} alt={galleryImages[1].alt} fill className="object-cover" />
+              <div className="absolute bottom-0 left-0 right-0 p-3 text-white bg-gradient-to-t from-black/70 via-transparent to-transparent">
+                <h3 className="text-lg font-semibold">{galleryImages[1].title}</h3>
+                <p className="text-xs">{galleryImages[1].location}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Top-right: 1 large image spanning 2 rows */}
+          <div className="row-span-2 relative overflow-hidden rounded-xl cursor-pointer" onClick={() => openLightbox(galleryImages[2], 2)}>
+            <Image src={galleryImages[2].src} alt={galleryImages[2].alt} fill className="object-cover" />
+            <div className="absolute bottom-0 left-0 right-0 p-3 text-white bg-gradient-to-t from-black/70 via-transparent to-transparent">
+              <h3 className="text-lg font-semibold">{galleryImages[2].title}</h3>
+              <p className="text-xs">{galleryImages[2].location}</p>
+            </div>
+          </div>
+
+          {/* Bottom-left: 1 large image spanning 2 columns */}
+          <div className="col-span-2 relative overflow-hidden rounded-xl cursor-pointer" onClick={() => openLightbox(galleryImages[3], 3)}>
+            <Image src={galleryImages[3].src} alt={galleryImages[3].alt} fill className="object-cover" />
+            <div className="absolute bottom-0 left-0 right-0 p-3 text-white bg-gradient-to-t from-black/70 via-transparent to-transparent">
+              <h3 className="text-lg font-semibold">{galleryImages[3].title}</h3>
+              <p className="text-xs">{galleryImages[3].location}</p>
+            </div>
+          </div>
+
+          {/* Bottom-right: 2 images stacked */}
+          <div className="flex flex-col gap-4 h-full">
+            <div className="flex-1 relative overflow-hidden rounded-xl cursor-pointer" onClick={() => openLightbox(galleryImages[4], 4)}>
+              <Image src={galleryImages[4].src} alt={galleryImages[4].alt} fill className="object-cover" />
+              <div className="absolute bottom-0 left-0 right-0 p-3 text-white bg-gradient-to-t from-black/70 via-transparent to-transparent">
+                <h3 className="text-lg font-semibold">{galleryImages[4].title}</h3>
+                <p className="text-xs">{galleryImages[4].location}</p>
+              </div>
+            </div>
+            <div className="flex-1 relative overflow-hidden rounded-xl cursor-pointer" onClick={() => openLightbox(galleryImages[5], 5)}>
+              <Image src={galleryImages[5].src} alt={galleryImages[5].alt} fill className="object-cover" />
+              <div className="absolute bottom-0 left-0 right-0 p-3 text-white bg-gradient-to-t from-black/70 via-transparent to-transparent">
+                <h3 className="text-lg font-semibold">{galleryImages[5].title}</h3>
+                <p className="text-xs">{galleryImages[5].location}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
