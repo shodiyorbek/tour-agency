@@ -37,6 +37,11 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
     setIsMenuOpen(false)
   }
 
+  const handleGalleryClick = () => {
+    router.push('/gallery')
+    setIsMenuOpen(false)
+  }
+
   return (
     <nav className="fixed top-0 w-full bg-white z-50 border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,7 +80,7 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
               Special Deals
             </button>
             <button
-              onClick={() => scrollToSection("gallery")}
+              onClick={handleGalleryClick}
               className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Gallery
@@ -181,7 +186,7 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
                 Special Deals
               </button>
               <button
-                onClick={() => handleMobileNavClick("gallery")}
+                onClick={handleGalleryClick}
                 className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
               >
                 Gallery
