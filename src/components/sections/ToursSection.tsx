@@ -151,6 +151,258 @@ const tours = [
     included: ["Safari Lodges", "All Meals", "Game Drives", "Park Fees"],
     notIncluded: ["Flights", "Visa", "Tips", "Drinks"],
   },
+  {
+    id: 7,
+    title: "Norwegian Fjords Cruise",
+    destination: "Norway",
+    price: 1850,
+    duration: "8 days",
+    groupSize: "10-25 people",
+    rating: 4.9,
+    reviews: 178,
+    image: "/gallery/aurora.jpg",
+    description: "Sail through majestic Norwegian fjords, witness the midnight sun, and explore charming coastal villages.",
+    highlights: ["Geirangerfjord", "Northern Lights", "Bergen City", "Midnight Sun"],
+    category: "Adventure",
+    difficulty: "Easy",
+    availability: "Available",
+    spotsLeft: 15,
+    totalSpots: 25,
+    nextDeparture: "2024-05-10",
+    included: ["Cruise Cabin", "All Meals", "Shore Excursions", "Entertainment"],
+    notIncluded: ["Flights", "Drinks", "Spa Services", "Gratuities"],
+  },
+  {
+    id: 8,
+    title: "Machu Picchu Trek",
+    destination: "Peru",
+    price: 1450,
+    duration: "9 days",
+    groupSize: "6-15 people",
+    rating: 4.8,
+    reviews: 142,
+    image: "/gallery/macho.jpg",
+    description: "Trek the legendary Inca Trail to reach the ancient citadel of Machu Picchu, with expert guides and porters.",
+    highlights: ["Inca Trail", "Machu Picchu", "Sacred Valley", "Cusco City"],
+    category: "Adventure",
+    difficulty: "Challenging",
+    availability: "Limited",
+    spotsLeft: 4,
+    totalSpots: 15,
+    nextDeparture: "2024-04-15",
+    included: ["Camping Equipment", "All Meals", "Permits", "Train Tickets"],
+    notIncluded: ["Flights", "Sleeping Bag", "Tips", "Personal Items"],
+  },
+  {
+    id: 9,
+    title: "Greek Islands Hopping",
+    destination: "Greece",
+    price: 1320,
+    duration: "10 days",
+    groupSize: "8-18 people",
+    rating: 4.7,
+    reviews: 96,
+    image: "/images/tropical-beach.jpg",
+    description: "Island hop through Santorini, Mykonos, and Crete, enjoying pristine beaches, ancient ruins, and local cuisine.",
+    highlights: ["Santorini Sunset", "Mykonos Beaches", "Knossos Palace", "Greek Cuisine"],
+    category: "Cultural",
+    difficulty: "Easy",
+    availability: "Available",
+    spotsLeft: 12,
+    totalSpots: 18,
+    nextDeparture: "2024-05-01",
+    included: ["Hotels", "Ferries", "Breakfast", "Island Tours"],
+    notIncluded: ["Flights", "Lunch & Dinner", "Beach Activities", "Nightlife"],
+  },
+  {
+    id: 10,
+    title: "Iceland Ring Road",
+    destination: "Iceland",
+    price: 1980,
+    duration: "11 days",
+    groupSize: "4-10 people",
+    rating: 4.9,
+    reviews: 134,
+    image: "/gallery/dubai-sunset.jpg",
+    description: "Complete circuit of Iceland's Ring Road, featuring glaciers, volcanoes, waterfalls, and hot springs.",
+    highlights: ["Blue Lagoon", "Glacier Walks", "Northern Lights", "Black Sand Beaches"],
+    category: "Adventure",
+    difficulty: "Moderate",
+    availability: "Filling Fast",
+    spotsLeft: 3,
+    totalSpots: 10,
+    nextDeparture: "2024-09-15",
+    included: ["4x4 Vehicle", "Accommodation", "Breakfast", "Activities"],
+    notIncluded: ["Flights", "Lunch & Dinner", "Optional Tours", "Fuel"],
+  },
+  {
+    id: 11,
+    title: "Moroccan Desert Experience",
+    destination: "Morocco",
+    price: 890,
+    duration: "7 days",
+    groupSize: "6-16 people",
+    rating: 4.8,
+    reviews: 87,
+    image: "/images/bali.webp",
+    description: "Journey from Marrakech to the Sahara Desert, experiencing Berber culture and camping under the stars.",
+    highlights: ["Sahara Camping", "Camel Trek", "Marrakech Souks", "Atlas Mountains"],
+    category: "Cultural",
+    difficulty: "Moderate",
+    availability: "Available",
+    spotsLeft: 9,
+    totalSpots: 16,
+    nextDeparture: "2024-03-10",
+    included: ["Transport", "Desert Camp", "Guides", "Most Meals"],
+    notIncluded: ["Flights", "Tips", "Personal Shopping", "Drinks"],
+  },
+  {
+    id: 12,
+    title: "New Zealand Adventure",
+    destination: "New Zealand",
+    price: 2250,
+    duration: "14 days",
+    groupSize: "8-20 people",
+    rating: 4.9,
+    reviews: 167,
+    image: "/gallery/canyon.avif",
+    description: "Experience both North and South Islands with adventure activities, Maori culture, and stunning landscapes.",
+    highlights: ["Milford Sound", "Queenstown Adventures", "Hobbiton", "Maori Culture"],
+    category: "Adventure",
+    difficulty: "Moderate",
+    availability: "Available",
+    spotsLeft: 14,
+    totalSpots: 20,
+    nextDeparture: "2024-11-01",
+    included: ["Hotels", "Transport", "Activities", "Some Meals"],
+    notIncluded: ["Flights", "Adventure Sports", "Most Meals", "Insurance"],
+  },
+  {
+    id: 13,
+    title: "Egyptian Wonders Tour",
+    destination: "Egypt",
+    price: 1150,
+    duration: "9 days",
+    groupSize: "10-25 people",
+    rating: 4.7,
+    reviews: 112,
+    image: "/gallery/turkey.webp",
+    description: "Explore ancient Egypt including the Pyramids, Sphinx, Valley of the Kings, and a Nile River cruise.",
+    highlights: ["Pyramids of Giza", "Nile Cruise", "Luxor Temples", "Egyptian Museum"],
+    category: "Cultural",
+    difficulty: "Easy",
+    availability: "Available",
+    spotsLeft: 18,
+    totalSpots: 25,
+    nextDeparture: "2024-10-15",
+    included: ["Hotels", "Nile Cruise", "Entrance Fees", "Breakfast"],
+    notIncluded: ["Flights", "Visa", "Lunch & Dinner", "Tips"],
+  },
+  {
+    id: 14,
+    title: "Canadian Rockies Explorer",
+    destination: "Canada",
+    price: 1680,
+    duration: "10 days",
+    groupSize: "6-15 people",
+    rating: 4.8,
+    reviews: 93,
+    image: "/gallery/over-water.jpg",
+    description: "Discover the stunning Canadian Rockies with visits to Banff, Jasper, and Lake Louise.",
+    highlights: ["Banff National Park", "Lake Louise", "Glacier Skywalk", "Wildlife Viewing"],
+    category: "Adventure",
+    difficulty: "Easy",
+    availability: "Filling Fast",
+    spotsLeft: 6,
+    totalSpots: 15,
+    nextDeparture: "2024-07-01",
+    included: ["Hotels", "Transport", "Park Fees", "Some Activities"],
+    notIncluded: ["Flights", "Meals", "Optional Activities", "Equipment"],
+  },
+  {
+    id: 15,
+    title: "India Golden Triangle",
+    destination: "India",
+    price: 750,
+    duration: "8 days",
+    groupSize: "8-18 people",
+    rating: 4.6,
+    reviews: 74,
+    image: "/gallery/kyoto.jpg",
+    description: "Classic tour of Delhi, Agra, and Jaipur featuring the Taj Mahal and rich cultural heritage.",
+    highlights: ["Taj Mahal", "Amber Fort", "Delhi Markets", "Cultural Shows"],
+    category: "Cultural",
+    difficulty: "Easy",
+    availability: "Available",
+    spotsLeft: 11,
+    totalSpots: 18,
+    nextDeparture: "2024-02-25",
+    included: ["Hotels", "Transport", "Guides", "Breakfast"],
+    notIncluded: ["Flights", "Visa", "Lunch & Dinner", "Monument Fees"],
+  },
+  {
+    id: 16,
+    title: "Patagonia Expedition",
+    destination: "Chile & Argentina",
+    price: 2450,
+    duration: "13 days",
+    groupSize: "6-14 people",
+    rating: 4.9,
+    reviews: 108,
+    image: "/gallery/serengeti.webp",
+    description: "Explore the wild beauty of Patagonia including Torres del Paine and Los Glaciares National Parks.",
+    highlights: ["Torres del Paine", "Perito Moreno Glacier", "Fitz Roy Trek", "Wildlife"],
+    category: "Adventure",
+    difficulty: "Challenging",
+    availability: "Limited",
+    spotsLeft: 3,
+    totalSpots: 14,
+    nextDeparture: "2024-12-01",
+    included: ["Lodges", "Park Fees", "Guides", "Most Meals"],
+    notIncluded: ["Flights", "Equipment Rental", "Tips", "Insurance"],
+  },
+  {
+    id: 17,
+    title: "Vietnam & Cambodia Journey",
+    destination: "Vietnam & Cambodia",
+    price: 1120,
+    duration: "12 days",
+    groupSize: "10-22 people",
+    rating: 4.7,
+    reviews: 86,
+    image: "/gallery/aurora.jpg",
+    description: "Discover the highlights of Vietnam and Cambodia including Halong Bay, Angkor Wat, and vibrant cities.",
+    highlights: ["Halong Bay Cruise", "Angkor Wat", "Mekong Delta", "Street Food Tours"],
+    category: "Cultural",
+    difficulty: "Easy",
+    availability: "Available",
+    spotsLeft: 16,
+    totalSpots: 22,
+    nextDeparture: "2024-03-20",
+    included: ["Hotels", "Transport", "Cruise", "Breakfast"],
+    notIncluded: ["Flights", "Visa", "Most Meals", "Personal Expenses"],
+  },
+  {
+    id: 18,
+    title: "Turkish Delights Tour",
+    destination: "Turkey",
+    price: 1050,
+    duration: "10 days",
+    groupSize: "8-20 people",
+    rating: 4.8,
+    reviews: 129,
+    image: "/gallery/macho.jpg",
+    description: "Journey through Turkey's historical sites including Istanbul, Cappadocia, and Ephesus.",
+    highlights: ["Hot Air Balloon", "Blue Mosque", "Fairy Chimneys", "Turkish Cuisine"],
+    category: "Cultural",
+    difficulty: "Easy",
+    availability: "Available",
+    spotsLeft: 13,
+    totalSpots: 20,
+    nextDeparture: "2024-04-05",
+    included: ["Hotels", "Domestic Flights", "Breakfast", "Tours"],
+    notIncluded: ["International Flights", "Lunch & Dinner", "Balloon Ride", "Tips"],
+  },
 ]
 
 const categories = ["All", "Adventure", "Cultural", "Luxury", "Romance"]
@@ -165,6 +417,7 @@ export default function ToursSection() {
   const [sortBy, setSortBy] = useState("Popular")
   const [isLoading, setIsLoading] = useState(false)
   const [filteredTours, setFilteredTours] = useState(tours)
+  const [displayCount, setDisplayCount] = useState(6) // Show 6 tours initially
   
   const toursRef = useRef<HTMLElement>(null)
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlistContext()
@@ -205,6 +458,7 @@ export default function ToursSection() {
 
       setFilteredTours(filtered)
       setIsLoading(false)
+      setDisplayCount(6) // Reset to show first 6 tours when filters change
     }, 100) 
 
     return () => clearTimeout(filterTimer)
@@ -499,6 +753,7 @@ export default function ToursSection() {
                 setSearchQuery("")
                 setSelectedCategory("All")
                 setPriceRange([0, 3000])
+                setDisplayCount(6)
               }}
               className="text-blue-600 hover:text-blue-700"
             >
@@ -548,7 +803,7 @@ export default function ToursSection() {
               className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}
               layout
             >
-              {filteredTours.map((tour, index) => (
+              {filteredTours.slice(0, displayCount).map((tour, index) => (
                 <TourCard key={tour.id} tour={tour} index={index} />
               ))}
             </motion.div>
@@ -562,7 +817,7 @@ export default function ToursSection() {
         )}
 
         {/* Load More */}
-        {filteredTours.length > 0 && (
+        {filteredTours.length > displayCount && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -572,10 +827,11 @@ export default function ToursSection() {
             <Button
               variant="outline"
               size="lg"
+              onClick={() => setDisplayCount(filteredTours.length)}
               className="px-8 py-3 hover:bg-blue-50 transition-colors duration-200"
             >
               <Sparkles className="h-4 w-4 mr-2" />
-              Load More Tours
+              Load More Tours ({filteredTours.length - displayCount} remaining)
             </Button>
           </motion.div>
         )}
