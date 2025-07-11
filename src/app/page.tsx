@@ -27,6 +27,12 @@ export default function TravelAgency() {
       ScrollTrigger.refresh()
     }
 
+    // Ensure scrolling is not blocked by GSAP
+    const enableScrolling = () => {
+      document.body.style.overflow = 'auto'
+      document.documentElement.style.overflow = 'auto'
+    }
+
     // Listen for potential DOM changes that might affect animations
     const observer = new MutationObserver(() => {
       // Debounce the refresh to avoid excessive calls
@@ -40,6 +46,9 @@ export default function TravelAgency() {
       attributes: true,
       attributeFilter: ['class', 'style']
     })
+
+    // Enable scrolling immediately
+    enableScrolling()
 
     const ctx = gsap.context(() => {
       // Enhanced hover animations for tour cards
@@ -177,6 +186,8 @@ export default function TravelAgency() {
       observer.disconnect()
       clearTimeout((window as any).refreshTimeout)
       ctx.revert()
+      // Ensure scrolling is restored
+      enableScrolling()
     }
   }, [])
 
@@ -195,7 +206,7 @@ export default function TravelAgency() {
   }
 
   return (
-    <div className="min-h-screen bg-white relative">
+    <div className="min-h-screen bg-white relative overflow-y-auto">
       <Navigation scrollToSection={scrollToSection} />
       <HeroSection />
       <AboutSection />
