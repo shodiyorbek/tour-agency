@@ -139,7 +139,7 @@ export default function HeroSection() {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+            <label className="text-sm font-medium text-foreground flex items-center gap-2">
               <MapPin className="w-4 h-4" />
               Destination
             </label>
@@ -151,7 +151,7 @@ export default function HeroSection() {
 
           {/* Departure Date */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+            <label className="text-sm font-medium text-foreground flex items-center gap-2">
               Departure
             </label>
             <Input type="date" className="h-12 border-gray-200 focus:border-primary focus:ring-primary" />
@@ -159,7 +159,7 @@ export default function HeroSection() {
 
           {/* Return Date */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+            <label className="text-sm font-medium text-foreground flex items-center gap-2">
               Return
             </label>
             <Input type="date" className="h-12 border-gray-200 focus:border-primary focus:ring-primary" />
@@ -167,7 +167,7 @@ export default function HeroSection() {
 
           {/* Travelers */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+            <label className="text-sm font-medium text-foreground flex items-center gap-2">
               <Users className="w-4 h-4" />
               Travelers
             </label>

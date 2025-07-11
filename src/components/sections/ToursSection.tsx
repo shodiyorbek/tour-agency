@@ -510,7 +510,7 @@ export default function ToursSection() {
           </div>
           
           <div className="absolute top-4 left-4 flex gap-2">
-            <Badge className="bg-blue-600 text-white backdrop-blur-sm">
+            <Badge className="bg-primary text-white backdrop-blur-sm">
               {tour.category}
             </Badge>
             {tour.spotsLeft <= 3 && (
@@ -530,8 +530,8 @@ export default function ToursSection() {
             <Heart 
               className={`h-5 w-5 transition-all duration-300 ${
                 isInWishlist(tour.id) 
-                  ? "text-red-500 fill-current scale-110" 
-                  : "text-gray-600 group-hover/heart:text-red-500 group-hover/heart:scale-110"
+                  ? "text-primary fill-current scale-110" 
+                  : "text-muted-foreground group-hover/heart:text-primary group-hover/heart:scale-110"
               }`} 
             />
           </button>
@@ -547,26 +547,26 @@ export default function ToursSection() {
                       key={i}
                       className={`h-4 w-4 ${
                         i < Math.floor(tour.rating)
-                          ? 'fill-yellow-400 text-yellow-400'
-                          : 'fill-gray-200 text-gray-200'
+                          ? 'fill-primary text-primary'
+                          : 'fill-muted text-muted'
                       }`}
                     />
                   ))}
                 </div>
                 <span className="text-sm font-medium">{tour.rating}</span>
-                <span className="text-sm text-gray-500">({tour.reviews})</span>
+                <span className="text-sm text-muted-foreground">({tour.reviews})</span>
               </div>
-              <div className="text-2xl font-bold text-blue-600">
+              <div className="text-2xl font-bold text-primary">
                 ${tour.price}
-                <span className="text-sm font-normal text-gray-500">/person</span>
+                <span className="text-sm font-normal text-muted-foreground">/person</span>
               </div>
             </div>
             
-            <CardTitle className="text-xl group-hover:text-blue-600 transition-colors duration-200 line-clamp-1">
+            <CardTitle className="text-xl group-hover:text-primary transition-colors duration-200 line-clamp-1">
               {tour.title}
             </CardTitle>
             
-            <CardDescription className="flex items-center gap-2 text-gray-600">
+            <CardDescription className="flex items-center gap-2 text-muted-foreground">
               <MapPin className="h-4 w-4" />
               {tour.destination}
               <Badge variant="outline" className="ml-2">
@@ -576,23 +576,23 @@ export default function ToursSection() {
           </CardHeader>
           
           <CardContent>
-            <p className="text-gray-600 mb-4 line-clamp-2">{tour.description}</p>
+            <p className="text-muted-foreground mb-4 line-clamp-2">{tour.description}</p>
             
-            <div className="grid grid-cols-2 gap-3 text-sm text-gray-500 mb-4">
+            <div className="grid grid-cols-2 gap-3 text-sm text-muted-foreground mb-4">
               <div className="flex items-center gap-1">
-                <Clock className="h-4 w-4 text-blue-500" />
+                <Clock className="h-4 w-4 text-primary" />
                 {tour.duration}
               </div>
               <div className="flex items-center gap-1">
-                <Users className="h-4 w-4 text-blue-500" />
+                <Users className="h-4 w-4 text-primary" />
                 {tour.groupSize}
               </div>
               <div className="flex items-center gap-1">
-                <Calendar className="h-4 w-4 text-blue-500" />
+                <Calendar className="h-4 w-4 text-primary" />
                 Next: {new Date(tour.nextDeparture).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
               </div>
               <div className="flex items-center gap-1">
-                <TrendingUp className="h-4 w-4 text-blue-500" />
+                <TrendingUp className="h-4 w-4 text-primary" />
                 {tour.availability}
               </div>
             </div>
@@ -615,14 +615,14 @@ export default function ToursSection() {
             <div className="flex gap-2">
               <Button 
                 onClick={() => setSelectedTour(tour)}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 transition-all duration-200 group"
+                className="flex-1 bg-primary hover:bg-primary/90 transition-all duration-200 group"
               >
                 <Info className="h-4 w-4 mr-2" />
                 Quick View
               </Button>
               <Button
                 variant="outline"
-                className="hover:bg-blue-50 transition-colors duration-200"
+                className="hover:bg-primary/10 transition-colors duration-200"
                 onClick={(e) => {
                   e.stopPropagation()
                   setBookingTour(tour)
@@ -638,7 +638,7 @@ export default function ToursSection() {
   )
 
   return (
-    <section id="tours" ref={toursRef} className="py-20 bg-gray-50">
+    <section id="tours" ref={toursRef} className="py-20 bg-muted/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <motion.div
@@ -646,10 +646,10 @@ export default function ToursSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
               Discover Your Next Adventure
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Handpicked destinations and experiences crafted by our travel experts
             </p>
           </motion.div>
@@ -664,7 +664,7 @@ export default function ToursSection() {
         >
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 placeholder="Search destinations, tours..."
                 value={searchQuery}
@@ -695,7 +695,7 @@ export default function ToursSection() {
                   }}
                   className="absolute right-3 top-1/2 -translate-y-1/2"
                 >
-                  <div className="h-5 w-5 border-2 border-blue-500 border-t-transparent rounded-full" />
+                  <div className="h-5 w-5 border-2 border-primary border-t-transparent rounded-full" />
                 </motion.div>
               )}
             </div>
@@ -751,7 +751,7 @@ export default function ToursSection() {
 
         {/* Results Count */}
         <div className="flex items-center justify-between mb-6">
-          <p className="text-gray-600">
+          <p className="text-muted-foreground">
             {filteredTours.length} {filteredTours.length === 1 ? 'tour' : 'tours'} found
           </p>
           {(searchQuery || selectedCategory !== "All" || priceRange[0] > 0 || priceRange[1] < 3000) && (
@@ -763,7 +763,7 @@ export default function ToursSection() {
                 setPriceRange([0, 3000])
                 setDisplayCount(6)
               }}
-              className="text-blue-600 hover:text-blue-700"
+              className="text-primary hover:text-primary/70"
             >
               Clear all filters
               <X className="h-4 w-4 ml-1" />
@@ -818,9 +818,9 @@ export default function ToursSection() {
           </AnimatePresence>
         ) : (
           <div className="text-center py-12">
-            <Globe className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-xl text-gray-600 mb-2">No tours found</p>
-            <p className="text-gray-500">Try adjusting your filters or search query</p>
+            <Globe className="h-16 w-16 text-muted mx-auto mb-4" />
+            <p className="text-xl text-muted-foreground mb-2">No tours found</p>
+            <p className="text-muted-foreground">Try adjusting your filters or search query</p>
           </div>
         )}
 
@@ -836,7 +836,7 @@ export default function ToursSection() {
               variant="outline"
               size="lg"
               onClick={() => setDisplayCount(filteredTours.length)}
-              className="px-8 py-3 hover:bg-blue-50 transition-colors duration-200"
+              className="px-8 py-3 hover:bg-primary/10 transition-colors duration-200"
             >
               <Sparkles className="h-4 w-4 mr-2" />
               Load More Tours ({filteredTours.length - displayCount} remaining)
@@ -882,16 +882,16 @@ export default function ToursSection() {
                   
                   <div className="space-y-2">
                     <h3 className="font-semibold text-lg">Description</h3>
-                    <p className="text-gray-600">{selectedTour.description}</p>
+                    <p className="text-muted-foreground">{selectedTour.description}</p>
                   </div>
                 </div>
                 
                 <div className="space-y-4">
-                  <div className="bg-blue-50 rounded-lg p-4">
+                  <div className="bg-primary/10 rounded-lg p-4">
                     <div className="flex items-center justify-between mb-4">
                       <div>
-                        <p className="text-3xl font-bold text-blue-600">${selectedTour.price}</p>
-                        <p className="text-sm text-gray-600">per person</p>
+                        <p className="text-3xl font-bold text-primary">${selectedTour.price}</p>
+                        <p className="text-sm text-muted-foreground">per person</p>
                       </div>
                       <div className="text-right">
                         <div className="flex items-center gap-1">
@@ -900,33 +900,33 @@ export default function ToursSection() {
                               key={i}
                               className={`h-4 w-4 ${
                                 i < Math.floor(selectedTour.rating)
-                                  ? 'fill-yellow-400 text-yellow-400'
-                                  : 'fill-gray-200 text-gray-200'
+                                  ? 'fill-primary text-primary'
+                                  : 'fill-muted text-muted'
                               }`}
                             />
                           ))}
                         </div>
-                        <p className="text-sm text-gray-600">{selectedTour.reviews} reviews</p>
+                        <p className="text-sm text-muted-foreground">{selectedTour.reviews} reviews</p>
                       </div>
                     </div>
                     
                     <div className="space-y-3">
                       <div className="flex items-center justify-between py-2 border-b">
-                        <span className="flex items-center gap-2 text-gray-600">
+                        <span className="flex items-center gap-2 text-muted-foreground">
                           <Clock className="h-4 w-4" />
                           Duration
                         </span>
                         <span className="font-medium">{selectedTour.duration}</span>
                       </div>
                       <div className="flex items-center justify-between py-2 border-b">
-                        <span className="flex items-center gap-2 text-gray-600">
+                        <span className="flex items-center gap-2 text-muted-foreground">
                           <Users className="h-4 w-4" />
                           Group Size
                         </span>
                         <span className="font-medium">{selectedTour.groupSize}</span>
                       </div>
                       <div className="flex items-center justify-between py-2 border-b">
-                        <span className="flex items-center gap-2 text-gray-600">
+                        <span className="flex items-center gap-2 text-muted-foreground">
                           <Calendar className="h-4 w-4" />
                           Next Departure
                         </span>
@@ -935,7 +935,7 @@ export default function ToursSection() {
                         </span>
                       </div>
                       <div className="flex items-center justify-between py-2">
-                        <span className="flex items-center gap-2 text-gray-600">
+                        <span className="flex items-center gap-2 text-muted-foreground">
                           <TrendingUp className="h-4 w-4" />
                           Availability
                         </span>
@@ -954,7 +954,7 @@ export default function ToursSection() {
                     <TabsContent value="included" className="space-y-2">
                       {selectedTour.included.map((item, idx) => (
                         <div key={idx} className="flex items-center gap-2">
-                          <Check className="h-4 w-4 text-green-500" />
+                          <Check className="h-4 w-4 text-primary" />
                           <span className="text-sm">{item}</span>
                         </div>
                       ))}
@@ -962,7 +962,7 @@ export default function ToursSection() {
                     <TabsContent value="notIncluded" className="space-y-2">
                       {selectedTour.notIncluded.map((item, idx) => (
                         <div key={idx} className="flex items-center gap-2">
-                          <X className="h-4 w-4 text-red-500" />
+                          <X className="h-4 w-4 text-destructive" />
                           <span className="text-sm">{item}</span>
                         </div>
                       ))}
@@ -977,13 +977,13 @@ export default function ToursSection() {
                     >
                       <Heart
                         className={`h-4 w-4 mr-2 ${
-                          isInWishlist(selectedTour.id) ? 'fill-current text-red-500' : ''
+                          isInWishlist(selectedTour.id) ? 'fill-current text-primary' : ''
                         }`}
                       />
                       {isInWishlist(selectedTour.id) ? 'Saved' : 'Save'}
                     </Button>
                     <Button 
-                      className="flex-1 bg-blue-600 hover:bg-blue-700"
+                      className="flex-1 bg-primary hover:bg-primary/90"
                       onClick={() => {
                         setSelectedTour(null)
                         setBookingTour(selectedTour)

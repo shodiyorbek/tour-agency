@@ -244,7 +244,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
                   ))}
                 </SelectContent>
               </Select>
-                             <p className="text-sm text-gray-500 mt-2">
+                             <p className="text-sm text-muted-foreground mt-2">
                 {tour.spotsLeft || 'Limited'} spots available for this tour
               </p>
             </div>
@@ -296,7 +296,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
               
               <div className="max-h-[400px] overflow-y-auto space-y-6">
                 {passengers.map((passenger, index) => (
-                  <div key={index} className="space-y-4 p-4 bg-gray-50 rounded-lg">
+                  <div key={index} className="space-y-4 p-4 bg-muted/20 rounded-lg">
                     <h4 className="font-medium">Passenger {index + 1}</h4>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
@@ -387,15 +387,15 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
       case 3:
         return (
           <div className="space-y-6">
-            <div className="bg-blue-50 p-4 rounded-lg">
+            <div className="bg-primary/10 p-4 rounded-lg">
               <h3 className="font-semibold text-lg mb-2">{tour.title}</h3>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-blue-600" />
+                  <Calendar className="h-4 w-4 text-primary" />
                   <span>{tour.duration}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Users className="h-4 w-4 text-blue-600" />
+                  <Users className="h-4 w-4 text-primary" />
                   <span>{numberOfPassengers} {numberOfPassengers === 1 ? 'Passenger' : 'Passengers'}</span>
                 </div>
               </div>
@@ -405,10 +405,10 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
               <h4 className="font-semibold mb-3">Passenger Details</h4>
               <div className="space-y-2">
                 {passengers.map((passenger, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded">
+                  <div key={index} className="flex items-center justify-between p-3 bg-muted/20 rounded">
                     <div>
                       <p className="font-medium">{passenger.firstName} {passenger.lastName}</p>
-                      <p className="text-sm text-gray-600">{passenger.email}</p>
+                      <p className="text-sm text-muted-foreground">{passenger.email}</p>
                     </div>
                     <Badge variant="secondary">Passenger {index + 1}</Badge>
                   </div>
@@ -420,11 +420,11 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
               <h4 className="font-semibold mb-3">Contact Information</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-gray-500" />
+                  <Mail className="h-4 w-4 text-muted-foreground" />
                   <span>{contactEmail}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-gray-500" />
+                  <Phone className="h-4 w-4 text-muted-foreground" />
                   <span>{contactPhone}</span>
                 </div>
               </div>
@@ -433,7 +433,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
             {specialRequests && (
               <div>
                 <h4 className="font-semibold mb-2">Special Requests</h4>
-                <p className="text-sm text-gray-600 bg-gray-50 p-3 rounded">{specialRequests}</p>
+                <p className="text-sm text-muted-foreground bg-muted/20 p-3 rounded">{specialRequests}</p>
               </div>
             )}
             
@@ -451,7 +451,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
               <Separator />
               <div className="flex justify-between text-lg font-semibold">
                 <span>Total Price</span>
-                <span className="text-blue-600">${totalPrice}</span>
+                <span className="text-primary">${totalPrice}</span>
               </div>
             </div>
           </div>
@@ -464,7 +464,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
               <h4 className="font-semibold mb-3">Payment Method</h4>
               <RadioGroup value={paymentMethod} onValueChange={(value: any) => setPaymentMethod(value)}>
                 <div className="space-y-2">
-                  <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50">
+                  <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/10">
                     <RadioGroupItem value="card" id="card" />
                     <Label htmlFor="card" className="flex-1 cursor-pointer flex items-center justify-between">
                       <span className="flex items-center gap-2">
@@ -478,14 +478,14 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
                       </div>
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50">
+                  <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/10">
                     <RadioGroupItem value="paypal" id="paypal" />
                     <Label htmlFor="paypal" className="flex-1 cursor-pointer flex items-center gap-2">
                       <DollarSign className="h-4 w-4" />
                       PayPal
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50">
+                  <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/10">
                     <RadioGroupItem value="bank-transfer" id="bank-transfer" />
                     <Label htmlFor="bank-transfer" className="flex-1 cursor-pointer flex items-center gap-2">
                       <Shield className="h-4 w-4" />
@@ -564,10 +564,10 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
             )}
             
             <div className="space-y-3">
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-muted/20 p-4 rounded-lg">
                 <div className="flex justify-between items-center text-lg font-semibold">
                   <span>Total Amount</span>
-                  <span className="text-blue-600">${totalPrice}</span>
+                  <span className="text-primary">${totalPrice}</span>
                 </div>
               </div>
               
@@ -579,7 +579,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
                   onChange={(e) => setAgreedToTerms(e.target.checked)}
                   className="mt-1"
                 />
-                <Label htmlFor="terms" className="text-sm text-gray-600 cursor-pointer">
+                <Label htmlFor="terms" className="text-sm text-muted-foreground cursor-pointer">
                   I agree to the terms and conditions and understand that this booking is subject to availability.
                   I also acknowledge the cancellation policy.
                 </Label>
@@ -611,9 +611,10 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
                     <div className={`
                       flex items-center justify-center w-28 h-10 rounded-full transition-colors
                       ${currentStep >= step.id 
-                        ? 'bg-blue-600 text-white' 
-                        : 'bg-gray-200 text-gray-500'
-                      } 
+                        ? 'bg-primary text-white' 
+                        : 'bg-muted text-muted-foreground'
+                      }
+
                     `}>
                       <Icon className="h-5 w-5" />
                     </div>
@@ -621,8 +622,10 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
                       <span className="text-sm font-medium">{step.name}</span>
                     </div>
                     {index < steps.length - 1 && (
-                      <div className={`w-full  h-1 mx-3 rounded transition-colors ${
-                        currentStep > step.id ? 'bg-blue-600' : 'bg-gray-200'
+
+                      <div className={`w-full h-1 mx-3 rounded transition-colors ${
+                        currentStep > step.id ? 'bg-primary' : 'bg-muted'
+
                       }`} />
                     )}
                   </div>
@@ -665,7 +668,7 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
                 <Button 
                   onClick={handleSubmitBooking} 
                   disabled={!validateStep() || isProcessing}
-                  className="bg-blue-600 hover:bg-blue-700"
+                  className="bg-primary hover:bg-primary/90"
                 >
                   {isProcessing ? (
                     <>
@@ -688,15 +691,15 @@ export default function BookingModal({ tour, isOpen, onClose }: BookingModalProp
             animate={{ opacity: 1, scale: 1 }}
             className="text-center py-8"
           >
-            <CheckCircle2 className="h-20 w-20 text-green-500 mx-auto mb-4" />
+            <CheckCircle2 className="h-20 w-20 text-primary mx-auto mb-4" />
             <DialogTitle className="text-2xl mb-2">Booking Confirmed!</DialogTitle>
             <DialogDescription className="text-lg mb-4">
               Your booking reference is <span className="font-semibold">{bookingId}</span>
             </DialogDescription>
-            <p className="text-gray-600 mb-6">
+            <p className="text-muted-foreground mb-6">
               A confirmation email has been sent to {contactEmail}
             </p>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-muted-foreground">
               Redirecting to your booking details...
             </p>
           </motion.div>
