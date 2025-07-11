@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useCallback, memo } from "react"
 import { 
   MapPin, Users, Star, Clock, Heart, ChevronLeft, ChevronRight, 
   Search, Filter, Grid, List, Calendar, DollarSign, X, 
@@ -410,6 +410,194 @@ const tours = [
 const categories = ["All", "Adventure", "Cultural", "Luxury", "Romance"]
 const sortOptions = ["Popular", "Price: Low to High", "Price: High to Low", "Rating", "Duration"]
 
+// Move TourCard outside and memoize it
+interface TourCardProps {
+  tour: typeof tours[0]
+  index: number
+  viewMode: 'grid' | 'list'
+  isInWishlist: boolean
+  onToggleWishlist: (tour: typeof tours[0]) => void
+  onSelectTour: (tour: typeof tours[0]) => void
+  onBookTour: (tour: typeof tours[0]) => void
+}
+
+const TourCard = memo<TourCardProps>(({ 
+  tour, 
+  index, 
+  viewMode, 
+  isInWishlist, 
+  onToggleWishlist, 
+  onSelectTour, 
+  onBookTour 
+}) => (
+  <motion.div
+    layoutId={`tour-${tour.id}`}
+    initial={{ opacity: 0, y: 20, scale: 0.95 }}
+    animate={{ 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: {
+        type: "spring",
+        bounce: 0.4,
+        duration: 0.6,
+        delay: index * 0.05
+      }
+    }}
+    exit={{ opacity: 0, scale: 0.9, y: -20 }}
+    whileHover={{ y: -5, scale: 1.02 }}
+    className={viewMode === 'list' ? 'mb-4' : ''}
+  >
+    <Card className={`group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 ${
+      viewMode === 'list' ? 'flex' : ''
+    }`}>
+      <div className={`relative overflow-hidden ${viewMode === 'list' ? 'w-1/3' : ''}`}>
+        <div className="relative h-64 overflow-hidden">
+          <Image
+            src={tour.image || "/placeholder.svg"}
+            alt={tour.title}
+            fill
+            className="object-cover group-hover:scale-110 transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </div>
+        
+        <div className="absolute top-4 left-4 flex gap-2">
+          <Badge className="bg-primary text-white backdrop-blur-sm">
+            {tour.category}
+          </Badge>
+          {tour.spotsLeft <= 3 && (
+            <Badge className="bg-red-600 text-white backdrop-blur-sm animate-pulse">
+              Only {tour.spotsLeft} spots left!
+            </Badge>
+          )}
+        </div>
+        
+        <button 
+          onClick={(e) => {
+            e.stopPropagation()
+            onToggleWishlist(tour)
+          }}
+          className="absolute top-4 right-4 p-2 bg-white/90 rounded-full hover:bg-white transition-all duration-200 group/heart"
+        >
+          <Heart 
+            className={`h-5 w-5 transition-all duration-300 ${
+              isInWishlist 
+                ? "text-primary fill-current scale-110" 
+                : "text-muted-foreground group-hover/heart:text-primary group-hover/heart:scale-110"
+            }`} 
+          />
+        </button>
+      </div>
+      
+      <div className={`${viewMode === 'list' ? 'flex-1' : ''}`}>
+        <CardHeader>
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className={`h-4 w-4 ${
+                      i < Math.floor(tour.rating)
+                        ? 'fill-primary text-primary'
+                        : 'fill-muted text-muted'
+                    }`}
+                  />
+                ))}
+              </div>
+              <span className="text-sm font-medium">{tour.rating}</span>
+              <span className="text-sm text-muted-foreground">({tour.reviews})</span>
+            </div>
+            <div className="text-2xl font-bold text-primary">
+              ${tour.price}
+              <span className="text-sm font-normal text-muted-foreground">/person</span>
+            </div>
+          </div>
+          
+          <CardTitle className="text-xl group-hover:text-primary transition-colors duration-200 line-clamp-1">
+            {tour.title}
+          </CardTitle>
+          
+          <CardDescription className="flex items-center gap-2 text-muted-foreground">
+            <MapPin className="h-4 w-4" />
+            {tour.destination}
+            <Badge variant="outline" className="ml-2">
+              {tour.difficulty}
+            </Badge>
+          </CardDescription>
+        </CardHeader>
+        
+        <CardContent>
+          <p className="text-muted-foreground mb-4 line-clamp-2">{tour.description}</p>
+          
+          <div className="grid grid-cols-2 gap-3 text-sm text-muted-foreground mb-4">
+            <div className="flex items-center gap-1">
+              <Clock className="h-4 w-4 text-primary" />
+              {tour.duration}
+            </div>
+            <div className="flex items-center gap-1">
+              <Users className="h-4 w-4 text-primary" />
+              {tour.groupSize}
+            </div>
+            <div className="flex items-center gap-1">
+              <Calendar className="h-4 w-4 text-primary" />
+              Next: {new Date(tour.nextDeparture).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+            </div>
+            <div className="flex items-center gap-1">
+              <TrendingUp className="h-4 w-4 text-primary" />
+              {tour.availability}
+            </div>
+          </div>
+          
+          <div className="mb-4">
+            <div className="flex flex-wrap gap-1">
+              {tour.highlights.slice(0, 3).map((highlight, idx) => (
+                <Badge key={idx} variant="secondary" className="text-xs">
+                  {highlight}
+                </Badge>
+              ))}
+              {tour.highlights.length > 3 && (
+                <Badge variant="outline" className="text-xs">
+                  +{tour.highlights.length - 3} more
+                </Badge>
+              )}
+            </div>
+          </div>
+          
+          <div className="flex gap-2">
+            <Button 
+              onClick={() => onSelectTour(tour)}
+              className="flex-1 bg-primary hover:bg-primary/90 transition-all duration-200 group"
+            >
+              <Info className="h-4 w-4 mr-2" />
+              Quick View
+            </Button>
+            <Button
+              variant="outline"
+              className="hover:bg-primary/10 transition-colors duration-200"
+              onClick={(e) => {
+                e.stopPropagation()
+                onBookTour(tour)
+              }}
+            >
+              Book Now
+            </Button>
+          </div>
+        </CardContent>
+      </div>
+    </Card>
+  </motion.div>
+), (prevProps, nextProps) => {
+  // Custom comparison function to prevent re-renders
+  return prevProps.tour.id === nextProps.tour.id &&
+         prevProps.index === nextProps.index &&
+         prevProps.viewMode === nextProps.viewMode &&
+         prevProps.isInWishlist === nextProps.isInWishlist
+})
+
+TourCard.displayName = 'TourCard'
+
 export default function ToursSection() {
   const [selectedTour, setSelectedTour] = useState<typeof tours[0] | null>(null)
   const [bookingTour, setBookingTour] = useState<typeof tours[0] | null>(null)
@@ -468,174 +656,22 @@ export default function ToursSection() {
     return () => clearTimeout(filterTimer)
   }, [debouncedSearchQuery, selectedCategory, debouncedPriceRange, sortBy])
 
-  const toggleWishlist = (tour: any) => {
+  // Memoize callbacks
+  const toggleWishlist = useCallback((tour: typeof tours[0]) => {
     if (isInWishlist(tour.id)) {
       removeFromWishlist(tour.id)
     } else {
       addToWishlist(tour as Tour)
     }
-  }
+  }, [isInWishlist, removeFromWishlist, addToWishlist])
 
-  const TourCard = ({ tour, index }: { tour: typeof tours[0], index: number }) => (
-    <motion.div
-      key={tour.id}
-      initial={{ opacity: 0, y: 20, scale: 0.95 }}
-      animate={{ 
-        opacity: 1, 
-        y: 0, 
-        scale: 1,
-        transition: {
-          type: "spring",
-          bounce: 0.4,
-          duration: 0.6,
-          delay: index * 0.05
-        }
-      }}
-      exit={{ opacity: 0, scale: 0.9, y: -20 }}
-      whileHover={{ y: -5, scale: 1.02 }}
-      className={viewMode === 'list' ? 'mb-4' : ''}
-    >
-      <Card className={`group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 ${
-        viewMode === 'list' ? 'flex' : ''
-      }`}>
-        <div className={`relative overflow-hidden ${viewMode === 'list' ? 'w-1/3' : ''}`}>
-          <div className="relative h-64 overflow-hidden">
-            <Image
-              src={tour.image || "/placeholder.svg"}
-              alt={tour.title}
-              fill
-              className="object-cover group-hover:scale-110 transition-transform duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </div>
-          
-          <div className="absolute top-4 left-4 flex gap-2">
-            <Badge className="bg-primary text-white backdrop-blur-sm">
-              {tour.category}
-            </Badge>
-            {tour.spotsLeft <= 3 && (
-              <Badge className="bg-red-600 text-white backdrop-blur-sm animate-pulse">
-                Only {tour.spotsLeft} spots left!
-              </Badge>
-            )}
-          </div>
-          
-          <button 
-            onClick={(e) => {
-              e.stopPropagation()
-              toggleWishlist(tour)
-            }}
-            className="absolute top-4 right-4 p-2 bg-white/90 rounded-full hover:bg-white transition-all duration-200 group/heart"
-          >
-            <Heart 
-              className={`h-5 w-5 transition-all duration-300 ${
-                isInWishlist(tour.id) 
-                  ? "text-primary fill-current scale-110" 
-                  : "text-muted-foreground group-hover/heart:text-primary group-hover/heart:scale-110"
-              }`} 
-            />
-          </button>
-        </div>
-        
-        <div className={`${viewMode === 'list' ? 'flex-1' : ''}`}>
-          <CardHeader>
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2">
-                <div className="flex items-center">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`h-4 w-4 ${
-                        i < Math.floor(tour.rating)
-                          ? 'fill-primary text-primary'
-                          : 'fill-muted text-muted'
-                      }`}
-                    />
-                  ))}
-                </div>
-                <span className="text-sm font-medium">{tour.rating}</span>
-                <span className="text-sm text-muted-foreground">({tour.reviews})</span>
-              </div>
-              <div className="text-2xl font-bold text-primary">
-                ${tour.price}
-                <span className="text-sm font-normal text-muted-foreground">/person</span>
-              </div>
-            </div>
-            
-            <CardTitle className="text-xl group-hover:text-primary transition-colors duration-200 line-clamp-1">
-              {tour.title}
-            </CardTitle>
-            
-            <CardDescription className="flex items-center gap-2 text-muted-foreground">
-              <MapPin className="h-4 w-4" />
-              {tour.destination}
-              <Badge variant="outline" className="ml-2">
-                {tour.difficulty}
-              </Badge>
-            </CardDescription>
-          </CardHeader>
-          
-          <CardContent>
-            <p className="text-muted-foreground mb-4 line-clamp-2">{tour.description}</p>
-            
-            <div className="grid grid-cols-2 gap-3 text-sm text-muted-foreground mb-4">
-              <div className="flex items-center gap-1">
-                <Clock className="h-4 w-4 text-primary" />
-                {tour.duration}
-              </div>
-              <div className="flex items-center gap-1">
-                <Users className="h-4 w-4 text-primary" />
-                {tour.groupSize}
-              </div>
-              <div className="flex items-center gap-1">
-                <Calendar className="h-4 w-4 text-primary" />
-                Next: {new Date(tour.nextDeparture).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-              </div>
-              <div className="flex items-center gap-1">
-                <TrendingUp className="h-4 w-4 text-primary" />
-                {tour.availability}
-              </div>
-            </div>
-            
-            <div className="mb-4">
-              <div className="flex flex-wrap gap-1">
-                {tour.highlights.slice(0, 3).map((highlight, idx) => (
-                  <Badge key={idx} variant="secondary" className="text-xs">
-                    {highlight}
-                  </Badge>
-                ))}
-                {tour.highlights.length > 3 && (
-                  <Badge variant="outline" className="text-xs">
-                    +{tour.highlights.length - 3} more
-                  </Badge>
-                )}
-              </div>
-            </div>
-            
-            <div className="flex gap-2">
-              <Button 
-                onClick={() => setSelectedTour(tour)}
-                className="flex-1 bg-primary hover:bg-primary/90 transition-all duration-200 group"
-              >
-                <Info className="h-4 w-4 mr-2" />
-                Quick View
-              </Button>
-              <Button
-                variant="outline"
-                className="hover:bg-primary/10 transition-colors duration-200"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setBookingTour(tour)
-                }}
-              >
-                Book Now
-              </Button>
-            </div>
-          </CardContent>
-        </div>
-      </Card>
-    </motion.div>
-  )
+  const handleSelectTour = useCallback((tour: typeof tours[0]) => {
+    setSelectedTour(tour)
+  }, [])
+
+  const handleBookTour = useCallback((tour: typeof tours[0]) => {
+    setBookingTour(tour)
+  }, [])
 
   return (
     <section id="tours" ref={toursRef} className="py-20 bg-muted/20">
@@ -812,7 +848,16 @@ export default function ToursSection() {
               layout
             >
               {filteredTours.slice(0, displayCount).map((tour, index) => (
-                <TourCard key={tour.id} tour={tour} index={index} />
+                <TourCard 
+                  key={tour.id} 
+                  tour={tour} 
+                  index={index} 
+                  viewMode={viewMode} 
+                  isInWishlist={isInWishlist(tour.id)} 
+                  onToggleWishlist={toggleWishlist} 
+                  onSelectTour={handleSelectTour} 
+                  onBookTour={handleBookTour} 
+                />
               ))}
             </motion.div>
           </AnimatePresence>
