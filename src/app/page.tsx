@@ -193,13 +193,15 @@ export default function TravelAgency() {
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
+    console.log(element,sectionId)
     if (element) {
-      const yOffset = -80 // Account for fixed header height
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
+      const headerOffset = 80 ;
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
       
       // Use native smooth scrolling
       window.scrollTo({
-        top: y,
+        top: offsetPosition,
         behavior: 'smooth'
       })
     }

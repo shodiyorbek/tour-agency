@@ -82,108 +82,6 @@ export default function ImageGallery() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const lightboxRef = useRef<HTMLDivElement>(null)
   const scrollTriggersRef = useRef<any[]>([])
-
-  useEffect(() => {
-    // Kill any existing ScrollTriggers to prevent conflicts
-    ScrollTrigger.getAll().forEach(trigger => {
-      const triggerElement = trigger.vars.trigger as Element
-      if (triggerElement?.classList?.contains('gallery-item') || 
-          triggerElement?.classList?.contains('gallery-grid') ||
-          triggerElement?.classList?.contains('gallery-section')) {
-        trigger.kill()
-      }
-    })
-
-    const ctx = gsap.context(() => {
-      // Parallax effect for gallery items with more specific targeting
-      const galleryItems = gsap.utils.toArray(".gallery-item")
-      galleryItems.forEach((item: any, index) => {
-        const speed = 0.5 + (index % 3) * 0.2
-        
-        const parallaxTrigger = gsap.to(item, {
-          yPercent: -50 * speed,
-          ease: "none",
-          scrollTrigger: {
-            trigger: item,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-            invalidateOnRefresh: true,
-            refreshPriority: -1, // Lower priority to avoid conflicts
-          },
-        })
-        scrollTriggersRef.current.push(parallaxTrigger.scrollTrigger)
-      })
-
-      // Staggered fade-in animation with better refresh handling
-      const fadeInTrigger = gsap.fromTo(
-        ".gallery-item",
-        {
-          opacity: 0,
-          y: 100,
-          scale: 0.8,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".gallery-grid",
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-            invalidateOnRefresh: true,
-            refreshPriority: -1,
-          },
-        },
-      )
-      scrollTriggersRef.current.push(fadeInTrigger.scrollTrigger)
-
-      // Gallery title animation
-      const titleTrigger = gsap.fromTo(
-        ".gallery-title",
-        {
-          opacity: 0,
-          y: 50,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".gallery-section",
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-            invalidateOnRefresh: true,
-            refreshPriority: -1,
-          },
-        },
-      )
-      scrollTriggersRef.current.push(titleTrigger.scrollTrigger)
-
-      // Refresh ScrollTrigger after a short delay to ensure proper positioning
-      setTimeout(() => {
-        ScrollTrigger.refresh()
-      }, 100)
-
-    }, galleryRef)
-
-    return () => {
-      // Clean up all ScrollTriggers created in this context
-      scrollTriggersRef.current.forEach(trigger => {
-        if (trigger && !trigger.killed) {
-          trigger.kill()
-        }
-      })
-      scrollTriggersRef.current = []
-      ctx.revert()
-    }
-  }, [])
-
-  // Add a refresh effect when the component mounts or when other sections might affect it
   useEffect(() => {
     const handleResize = () => {
       ScrollTrigger.refresh()
@@ -265,8 +163,8 @@ export default function ImageGallery() {
         </div>
 
         <div
-          className="gallery-grid grid grid-cols-4 gap-4 h-[700px]"
-          style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr' }}
+          className="gallery-grid grid grid-cols-2 gap-4 h-[700px]"
+          style={{ gridTemplateColumns: '1fr 1fr' }}
         >
           {/* First grid: 2 images stacked */}
           <div className="flex flex-col gap-4 h-full">
@@ -286,8 +184,8 @@ export default function ImageGallery() {
             </div>
           </div>
 
-          {/* Second grid: 1 image */}
-          <div className="relative overflow-hidden rounded-xl cursor-pointer gallery-item" onClick={() => openLightbox(galleryImages[2], 2)}>
+          {/* Second grid: 1 image taking full height */}
+          <div className="relative overflow-hidden rounded-xl cursor-pointer gallery-item h-full" onClick={() => openLightbox(galleryImages[2], 2)}>
             <Image src={galleryImages[2].src} alt={galleryImages[2].alt} fill className="object-cover" />
             <div className="absolute bottom-0 left-0 right-0 p-3 text-white bg-gradient-to-t from-black/70 via-transparent to-transparent">
               <h3 className="text-lg font-semibold">{galleryImages[2].title}</h3>
@@ -295,8 +193,8 @@ export default function ImageGallery() {
             </div>
           </div>
 
-          {/* Third grid: 1 image */}
-          <div className="relative overflow-hidden rounded-xl cursor-pointer gallery-item" onClick={() => openLightbox(galleryImages[3], 3)}>
+          {/* Third grid: 1 image taking full height */}
+          <div className="relative overflow-hidden rounded-xl cursor-pointer gallery-item h-full" onClick={() => openLightbox(galleryImages[3], 3)}>
             <Image src={galleryImages[3].src} alt={galleryImages[3].alt} fill className="object-cover" />
             <div className="absolute bottom-0 left-0 right-0 p-3 text-white bg-gradient-to-t from-black/70 via-transparent to-transparent">
               <h3 className="text-lg font-semibold">{galleryImages[3].title}</h3>
