@@ -4,12 +4,27 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 /* Prevent horizontal scroll on mobile */
 html, body {
   overflow-x: hidden;
   max-width: 100%;
+  overflow-y: auto;
+  height: 100%;
+  position: relative;
+}
+
+/* Ensure proper scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-y: auto !important;
+  position: relative;
 }
 
 /* Ensure images don't break layout */
@@ -24,6 +39,12 @@ img {
     min-height: 44px;
     min-width: 44px;
   }
+}
+
+/* Ensure the main container allows scrolling */
+#__next, [data-nextjs-page] {
+  min-height: 100vh;
+  overflow-y: auto;
 }
 
 @layer utilities {
