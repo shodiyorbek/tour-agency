@@ -44,7 +44,7 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center bg-black overflow-hidden rounded-r-[40px] max-w-[1240px] mx-auto">
+    <section className="relative min-h-screen flex items-center bg-black overflow-hidden rounded-r-[40px] max-w-[1440px] mx-auto">
       {/* Dynamic Background Image */}
       <div className="absolute inset-0 z-0 transition-all duration-700">
         <Image
@@ -78,9 +78,19 @@ export default function HeroSection() {
 
         {/* Right Side: Carousel above cards */}
         <div className="flex-1 flex flex-col justify-center items-end relative min-h-[400px]">
-          {/* Carousel Slider */}
+          {/* Carousel Controls and Progress bar above cards */}
           <div className="w-full max-w-2xl mb-8">
-            <Carousel opts={{ align: "start" }} setApi={handleSelect}>
+            {/* Carousel Buttons */}
+            <div className="flex gap-2 mb-4 justify-end">
+              <CarouselPrevious className="bg-white/20 backdrop-blur-md border-white/30 text-white hover:bg-white/30" />
+              <CarouselNext className="bg-white/20 backdrop-blur-md border-white/30 text-white hover:bg-white/30" />
+            </div>
+            {/* Progress bar */}
+            <div className="w-full h-1 bg-white/30 rounded-full mb-4 relative">
+              <div className="h-1 bg-yellow-400 rounded-full transition-all duration-300" style={{ width: `${((activeIdx + 1) / tourCards.length) * 100}%` }} />
+            </div>
+            {/* Carousel Cards */}
+            <Carousel opts={{ align: "start" }} setApi={api => { if (api) { api.on('select', () => handleSelect(api)); handleSelect(api); } }}>
               <CarouselContent>
                 {tourCards.map((card, idx) => (
                   <CarouselItem key={card.title} className="basis-1/2 px-2">
@@ -98,15 +108,7 @@ export default function HeroSection() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <div className="flex gap-2 mt-4 justify-end">
-                <CarouselPrevious className="bg-white/20 backdrop-blur-md border-white/30 text-white hover:bg-white/30" />
-                <CarouselNext className="bg-white/20 backdrop-blur-md border-white/30 text-white hover:bg-white/30" />
-              </div>
             </Carousel>
-            {/* Progress bar */}
-            <div className="w-full h-1 bg-white/30 rounded-full mt-4 relative">
-              <div className="h-1 bg-yellow-400 rounded-full transition-all duration-300" style={{ width: `${((activeIdx + 1) / tourCards.length) * 100}%` }} />
-            </div>
           </div>
         </div>
       </div>
