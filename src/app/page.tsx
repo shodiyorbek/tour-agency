@@ -160,10 +160,13 @@ export default function TravelAgency() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      gsap.to(window, {
-        duration: 1,
-        scrollTo: { y: element, offsetY: 80 },
-        ease: "power2.inOut",
+      const yOffset = -80 // Account for fixed header height
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
+      
+      // Use native smooth scrolling
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
       })
     }
   }

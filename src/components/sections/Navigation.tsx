@@ -45,28 +45,34 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
               Home
             </button>
             <button
-              onClick={() => scrollToSection("tours")}
+              onClick={() => scrollToSection("hot-deals")}
               className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Hot deals
             </button>
             <button
-              onClick={() => scrollToSection("gallery")}
+              onClick={() => scrollToSection("tours")}
               className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Special Deals
             </button>
             <button
+              onClick={() => scrollToSection("gallery")}
+              className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
+            >
+              Gallery
+            </button>
+            <button
+              onClick={() => scrollToSection("about")}
+              className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
+            >
+              Why we?
+            </button>
+            <button
               onClick={() => scrollToSection("contact")}
               className="nav-link text-gray-700 hover:text-primary transition-colors duration-200 relative font-medium"
             >
-              Tours
-            </button>
-            <button className="text-gray-700 hover:text-primary transition-colors duration-200 font-medium">
-              Gallery
-            </button>
-            <button className="text-gray-700 hover:text-primary transition-colors duration-200 font-medium">
-              Why we?
+              Contact
             </button>
           
             <button
@@ -107,24 +113,35 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
                 Home
               </button>
               <button
-                onClick={() => scrollToSection("tours")}
+                onClick={() => scrollToSection("hot-deals")}
                 className="block px-3 py-2 text-gray-700 hover:text-primary transition-colors duration-200 font-medium"
               >
-                Discover
+                Hot deals
               </button>
               <button
-                onClick={() => scrollToSection("gallery")}
+                onClick={() => scrollToSection("tours")}
                 className="block px-3 py-2 text-gray-700 hover:text-primary transition-colors duration-200 font-medium"
               >
                 Special Deals
               </button>
               <button
+                onClick={() => scrollToSection("gallery")}
+                className="block px-3 py-2 text-gray-700 hover:text-primary transition-colors duration-200 font-medium"
+              >
+                Gallery
+              </button>
+              <button
+                onClick={() => scrollToSection("about")}
+                className="block px-3 py-2 text-gray-700 hover:text-primary transition-colors duration-200 font-medium"
+              >
+                Why we?
+              </button>
+              <button
                 onClick={() => scrollToSection("contact")}
                 className="block px-3 py-2 text-gray-700 hover:text-primary transition-colors duration-200 font-medium"
               >
-                Support
+                Contact
               </button>
-             
               <button
                 onClick={() => setIsWishlistOpen(true)}
                 className="flex items-center px-3 py-2 text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium"
