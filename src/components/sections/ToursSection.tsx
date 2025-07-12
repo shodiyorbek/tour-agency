@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef, useCallback } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import { motion } from "framer-motion"
 import { Search, Grid, List, Heart, Star, MapPin, Clock, Users, Calendar, ArrowRight, Filter, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
