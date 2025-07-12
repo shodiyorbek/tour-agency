@@ -628,7 +628,12 @@ export default function DestinationPage() {
     if (isInWishlist(destination.id)) {
       removeFromWishlist(destination.id)
     } else {
-      addToWishlist(destination as Tour)
+      // Map location to destination field expected by the Tour type
+      const tourCompatible = {
+        ...destination,
+        destination: destination.location,
+      } as Tour
+      addToWishlist(tourCompatible)
     }
   }
 
@@ -983,7 +988,8 @@ export default function DestinationPage() {
         </div>
       )}
 
-      <Footer />
+      {/* Destination standalone page does not use smooth scrolling navigation, so pass a no-op */}
+      <Footer scrollToSection={() => {}} />
     </div>
   )
 }

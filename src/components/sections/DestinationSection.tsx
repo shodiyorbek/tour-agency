@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { MapPin, Star, Users, Calendar } from "lucide-react"
+import { Star, Users, Calendar } from "lucide-react"
 
 const destinations = [
   {
