@@ -18,6 +18,8 @@ import {
   Globe,
   Mountain,
   Waves,
+  Palmtree,
+
   Building,
   TreePine,
   Plane,
@@ -569,6 +571,8 @@ export default function Page() {
         notIncluded: destination.notIncluded,
       }
       addToWishlist(tour)
+      // Ensure required 'destination' field exists for Tour type
+      addToWishlist({ ...(destination as any), destination: destination.location } as Tour)
     }
   }
 
@@ -589,6 +593,7 @@ export default function Page() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
     }
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (

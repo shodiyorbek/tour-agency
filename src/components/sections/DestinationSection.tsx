@@ -1,5 +1,6 @@
 "use client";
 
+<<<<<<< HEAD
 import Image from "next/image";
 import { Star, Calendar } from "lucide-react";
 import React from "react";
@@ -10,6 +11,11 @@ import {
 } from "@/components/ui/carousel";
 import { AnimatePresence, motion } from "framer-motion";
 import Autoplay from "embla-carousel-autoplay";
+=======
+import React from "react"
+import Image from "next/image"
+import { MapPin, Star, Users, Calendar } from "lucide-react"
+>>>>>>> ebcf859d84cdf77707d770a0986175f449fd8e73
 
 const destinations = [
   {
