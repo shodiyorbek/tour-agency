@@ -9,7 +9,7 @@ import HeroSection from "@/components/sections/HeroSection"
 import TopDestinationsSection from "@/components/sections/TopDestinationsSection"
 import StatsSection from "@/components/sections/StatsSection"
 import HotDealsSection from "@/components/sections/HotDealsSection"
-import ToursSection from "@/components/sections/ToursSection"
+
 import AboutSection from "@/components/sections/AboutSection"
 import DestinationSection from "@/components/sections/DestinationSection"
 import BestRecommendedSection from "@/components/sections/BestRecommendedSection"
@@ -256,15 +256,11 @@ export default function TravelAgency() {
       <TopDestinationsSection />
       <AboutSection />
       <HotDealsSection />
-      <ToursSection />
       <DestinationSection />
       <BestRecommendedSection />
       <div id="gallery">
         <ImageGallery />
       </div>
-      <NewsletterSection />
-      <StatsSection />
-      <ContactSection />
       <Footer scrollToSection={scrollToSection} />
       <FloatingElements />
     </div>

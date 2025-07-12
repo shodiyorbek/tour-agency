@@ -52,6 +52,12 @@ img {
     text-wrap: balance;
   }
   
+  /* Vertical text writing mode for collapsed destination cards */
+  .writing-mode-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+  
   /* Custom scrollbar for better mobile experience */
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px;

@@ -14,7 +14,7 @@ export default function AboutSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
           <div className="about-content order-2 lg:order-1">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6">
-              About <span className="text-yellow-400">Our Company</span>
+              About <span className="text-primary">Our Company</span>
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8">
               With over 25 years of experience in crafting extraordinary travel experiences, we specialize in creating
@@ -76,7 +76,7 @@ export default function AboutSection() {
                 className="rounded-xl sm:rounded-2xl shadow-2xl w-full"
               />
               <div className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 bg-white p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-lg">
-                <div className="text-2xl sm:text-3xl font-bold text-yellow-400">
+                <div className="text-2xl sm:text-3xl font-bold text-primary">
                   <AnimatedCounter end={25} suffix="+" />
                 </div>
                 <div className="text-sm sm:text-base text-muted-foreground">Years Experience</div>

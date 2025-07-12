@@ -24,12 +24,12 @@ import {
   Clock, 
   Users, 
   Calendar,
-  ArrowRight,
   Info,
   X
 } from "lucide-react"
 import Image from "next/image"
 import Autoplay from "embla-carousel-autoplay"
+import { useRouter } from "next/navigation"
 
 const hotDeals = [
   {
@@ -135,7 +135,7 @@ export default function HotDealsSection() {
   const [count, setCount] = useState(0)
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const [selectedTour, setSelectedTour] = useState<Tour | null>(null)
-
+  const router = useRouter()
   const { wishlist, addToWishlist, removeFromWishlist, isInWishlist } = useWishlistContext()
   const { toast } = useToast()
 
@@ -144,7 +144,7 @@ export default function HotDealsSection() {
     id: deal.id,
     title: deal.title,
     destination: deal.destination,
-    price: deal.salePrice, // Use sale price as the current price
+    price: deal.salePrice, 
     duration: deal.duration,
     groupSize: deal.groupSize,
     rating: deal.rating,
@@ -153,8 +153,8 @@ export default function HotDealsSection() {
     description: deal.description,
     highlights: deal.highlights,
     category: deal.category,
-    spotsLeft: 10, // Default value for demo
-    totalSpots: 20, // Default value for demo
+    spotsLeft: 10, 
+    totalSpots: 20, 
     nextDeparture: deal.validUntil,
     included: deal.highlights,
     notIncluded: ["Flights", "Travel Insurance", "Personal Expenses"]
@@ -167,7 +167,7 @@ export default function HotDealsSection() {
   }, {} as Record<number, typeof hotDeals[0]>)
 
   const handleContactUs = (tour: Tour) => {
-    // Scroll to contact section
+    
     const contactSection = document.getElementById('contact')
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' })
@@ -282,7 +282,7 @@ export default function HotDealsSection() {
             }}
           >
             <CarouselContent>
-              {tours.map((tour, index) => (
+              {tours.map((tour) => (
                 <CarouselItem key={tour.id}>
                   <Card 
                     className="group overflow-hidden border-0 bg-white/80 backdrop-blur-sm hover:bg-white shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
@@ -325,8 +325,8 @@ export default function HotDealsSection() {
                                 </div>
                                 <Button 
                                   size="sm" 
-                                  className="bg-primary hover:bg-primary/90"
-                                  onClick={() => handleContactUs(tour)}
+                                  className="bg-white rounded-full text-black hover:text-white"
+                                  onClick={() => router.push("/contact")}
                                 >
                                   Contact Us
                                 </Button>
@@ -442,7 +442,7 @@ export default function HotDealsSection() {
                               <Button
                                 onClick={() => setSelectedTour(tour)}
                                 variant="outline"
-                                className="flex-1 hover:bg-primary/10"
+                                className="flex-1 bg-white text-black rounded-full"
                               >
                                 <Info className="h-4 w-4 mr-2" />
                                 View Details
@@ -502,9 +502,11 @@ export default function HotDealsSection() {
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                  <img
+                  <Image
                     src={selectedTour.image}
                     alt={selectedTour.title}
+                    width={600}
+                    height={600}
                     className="w-full h-64 object-cover rounded-lg"
                   />
                 </div>
@@ -540,7 +542,7 @@ export default function HotDealsSection() {
                       <span className="text-2xl font-bold">${selectedTour.price}</span>
                       <span className="text-muted-foreground"> per person</span>
                     </div>
-                    <Button onClick={() => handleContactUs(selectedTour)} className="bg-primary hover:bg-primary/90">
+                    <Button onClick={() => handleContactUs(selectedTour)} className="bg-white text-black hover:text-white">
                       Contact Us
                     </Button>
                   </div>

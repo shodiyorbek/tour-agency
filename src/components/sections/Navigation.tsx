@@ -1,12 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { Menu, X, Heart, Calendar } from "lucide-react"
+import { Menu, X, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useWishlistContext } from "@/components/wishlist-provider"
 import WishlistModal from "@/components/wishlist-modal"
+import { useRouter } from "next/navigation"
 
 interface NavigationProps {
   scrollToSection: (sectionId: string) => void
@@ -15,28 +15,22 @@ interface NavigationProps {
 export default function Navigation({ scrollToSection }: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isWishlistOpen, setIsWishlistOpen] = useState(false)
-  const router = useRouter()
   const { getWishlistCount } = useWishlistContext()
-
+  const router = useRouter()
   const handleWishlistOpen = () => {
     setIsWishlistOpen(true)
   }
 
   const handleMobileNavClick = (sectionId: string) => {
     scrollToSection(sectionId)
-    setIsMenuOpen(false) // Close menu after navigation
-  }
-
-  const handleContactClick = () => {
-    scrollToSection("contact")
-    setIsMenuOpen(false)
+    setIsMenuOpen(false) 
   }
 
   return (
     <nav className="fixed top-0 w-full bg-white z-50 border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 cursor-pointer" onClick={() => router.push("/")}>
             <div className="w-8 h-8 relative">
               <Image
                 src="/images/logo.png"
@@ -51,26 +45,21 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
-            <button
-              onClick={() => scrollToSection("home")}
-              className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"
-            >
-              Home
-            </button>
+           
             <button
               onClick={() => scrollToSection("hot-deals")}
               className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"
             >
-              Hot deals
+              Hot Deals
             </button>
             <button
-              onClick={() => scrollToSection("tours")}
+              onClick={() => router.push("/destination")}
               className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"
             >
-              Special Deals
+              Tours
             </button>
             <button
-              onClick={() => scrollToSection("gallery")}
+              onClick={() => router.push("/gallery")}
               className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Gallery
@@ -79,20 +68,13 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
               onClick={() => scrollToSection("about")}
               className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"
             >
-              Why we?
+              About Us
             </button>
             <button
-              onClick={() => scrollToSection("contact")}
+              onClick={() => router.push("/contact")}
               className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Contact
-            </button>
-          
-            <button
-              onClick={handleContactClick}
-              className="relative text-foreground hover:text-primary transition-colors duration-200 p-2"
-            >
-              <Calendar className="h-5 w-5 lg:h-6 lg:w-6" />
             </button>
             
             <button
@@ -116,13 +98,6 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
 
           {/* Mobile menu button and wishlist */}
           <div className="md:hidden flex items-center space-x-2">
-            <button
-              onClick={handleContactClick}
-              className="relative text-foreground hover:text-primary transition-colors duration-200 p-2"
-            >
-              <Calendar className="h-5 w-5" />
-            </button>
-            
             <button
               onClick={handleWishlistOpen}
               className="relative text-foreground hover:text-primary transition-colors duration-200 p-2"
@@ -157,13 +132,13 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
                 onClick={() => handleMobileNavClick("hot-deals")}
                 className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
               >
-                Hot deals
+                Hot Deals
               </button>
               <button
                 onClick={() => handleMobileNavClick("tours")}
                 className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
               >
-                Special Deals
+                Tours
               </button>
               <button
                 onClick={() => handleMobileNavClick("gallery")}
@@ -175,7 +150,7 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
                 onClick={() => handleMobileNavClick("about")}
                 className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
               >
-                Why we?
+                About Us
               </button>
               <button
                 onClick={() => handleMobileNavClick("contact")}
@@ -184,14 +159,8 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
                 Contact
               </button>
               <div className="border-t border-gray-200 mt-2 pt-2">
-                <button
-                  onClick={handleContactClick}
-                  className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
-                >
-                  Contact Us
-                </button>
                 <Button 
-                  className="w-full mt-2"
+                  className="w-full"
                   onClick={() => handleMobileNavClick("contact")}
                 >
                   Contact Us

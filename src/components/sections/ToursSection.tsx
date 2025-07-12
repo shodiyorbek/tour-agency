@@ -457,7 +457,7 @@ const TourCard = ({
             {tour.category}
           </Badge>
           {tour.spotsLeft <= 3 && (
-            <Badge className="bg-red-600 text-white backdrop-blur-sm animate-pulse">
+                            <Badge className="bg-primary text-primary-foreground backdrop-blur-sm animate-pulse">
               Only {tour.spotsLeft} spots left!
             </Badge>
           )}
@@ -658,21 +658,6 @@ export default function ToursSection() {
   return (
     <section id="tours" ref={toursRef} className="py-20 bg-muted/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Discover Your Next Adventure
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Handpicked destinations and experiences crafted by our travel experts
-            </p>
-          </motion.div>
-        </div>
-
         {/* Search and Filters Bar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
