@@ -17,7 +17,7 @@ import {
   ChevronRight,
   Globe,
   Mountain,
-  Beach,
+  Palmtree,
   Building,
   TreePine,
   Plane,
@@ -292,7 +292,7 @@ const destinations = [
 
 const categories = [
   { id: "all", name: "All Destinations", icon: Globe },
-  { id: "beach", name: "Beach", icon: Beach },
+  { id: "beach", name: "Beach", icon: Palmtree },
   { id: "mountain", name: "Mountain", icon: Mountain },
   { id: "city", name: "City", icon: Building },
   { id: "nature", name: "Nature", icon: TreePine },
@@ -628,7 +628,8 @@ export default function DestinationPage() {
     if (isInWishlist(destination.id)) {
       removeFromWishlist(destination.id)
     } else {
-      addToWishlist(destination as Tour)
+      // Ensure required 'destination' field exists for Tour type
+      addToWishlist({ ...(destination as any), destination: destination.location } as Tour)
     }
   }
 
@@ -641,6 +642,10 @@ export default function DestinationPage() {
       title: "Contact Us",
       description: "Please contact us to book this destination. We'll get back to you soon!",
     })
+  }
+
+  const scrollToSection = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
@@ -983,7 +988,7 @@ export default function DestinationPage() {
         </div>
       )}
 
-      <Footer />
+      <Footer scrollToSection={scrollToSection} />
     </div>
   )
 }
