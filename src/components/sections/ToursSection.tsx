@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
+import type { FC } from "react"
 import { motion } from "framer-motion"
 import { Search, Grid, List, Heart, Star, MapPin, Clock, Users, Calendar, ArrowRight, Filter, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -387,7 +388,7 @@ interface TourCardProps {
   onContactUs: () => void
 }
 
-const TourCard = ({ 
+const TourCard: FC<TourCardProps> = ({ 
   tour, 
   index, 
   viewMode, 
@@ -395,7 +396,7 @@ const TourCard = ({
   onToggleWishlist, 
   onSelectTour, 
   onContactUs 
-}: TourCardProps) => (
+}) => (
   <motion.div
     layoutId={`tour-${tour.id}`}
     initial={{ opacity: 0, y: 20, scale: 0.95 }}
