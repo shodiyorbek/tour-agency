@@ -3,6 +3,7 @@
 import { Plane, Instagram, Facebook, Twitter } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { motion } from "framer-motion"
 
 interface FooterProps {
   scrollToSection: (sectionId: string) => void
@@ -13,8 +14,20 @@ export default function Footer({ scrollToSection }: FooterProps) {
     <footer className="bg-background border-t text-foreground py-8 sm:py-10 lg:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          <div className="sm:col-span-2 lg:col-span-1">
-            <div className="flex items-center space-x-2 mb-3 sm:mb-4">
+          <motion.div 
+            className="sm:col-span-2 lg:col-span-1"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, threshold: 0.1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <motion.div 
+              className="flex items-center space-x-2 mb-3 sm:mb-4"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, threshold: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            >
               <div className="w-6 h-6 sm:w-8 sm:h-8 relative">
                 <Image
                   src="/images/logo.png"
@@ -25,11 +38,23 @@ export default function Footer({ scrollToSection }: FooterProps) {
                 />
               </div>
               <span className="text-xl sm:text-2xl font-bold">Big Trip</span>
-            </div>
-            <p className="text-sm sm:text-base text-muted-foreground mb-3 sm:mb-4">
+            </motion.div>
+            <motion.p 
+              className="text-sm sm:text-base text-muted-foreground mb-3 sm:mb-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, threshold: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+            >
               Creating extraordinary travel experiences that inspire and transform lives.
-            </p>
-            <div className="flex space-x-3 sm:space-x-4">
+            </motion.p>
+            <motion.div 
+              className="flex space-x-3 sm:space-x-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, threshold: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+            >
               <Link
                 href="https://instagram.com/wanderlust"
                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
@@ -48,10 +73,15 @@ export default function Footer({ scrollToSection }: FooterProps) {
               >
                 <Twitter className="h-4 w-4 sm:h-5 sm:w-5" />
               </Link>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, threshold: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          >
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Quick Links</h3>
             <ul className="space-y-1.5 sm:space-y-2">
               <li>
@@ -95,9 +125,14 @@ export default function Footer({ scrollToSection }: FooterProps) {
                 </button>
               </li>
             </ul>
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, threshold: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+          >
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Destinations</h3>
             <ul className="space-y-1.5 sm:space-y-2 text-muted-foreground">
               <li>
@@ -121,9 +156,14 @@ export default function Footer({ scrollToSection }: FooterProps) {
                 </Link>
               </li>
             </ul>
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, threshold: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+          >
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Contact Info</h3>
             <div className="space-y-1.5 sm:space-y-2 text-sm sm:text-base text-muted-foreground">
               <div>123 Travel Street</div>
@@ -131,12 +171,18 @@ export default function Footer({ scrollToSection }: FooterProps) {
               <div>Phone: +1 (555) 012-3456</div>
               <div className="break-all">Email: hello@wanderlust.com</div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        <div className="border-t border-border mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-xs sm:text-sm text-muted-foreground">
+        <motion.div 
+          className="border-t border-border mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-xs sm:text-sm text-muted-foreground"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, threshold: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
+        >
           <p>&copy; {new Date().getFullYear()} Big Trip Travel Agency. All rights reserved.</p>
-        </div>
+        </motion.div>
       </div>
     </footer>
   )

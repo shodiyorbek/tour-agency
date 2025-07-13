@@ -5,6 +5,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
 import { ArrowDown } from "lucide-react"
+import { motion } from "framer-motion"
 
 const tourCards = [
   {
@@ -60,62 +61,118 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative z-10 flex flex-col md:flex-row w-full h-full px-8 py-20 gap-4">
         {/* Left Side: Title, Subtitle, Description, Button */}
-        <div className="flex-1 flex flex-col justify-center items-start max-w-xl text-white gap-4">
-          <h1 className="text-6xl font-extrabold leading-tight mb-2 drop-shadow-lg">
+        <motion.div 
+          className="flex-1 flex flex-col justify-center items-start max-w-xl text-white gap-4"
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, threshold: 0.1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <motion.h1 
+            className="text-6xl font-extrabold leading-tight mb-2 drop-shadow-lg"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, threshold: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          >
             Explore
-          </h1>
-          <h2 className="text-2xl font-semibold mb-2 drop-shadow-lg">
+          </motion.h1>
+          <motion.h2 
+            className="text-2xl font-semibold mb-2 drop-shadow-lg"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, threshold: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+          >
             beauty of the whole world
-          </h2>
-          <p className="text-lg mb-6 drop-shadow-lg">
+          </motion.h2>
+          <motion.p 
+            className="text-lg mb-6 drop-shadow-lg"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, threshold: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+          >
             {activeCard.description}
-          </p>
-          <Button className="bg-white text-black px-8 py-4 rounded-full text-lg font-bold shadow-lg flex items-center gap-2">
-            Explore Tours
-            <span className="ml-2">→</span>
-          </Button>
-        </div>
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, threshold: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
+          >
+            <Button className="bg-white text-black px-8 py-4 rounded-full text-lg font-bold shadow-lg flex items-center gap-2">
+              Explore Tours
+              <span className="ml-2">→</span>
+            </Button>
+          </motion.div>
+        </motion.div>
 
         {/* Right Side: Carousel above cards */}
-        <div className="flex-1 flex flex-col justify-center items-end relative min-h-[400px]">
+        <motion.div 
+          className="flex-1 flex flex-col justify-center items-end relative min-h-[400px]"
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, threshold: 0.1 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+        >
           {/* Carousel Controls and Progress bar above cards */}
           <div className="w-full max-w-2xl mb-8">
             {/* Progress bar */}
-            <div className="w-full h-1 bg-white/30 rounded-full mb-4 relative">
+            <motion.div 
+              className="w-full h-1 bg-white/30 rounded-full mb-4 relative"
+              initial={{ opacity: 0, scaleX: 0 }}
+              whileInView={{ opacity: 1, scaleX: 1 }}
+              viewport={{ once: true, threshold: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+            >
               <div className="h-1 bg-yellow-400 rounded-full transition-all duration-300" style={{ width: `${((activeIdx + 1) / tourCards.length) * 100}%` }} />
-            </div>
+            </motion.div>
             {/* Carousel Cards */}
-            <Carousel opts={{ align: "start" }} setApi={api => { if (api) { api.on('select', () => handleSelect(api)); handleSelect(api); } }}>
-              <CarouselContent>
-                {tourCards.map((card, idx) => (
-                  <CarouselItem key={card.title} className="basis-1/2 px-2">
-                    <div className={`rounded-2xl bg-white/10 backdrop-blur-md shadow-xl flex flex-row items-center gap-4 p-4 border-2 ${activeIdx === idx ? 'border-yellow-400 bg-white/20' : 'border-white/20'} transition-all duration-300`}>
-                      <div className="w-32 h-24 rounded-xl overflow-hidden flex-shrink-0">
-                        <Image src={card.image} alt={card.title} width={128} height={96} className="object-cover w-full h-full" />
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, threshold: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.7, ease: "easeOut" }}
+            >
+              <Carousel opts={{ align: "start" }} setApi={api => { if (api) { api.on('select', () => handleSelect(api)); handleSelect(api); } }}>
+                <CarouselContent>
+                  {tourCards.map((card, idx) => (
+                    <CarouselItem key={card.title} className="basis-1/2 px-2">
+                      <div className={`rounded-2xl bg-white/10 backdrop-blur-md shadow-xl flex flex-row items-center gap-4 p-4 border-2 ${activeIdx === idx ? 'border-yellow-400 bg-white/20' : 'border-white/20'} transition-all duration-300`}>
+                        <div className="w-32 h-24 rounded-xl overflow-hidden flex-shrink-0">
+                          <Image src={card.image} alt={card.title} width={128} height={96} className="object-cover w-full h-full" />
+                        </div>
+                        <div className="flex flex-col flex-1">
+                          <h3 className="text-lg font-bold text-white">{card.title}</h3>
+                          <span className="text-sm text-white/80">{card.subtitle}</span>
+                          <span className="text-xs text-white/60 mt-1">{card.duration}</span>
+                          <Button className="mt-2 bg-yellow-400 text-black rounded-full px-4 py-2 text-sm font-bold w-fit hover:bg-yellow-300">Book Now</Button>
+                        </div>
                       </div>
-                      <div className="flex flex-col flex-1">
-                        <h3 className="text-lg font-bold text-white">{card.title}</h3>
-                        <span className="text-sm text-white/80">{card.subtitle}</span>
-                        <span className="text-xs text-white/60 mt-1">{card.duration}</span>
-                        <Button className="mt-2 bg-yellow-400 text-black rounded-full px-4 py-2 text-sm font-bold w-fit hover:bg-yellow-300">Book Now</Button>
-                      </div>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              {/* Carousel Buttons - moved inside Carousel component */}
-              <CarouselPrevious className="bg-white/20 backdrop-blur-md border-white/30 text-white hover:bg-white/30" />
-              <CarouselNext className="bg-white/20 backdrop-blur-md border-white/30 text-white hover:bg-white/30" />
-            </Carousel>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                {/* Carousel Buttons - moved inside Carousel component */}
+                <CarouselPrevious className="bg-white/20 backdrop-blur-md border-white/30 text-white hover:bg-white/30" />
+                <CarouselNext className="bg-white/20 backdrop-blur-md border-white/30 text-white hover:bg-white/30" />
+              </Carousel>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Scroll Down Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-20">
+      <motion.div 
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-20"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, threshold: 0.1 }}
+        transition={{ duration: 0.6, delay: 1, ease: "easeOut" }}
+      >
         <span className="text-white text-sm mb-1">Scroll Down</span>
         <ArrowDown className="w-8 h-8 text-white animate-bounce" />
-      </div>
+      </motion.div>
     </section>
   )
 }

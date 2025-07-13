@@ -3,6 +3,7 @@
 import React from "react"
 import Image from "next/image"
 import { MapPin, Star, Users, Calendar } from "lucide-react"
+import { motion } from "framer-motion"
 
 const destinations = [
   {
@@ -78,22 +79,44 @@ export default function DestinationSection() {
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, threshold: 0.1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <motion.h2 
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, threshold: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          >
             Popular <span className="text-yellow-400">Destinations</span>
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p 
+            className="text-lg text-gray-600 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, threshold: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+          >
             Discover the world's most sought-after destinations. From tropical paradises to cultural gems, 
             we've curated the perfect experiences for every traveler.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Destinations Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {destinations.map((destination) => (
-            <div
+          {destinations.map((destination, index) => (
+            <motion.div
               key={destination.id}
               className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, threshold: 0.1 }}
+              transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
             >
               {/* Image */}
               <div className="relative h-64 overflow-hidden">
@@ -145,16 +168,22 @@ export default function DestinationSection() {
                   Explore Package
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* View All Button */}
-        <div className="text-center mt-12">
+        <motion.div 
+          className="text-center mt-12"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, threshold: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
+        >
           <button className="bg-gray-900 text-white px-8 py-4 rounded-full font-semibold hover:bg-gray-800 transition-colors duration-300">
             View All Destinations
           </button>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

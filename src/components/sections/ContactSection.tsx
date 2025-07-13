@@ -6,21 +6,56 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import Link from "next/link"
+import { motion } from "framer-motion"
 
 export default function ContactSection() {
   return (
     <section id="contact" className="py-12 sm:py-16 lg:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 sm:mb-4">Start Your Journey</h2>
-          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto">
+        <motion.div 
+          className="text-center mb-8 sm:mb-12 lg:mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, threshold: 0.1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <motion.h2 
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 sm:mb-4"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, threshold: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          >
+            Start Your Journey
+          </motion.h2>
+          <motion.p 
+            className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, threshold: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+          >
             Ready to explore the world? Get in touch with our travel experts to plan your perfect adventure.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12">
-          <div className="order-2 lg:order-1">
-            <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Get in Touch</h3>
+          <motion.div 
+            className="order-2 lg:order-1"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, threshold: 0.1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <motion.h3 
+              className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, threshold: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            >
+              Get in Touch
+            </motion.h3>
 
             <div className="space-y-4 sm:space-y-6">
               <div className="flex items-center space-x-3 sm:space-x-4">
@@ -87,9 +122,15 @@ export default function ContactSection() {
                 </Link>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="order-1 lg:order-2">
+          <motion.div 
+            className="order-1 lg:order-2"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, threshold: 0.1 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          >
             <Card className="shadow-lg border-0">
               <CardHeader className="p-4 sm:p-6">
                 <CardTitle className="text-lg sm:text-xl">Send us a message</CardTitle>
@@ -145,7 +186,7 @@ export default function ContactSection() {
                 </form>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
