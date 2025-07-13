@@ -70,7 +70,7 @@ export default function TopDestinationsSection() {
         </div>
 
         {/* Destinations Row - Horizontal on desktop, Vertical on mobile */}
-        <div className="flex flex-col md:flex-row gap-4 mx-auto">
+        <div className="flex flex-col md:flex-row gap-4 mx-auto p-3 md:p-0">
           {destinations.map((destination) => {
             const isExpanded = expandedId === destination.id
             const isCollapsed = !isExpanded

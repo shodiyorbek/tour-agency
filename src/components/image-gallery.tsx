@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import Image from "next/image"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -20,59 +20,59 @@ interface GalleryImage {
 const galleryImages: GalleryImage[] = [
   {
     id: 1,
-    src: "/gallery/dubai-sunset.jpg",
+    src: "/destination/dubai.webp",
     alt: "Dubai Skyline",
-    title: "Dubai Skyline at Sunset",
+    title: "Dubai Skyline",
     location: "Dubai, UAE",
   },
   {
     id: 2,
-    src: "/gallery/canyon.avif",
-    alt: "Grand Canyon",
-    title: "Grand Canyon Vista",
-    location: "Arizona, USA",
+    src: "/destination/china.webp",
+    alt: "China Landscape",
+    title: "Great Wall of China",
+    location: "Beijing, China",
   },
   {
     id: 3,
-    src: "/gallery/turkey.webp",
-    alt: "Turkey",
-    title: "Turkey",
-    location: "Turkey, Anqara",
+    src: "/destination/vietnam.webp",
+    alt: "Vietnam Countryside",
+    title: "Ha Long Bay",
+    location: "Vietnam",
   },
   {
     id: 4,
-    src: "/gallery/over-water.jpg",
+    src: "/destination/maldivs.webp",
     alt: "Maldives Resort",
     title: "Overwater Villas",
     location: "Maldives",
   },
   {
     id: 5,
-    src: "/gallery/kyoto.jpg",
-    alt: "Cherry Blossoms",
-    title: "Kyoto Cherry Blossoms",
-    location: "Japan",
+    src: "/destination/istanbul.webp",
+    alt: "Istanbul Architecture",
+    title: "Hagia Sophia",
+    location: "Istanbul, Turkey",
   },
   {
     id: 6,
-    src: "/gallery/serengeti.webp",
-    alt: "African Safari",
-    title: "Serengeti Wildlife",
-    location: "Tanzania",
+    src: "/destination/sri-lanka.webp",
+    alt: "Sri Lanka Temple",
+    title: "Temple of the Tooth",
+    location: "Kandy, Sri Lanka",
   },
   {
     id: 7,
-    src: "/gallery/aurora.jpg",
-    alt: "Northern Lights",
-    title: "Aurora Borealis",
-    location: "Iceland",
+    src: "/destination/abu-dabi.webp",
+    alt: "Abu Dhabi Skyline",
+    title: "Sheikh Zayed Mosque",
+    location: "Abu Dhabi, UAE",
   },
   {
     id: 8,
-    src: "/gallery/macho.jpg",
-    alt: "Machu Picchu",
-    title: "Ancient Citadel",
-    location: "Peru",
+    src: "/destination/baku.webp",
+    alt: "Baku Architecture",
+    title: "Flame Towers",
+    location: "Baku, Azerbaijan",
   },
 ]
 
@@ -80,6 +80,7 @@ export default function ImageGallery() {
   const galleryRef = useRef<HTMLDivElement>(null)
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [imagesLoaded, setImagesLoaded] = useState<Set<number>>(new Set())
   const lightboxRef = useRef<HTMLDivElement>(null)
   const galleryItemsRef = useRef<HTMLDivElement[]>([])
 
@@ -154,6 +155,10 @@ export default function ImageGallery() {
     }
   }, [])
 
+  const handleImageLoad = (imageId: number) => {
+    setImagesLoaded(prev => new Set([...prev, imageId]))
+  }
+
   const openLightbox = (image: GalleryImage, index: number) => {
     setSelectedImage(image)
     setCurrentIndex(index)
@@ -191,8 +196,8 @@ export default function ImageGallery() {
     <section className="gallery-section py-12 sm:py-16 lg:py-20 bg-muted/20 overflow-hidden" ref={galleryRef}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16 lg:mb-24">
-          <div className="flex items-center justify-between mb-8">
-            <div className="text-left">
+          <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
+            <div className="text-center sm:text-left">
               <h2 className="gallery-title text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 sm:mb-4">Destination Gallery</h2>
               <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl">
                 Immerse yourself in the beauty of our carefully curated destinations
@@ -207,120 +212,184 @@ export default function ImageGallery() {
           </div>
         </div>
 
-        <div
-          className="gallery-grid grid grid-cols-2 gap-4 h-[700px]"
-          style={{ gridTemplateColumns: '1fr 1fr' }}
-        >
-          {/* First grid: 2 images stacked */}
-          <div className="flex flex-col gap-4 h-full">
-            <div 
-              ref={addGalleryItemRef}
-              className="flex-1 relative overflow-hidden rounded-xl cursor-pointer gallery-item group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
-              onClick={() => openLightbox(galleryImages[0], 0)}
-            >
-              <Image 
-                src={galleryImages[0].src} 
-                alt={galleryImages[0].alt} 
-                fill 
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
-              <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
-                <h3 className="text-lg font-semibold">{galleryImages[0].title}</h3>
-                <p className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{galleryImages[0].location}</p>
+        {/* Mobile Layout */}
+        <div className="block sm:hidden">
+          <div className="grid grid-cols-2 gap-3">
+            {galleryImages.slice(0, 6).map((image, index) => (
+              <div 
+                key={image.id}
+                ref={addGalleryItemRef}
+                className={`relative overflow-hidden rounded-lg cursor-pointer gallery-item group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl ${
+                  index === 0 || index === 3 ? 'aspect-square' : 'aspect-[4/3]'
+                }`}
+                onClick={() => openLightbox(image, index)}
+              >
+                <div className="relative w-full h-full">
+                  <OptimizedImage 
+                    src={image.src} 
+                    alt={image.alt} 
+                    fill 
+                    sizes="(max-width: 640px) 50vw, 25vw"
+                    priority={index < 4}
+                    onLoad={() => handleImageLoad(image.id)}
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
+                  <div className="absolute bottom-0 left-0 right-0 p-2 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                    <h3 className="text-sm font-semibold">{image.title}</h3>
+                    <p className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{image.location}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div 
-              ref={addGalleryItemRef}
-              className="flex-1 relative overflow-hidden rounded-xl cursor-pointer gallery-item group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
-              onClick={() => openLightbox(galleryImages[1], 1)}
-            >
-              <Image 
-                src={galleryImages[1].src} 
-                alt={galleryImages[1].alt} 
-                fill 
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
-              <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
-                <h3 className="text-lg font-semibold">{galleryImages[1].title}</h3>
-                <p className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{galleryImages[1].location}</p>
-              </div>
-            </div>
+            ))}
           </div>
+        </div>
 
-          {/* Second grid: 1 image taking full height */}
-          <div 
-            ref={addGalleryItemRef}
-            className="relative overflow-hidden rounded-xl cursor-pointer gallery-item h-full group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
-            onClick={() => openLightbox(galleryImages[2], 2)}
+        {/* Desktop Layout */}
+        <div className="hidden sm:block">
+          <div
+            className="gallery-grid grid grid-cols-2 gap-4 h-[700px]"
+            style={{ gridTemplateColumns: '1fr 1fr' }}
           >
-            <Image 
-              src={galleryImages[2].src} 
-              alt={galleryImages[2].alt} 
-              fill 
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
-            <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
-              <h3 className="text-lg font-semibold">{galleryImages[2].title}</h3>
-              <p className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{galleryImages[2].location}</p>
-            </div>
-          </div>
-
-          {/* Third grid: 1 image taking full height */}
-          <div 
-            ref={addGalleryItemRef}
-            className="relative overflow-hidden rounded-xl cursor-pointer gallery-item h-full group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
-            onClick={() => openLightbox(galleryImages[3], 3)}
-          >
-            <Image 
-              src={galleryImages[3].src} 
-              alt={galleryImages[3].alt} 
-              fill 
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
-            <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
-              <h3 className="text-lg font-semibold">{galleryImages[3].title}</h3>
-              <p className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{galleryImages[3].location}</p>
-            </div>
-          </div>
-
-          {/* Fourth grid: 2 images stacked */}
-          <div className="flex flex-col gap-4 h-full">
-            <div 
-              ref={addGalleryItemRef}
-              className="flex-1 relative overflow-hidden rounded-xl cursor-pointer gallery-item group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
-              onClick={() => openLightbox(galleryImages[4], 4)}
-            >
-              <Image 
-                src={galleryImages[4].src} 
-                alt={galleryImages[4].alt} 
-                fill 
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
-              <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
-                <h3 className="text-lg font-semibold">{galleryImages[4].title}</h3>
-                <p className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{galleryImages[4].location}</p>
+            {/* First grid: 2 images stacked */}
+            <div className="flex flex-col gap-4 h-full">
+              <div 
+                ref={addGalleryItemRef}
+                className="flex-1 relative overflow-hidden rounded-xl cursor-pointer gallery-item group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
+                onClick={() => openLightbox(galleryImages[0], 0)}
+              >
+                <div className="relative w-full h-full">
+                  <OptimizedImage 
+                    src={galleryImages[0].src} 
+                    alt={galleryImages[0].alt} 
+                    fill 
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    priority
+                    onLoad={() => handleImageLoad(galleryImages[0].id)}
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                    <h3 className="text-lg font-semibold">{galleryImages[0].title}</h3>
+                    <p className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{galleryImages[0].location}</p>
+                  </div>
+                </div>
+              </div>
+              <div 
+                ref={addGalleryItemRef}
+                className="flex-1 relative overflow-hidden rounded-xl cursor-pointer gallery-item group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
+                onClick={() => openLightbox(galleryImages[1], 1)}
+              >
+                <div className="relative w-full h-full">
+                  <OptimizedImage 
+                    src={galleryImages[1].src} 
+                    alt={galleryImages[1].alt} 
+                    fill 
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    priority
+                    onLoad={() => handleImageLoad(galleryImages[1].id)}
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                    <h3 className="text-lg font-semibold">{galleryImages[1].title}</h3>
+                    <p className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{galleryImages[1].location}</p>
+                  </div>
+                </div>
               </div>
             </div>
+
+            {/* Second grid: 1 image taking full height */}
             <div 
               ref={addGalleryItemRef}
-              className="flex-1 relative overflow-hidden rounded-xl cursor-pointer gallery-item group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
-              onClick={() => openLightbox(galleryImages[5], 5)}
+              className="relative overflow-hidden rounded-xl cursor-pointer gallery-item h-full group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
+              onClick={() => openLightbox(galleryImages[2], 2)}
             >
-              <Image 
-                src={galleryImages[5].src} 
-                alt={galleryImages[5].alt} 
-                fill 
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
-              <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
-                <h3 className="text-lg font-semibold">{galleryImages[5].title}</h3>
-                <p className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{galleryImages[5].location}</p>
+              <div className="relative w-full h-full">
+                <OptimizedImage 
+                  src={galleryImages[2].src} 
+                  alt={galleryImages[2].alt} 
+                  fill 
+                  sizes="(max-width: 1024px) 50vw, 25vw"
+                  priority
+                  onLoad={() => handleImageLoad(galleryImages[2].id)}
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
+                <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                  <h3 className="text-lg font-semibold">{galleryImages[2].title}</h3>
+                  <p className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{galleryImages[2].location}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Third grid: 1 image taking full height */}
+            <div 
+              ref={addGalleryItemRef}
+              className="relative overflow-hidden rounded-xl cursor-pointer gallery-item h-full group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
+              onClick={() => openLightbox(galleryImages[3], 3)}
+            >
+              <div className="relative w-full h-full">
+                <OptimizedImage 
+                  src={galleryImages[3].src} 
+                  alt={galleryImages[3].alt} 
+                  fill 
+                  sizes="(max-width: 1024px) 50vw, 25vw"
+                  priority
+                  onLoad={() => handleImageLoad(galleryImages[3].id)}
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
+                <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                  <h3 className="text-lg font-semibold">{galleryImages[3].title}</h3>
+                  <p className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{galleryImages[3].location}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Fourth grid: 2 images stacked */}
+            <div className="flex flex-col gap-4 h-full">
+              <div 
+                ref={addGalleryItemRef}
+                className="flex-1 relative overflow-hidden rounded-xl cursor-pointer gallery-item group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
+                onClick={() => openLightbox(galleryImages[4], 4)}
+              >
+                <div className="relative w-full h-full">
+                  <OptimizedImage 
+                    src={galleryImages[4].src} 
+                    alt={galleryImages[4].alt} 
+                    fill 
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    onLoad={() => handleImageLoad(galleryImages[4].id)}
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                    <h3 className="text-lg font-semibold">{galleryImages[4].title}</h3>
+                    <p className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{galleryImages[4].location}</p>
+                  </div>
+                </div>
+              </div>
+              <div 
+                ref={addGalleryItemRef}
+                className="flex-1 relative overflow-hidden rounded-xl cursor-pointer gallery-item group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
+                onClick={() => openLightbox(galleryImages[5], 5)}
+              >
+                <div className="relative w-full h-full">
+                  <OptimizedImage 
+                    src={galleryImages[5].src} 
+                    alt={galleryImages[5].alt} 
+                    fill 
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    onLoad={() => handleImageLoad(galleryImages[5].id)}
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                    <h3 className="text-lg font-semibold">{galleryImages[5].title}</h3>
+                    <p className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{galleryImages[5].location}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -332,11 +401,12 @@ export default function ImageGallery() {
         <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm">
           <div ref={lightboxRef} className="relative w-full max-w-5xl">
             <div className="relative group">
-              <Image
+              <OptimizedImage
                 src={selectedImage.src || "/placeholder.svg"}
                 alt={selectedImage.alt}
                 width={1200}
                 height={800}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1200px"
                 className="w-full h-auto max-h-[70vh] sm:max-h-[80vh] object-contain rounded-lg transition-transform duration-300 ease-out group-hover:scale-105"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 sm:p-6 text-white rounded-b-lg transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">

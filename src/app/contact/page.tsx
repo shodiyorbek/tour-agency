@@ -16,14 +16,14 @@ import {
   Building,
   Users,
   Star,
-  Heart
+  
+  Instagram
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import {  CardContent } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
 import Navigation from "@/components/sections/Navigation"
 import Footer from "@/components/sections/Footer"
@@ -32,13 +32,13 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Visit Our Office",
-    description: "123 Travel Street, Adventure City, AC 12345",
+    description: "Chilonzor,Sergeli,Yunusobod ",
     color: "bg-primary"
   },
   {
     icon: Phone,
     title: "Call Us",
-    description: "+1 (555) 012-3456",
+    description: "+998 90 019 22 00 ",
     color: "bg-primary"
   },
   {
@@ -210,36 +210,13 @@ export default function ContactPage() {
       <Navigation scrollToSection={scrollToSection} />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 pt-32 pb-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 pt-32 pb-20 overflow-hidden ">
         {/* Animated background elements */}
         <motion.div 
-          className="absolute inset-0 bg-[url('/images/bg.jpg')] bg-cover bg-center opacity-30"
-          style={{ y: backgroundY }}
+          className="absolute inset-0 bg-[url('/destination/baku.webp')] bg-cover bg-center opacity-40 h-full top-0"
         />
         
-        {/* Floating decorative elements */}
-        <motion.div
-          className="absolute top-20 left-10 w-24 h-24 bg-primary/20 rounded-full"
-          variants={floatingVariants}
-          animate="animate"
-        />
-        <motion.div
-          className="absolute top-40 right-20 w-20 h-20 bg-primary/20 rounded-full"
-          variants={floatingVariants}
-          animate="animate"
-          style={{ animationDelay: "1s" }}
-        />
-        <motion.div
-          className="absolute bottom-20 left-1/4 w-16 h-16 bg-primary/20 rounded-full"
-          variants={pulseVariants}
-          animate="animate"
-        />
-        <motion.div
-          className="absolute top-1/2 right-1/3 w-16 h-16 bg-primary/20 rounded-full"
-          variants={floatingVariants}
-          animate="animate"
-          style={{ animationDelay: "2s" }}
-        />
+       
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -325,8 +302,6 @@ export default function ContactPage() {
                     >
                       <motion.div 
                         className="p-3 bg-primary/10 rounded-full"
-                        animate={{ rotate: [0, 360] }}
-                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                       >
                         <Icon className="h-6 w-6 text-primary" />
                       </motion.div>
@@ -762,9 +737,9 @@ export default function ContactPage() {
                   viewport={{ once: true }}
                 >
                   {[
-                    { icon: MapPin, text: "123 Travel Street, Adventure City, AC 12345" },
-                    { icon: Phone, text: "+1 (555) 012-3456" },
-                    { icon: Mail, text: "hello@bigtrip.com" },
+                    { icon: MapPin, text: "Chilonzor,Sergeli,Yunusobod " },
+                    { icon: Phone, text: "+998 78 555 77 88" },
+                    { icon: Instagram, text: "bigtrip.uz" },
                     { icon: Clock, text: "Mon - Fri: 9AM - 6PM" }
                   ].map((item, index) => {
                     const Icon = item.icon
@@ -832,7 +807,7 @@ export default function ContactPage() {
                   >
                     <Phone className="h-6 w-6" />
                   </motion.div>
-                  <span className="text-xl font-semibold">+1 (555) 012-3456</span>
+                  <span className="text-xl font-semibold">+998 78 555 77 88</span>
                 </motion.div>
                 <motion.div
                   whileHover={{ scale: 1.05 }}

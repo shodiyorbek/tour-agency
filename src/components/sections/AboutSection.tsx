@@ -69,7 +69,7 @@ export default function AboutSection() {
           <div className="about-image relative order-1 lg:order-2">
             <div className="relative mx-auto max-w-md lg:max-w-none">
               <Image
-                src="/placeholder.svg?height=600&width=500"
+                src="/destination/baku.webp"
                 alt="Travel experience"
                 width={500}
                 height={600}

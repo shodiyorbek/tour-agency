@@ -166,16 +166,8 @@ export default function HotDealsSection() {
     return acc
   }, {} as Record<number, typeof hotDeals[0]>)
 
-  const handleContactUs = (tour: Tour) => {
-    
-    const contactSection = document.getElementById('contact')
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' })
-    }
-    toast({
-      title: "Contact Us",
-      description: "Please contact us to book this tour. We'll get back to you soon!",
-    })
+  const handleContactUs = () => {
+    router.push("/contact")
   }
 
   const handleCloseModal = () => {
@@ -448,7 +440,7 @@ export default function HotDealsSection() {
                                 View Details
                               </Button>
                               <Button
-                                onClick={() => handleContactUs(tour)}
+                                onClick={() => handleContactUs()}
                                 className="flex-1 bg-primary hover:bg-primary/90"
                               >
                                 Contact Us
@@ -468,7 +460,7 @@ export default function HotDealsSection() {
           </Carousel>
 
           {/* Carousel Indicators */}
-          <div className="flex justify-center mt-4 sm:mt-6">
+          <div className=" justify-center mt-4 sm:mt-6 hidden md:flex" >
             <div className="flex space-x-1 sm:space-x-2">
               {Array.from({ length: count }).map((_, index) => (
                 <button
@@ -544,7 +536,7 @@ export default function HotDealsSection() {
                       <span className="text-2xl font-bold">${selectedTour.price}</span>
                       <span className="text-muted-foreground"> per person</span>
                     </div>
-                    <Button onClick={() => handleContactUs(selectedTour)} className="bg-white text-black hover:text-white">
+                    <Button onClick={ handleContactUs} className="bg-white text-black hover:text-white">
                       Contact Us
                     </Button>
                   </div>

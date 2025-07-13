@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { 
   Search, 
@@ -18,12 +18,9 @@ import {
   Globe,
   Mountain,
   Waves,
-  Palmtree,
-
   Building,
   TreePine,
-  Plane,
-  Menu
+  Plane
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -37,20 +34,22 @@ import { useDebounce } from "@/hooks/use-debounce"
 import { Tour } from "@/hooks/use-wishlist"
 import Navigation from "@/components/sections/Navigation"
 import Footer from "@/components/sections/Footer"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 const destinations = [
   {
     id: 1,
-    title: "Bali Paradise Island",
+    title: "Bali Tropical Paradise",
     location: "Indonesia",
     price: 899,
     duration: "7 days",
     groupSize: "2-12 people",
     rating: 4.9,
     reviews: 127,
-    image: "/images/bali.webp",
-    description: "Experience the magic of Bali with luxury resorts, pristine beaches, and cultural temples.",
-    highlights: ["Beach Resorts", "Temple Tours", "Water Sports", "Cultural Shows"],
+    image: "/destination/bali.webp",
+    description: "Experience the magic of Bali with lush rice terraces, spiritual temples, and pristine beaches.",
+    highlights: ["Rice Terraces", "Sacred Temples", "Beach Resorts", "Balinese Culture"],
     category: "Beach",
     difficulty: "Easy",
     availability: "Available",
@@ -62,58 +61,58 @@ const destinations = [
   },
   {
     id: 2,
-    title: "Swiss Alps Adventure",
-    location: "Switzerland",
-    price: 1200,
+    title: "Cappadocia Fairy Chimneys",
+    location: "Turkey",
+    price: 750,
     duration: "5 days",
     groupSize: "4-16 people",
     rating: 4.8,
     reviews: 89,
-    image: "/gallery/canyon.avif",
-    description: "Discover the breathtaking beauty of the Swiss Alps with guided hikes and stunning mountain views.",
-    highlights: ["Mountain Hiking", "Cable Car Rides", "Alpine Lakes", "Swiss Culture"],
+    image: "/destination/cappadocia.webp",
+    description: "Discover the magical fairy chimneys and ancient cave dwellings of Cappadocia with hot air balloon rides.",
+    highlights: ["Fairy Chimneys", "Hot Air Balloon", "Cave Hotels", "Rock Formations"],
     category: "Mountain",
-    difficulty: "Moderate",
+    difficulty: "Easy",
     availability: "Limited",
     spotsLeft: 3,
     totalSpots: 16,
     nextDeparture: "2024-03-01",
-    included: ["Accommodation", "All Meals", "Activities", "Equipment"],
-    notIncluded: ["Flights", "Travel Insurance", "Tips"],
+    included: ["Cave Hotel", "Balloon Ride", "Guided Tours", "Breakfast"],
+    notIncluded: ["Flights", "Lunch & Dinner", "Tips"],
   },
   {
     id: 3,
-    title: "Tokyo Urban Experience",
-    location: "Japan",
-    price: 980,
-    duration: "8 days",
+    title: "Istanbul Historic Crossroads",
+    location: "Turkey",
+    price: 680,
+    duration: "6 days",
     groupSize: "6-14 people",
     rating: 4.7,
     reviews: 64,
-    image: "/gallery/kyoto.jpg",
-    description: "Journey through the vibrant city of Tokyo with modern attractions and traditional culture.",
-    highlights: ["Shibuya Crossing", "Traditional Temples", "Modern Architecture", "Local Cuisine"],
+    image: "/destination/istanbul.webp",
+    description: "Journey through Istanbul, the historic crossroads of Europe and Asia, with magnificent mosques and bazaars.",
+    highlights: ["Hagia Sophia", "Blue Mosque", "Grand Bazaar", "Bosphorus Bridge"],
     category: "City",
     difficulty: "Easy",
     availability: "Available",
     spotsLeft: 10,
     totalSpots: 14,
     nextDeparture: "2024-02-20",
-    included: ["Accommodation", "Breakfast", "City Tours", "Entrance Fees"],
-    notIncluded: ["Flights", "Visa", "Lunch & Dinner"],
+    included: ["Hotel", "Breakfast", "City Tours", "Entrance Fees"],
+    notIncluded: ["Flights", "Lunch & Dinner", "Personal Shopping"],
   },
   {
     id: 4,
-    title: "Maldives Overwater Paradise",
+    title: "Maldives Crystal Waters",
     location: "Maldives",
     price: 2400,
     duration: "6 days",
     groupSize: "2 people",
     rating: 5.0,
     reviews: 156,
-    image: "/gallery/over-water.jpg",
-    description: "Ultimate romantic getaway with overwater villas, private beaches, and world-class spa treatments.",
-    highlights: ["Overwater Villa", "Private Beach", "Spa Treatments", "Sunset Cruise"],
+    image: "/destination/maldivs.webp",
+    description: "Ultimate romantic getaway with crystal clear waters, overwater villas, and pristine coral reefs.",
+    highlights: ["Crystal Waters", "Overwater Villa", "Coral Reefs", "Private Beach"],
     category: "Beach",
     difficulty: "Easy",
     availability: "Available",
@@ -125,16 +124,16 @@ const destinations = [
   },
   {
     id: 5,
-    title: "Amazon Rainforest Expedition",
-    location: "Brazil",
-    price: 1650,
-    duration: "10 days",
+    title: "Malaysia Tropical Rainforest",
+    location: "Malaysia",
+    price: 950,
+    duration: "8 days",
     groupSize: "8-20 people",
     rating: 4.9,
     reviews: 203,
-    image: "/gallery/serengeti.webp",
-    description: "Explore the Amazon rainforest with guided tours, wildlife spotting, and indigenous culture.",
-    highlights: ["Wildlife Spotting", "Indigenous Culture", "River Cruises", "Canopy Walks"],
+    image: "/destination/malasia.webp",
+    description: "Explore the lush Malaysian rainforest with diverse wildlife, ancient trees, and indigenous culture.",
+    highlights: ["Tropical Rainforest", "Wildlife Spotting", "Ancient Trees", "Indigenous Culture"],
     category: "Nature",
     difficulty: "Moderate",
     availability: "Filling Fast",
@@ -146,16 +145,16 @@ const destinations = [
   },
   {
     id: 6,
-    title: "Santorini Island Hopping",
-    location: "Greece",
-    price: 2100,
-    duration: "12 days",
+    title: "Thailand Tropical Islands",
+    location: "Thailand",
+    price: 850,
+    duration: "10 days",
     groupSize: "4-12 people",
     rating: 4.8,
     reviews: 91,
-    image: "/images/tropical-beach.jpg",
-    description: "Island hop through the Greek islands enjoying pristine beaches, ancient ruins, and local cuisine.",
-    highlights: ["Santorini Sunset", "Mykonos Beaches", "Ancient Ruins", "Greek Cuisine"],
+    image: "/destination/tailand.webp",
+    description: "Island hop through Thailand's tropical paradise with pristine beaches, limestone cliffs, and crystal waters.",
+    highlights: ["Tropical Islands", "Limestone Cliffs", "Crystal Waters", "Thai Culture"],
     category: "Beach",
     difficulty: "Easy",
     availability: "Limited",
@@ -167,129 +166,234 @@ const destinations = [
   },
   {
     id: 7,
-    title: "New York City Explorer",
-    location: "USA",
-    price: 1850,
+    title: "China Mountain Landscapes",
+    location: "China",
+    price: 1200,
     duration: "8 days",
     groupSize: "10-25 people",
     rating: 4.9,
     reviews: 178,
-    image: "/gallery/dubai-sunset.jpg",
-    description: "Experience the city that never sleeps with iconic landmarks, Broadway shows, and diverse culture.",
-    highlights: ["Times Square", "Broadway Shows", "Central Park", "Museums"],
-    category: "City",
-    difficulty: "Easy",
+    image: "/destination/china.webp",
+    description: "Experience China's majestic mountain landscapes with ancient temples and breathtaking natural beauty.",
+    highlights: ["Mountain Landscapes", "Ancient Temples", "Natural Beauty", "Chinese Culture"],
+    category: "Mountain",
+    difficulty: "Moderate",
     availability: "Available",
     spotsLeft: 15,
     totalSpots: 25,
     nextDeparture: "2024-05-10",
-    included: ["Hotels", "Breakfast", "City Tours", "Show Tickets"],
+    included: ["Hotels", "Breakfast", "Mountain Tours", "Entrance Fees"],
     notIncluded: ["Flights", "Lunch & Dinner", "Shopping"],
   },
   {
     id: 8,
-    title: "Machu Picchu Trek",
-    location: "Peru",
-    price: 1450,
+    title: "Vietnam Mountain Terraces",
+    location: "Vietnam",
+    price: 780,
     duration: "9 days",
     groupSize: "6-15 people",
     rating: 4.8,
     reviews: 142,
-    image: "/gallery/macho.jpg",
-    description: "Trek the legendary Inca Trail to reach the ancient citadel of Machu Picchu.",
-    highlights: ["Inca Trail", "Machu Picchu", "Sacred Valley", "Cusco City"],
+    image: "/destination/vietnam.webp",
+    description: "Explore Vietnam's stunning mountain terraces and rural landscapes with rich cultural heritage.",
+    highlights: ["Mountain Terraces", "Rural Landscapes", "Local Villages", "Vietnamese Culture"],
     category: "Mountain",
-    difficulty: "Challenging",
+    difficulty: "Moderate",
     availability: "Limited",
     spotsLeft: 4,
     totalSpots: 15,
     nextDeparture: "2024-04-15",
-    included: ["Camping Equipment", "All Meals", "Permits", "Train Tickets"],
-    notIncluded: ["Flights", "Sleeping Bag", "Tips"],
+    included: ["Mountain Lodges", "Breakfast", "Guided Tours", "Transport"],
+    notIncluded: ["Flights", "Lunch & Dinner", "Tips"],
   },
   {
     id: 9,
-    title: "Dubai Luxury Experience",
-    location: "UAE",
-    price: 1320,
-    duration: "10 days",
+    title: "Georgia Alpine Peaks",
+    location: "Georgia",
+    price: 650,
+    duration: "7 days",
     groupSize: "8-18 people",
     rating: 4.7,
     reviews: 96,
-    image: "/gallery/turkey.webp",
-    description: "Experience the luxury of Dubai with iconic landmarks, desert safaris, and world-class shopping.",
-    highlights: ["Burj Khalifa", "Desert Safari", "Dubai Mall", "Luxury Hotels"],
-    category: "City",
-    difficulty: "Easy",
+    image: "/destination/gruzia.webp",
+    description: "Experience Georgia's stunning alpine peaks and snow-capped mountains with pristine wilderness.",
+    highlights: ["Alpine Peaks", "Snow-Capped Mountains", "Pristine Wilderness", "Georgian Culture"],
+    category: "Mountain",
+    difficulty: "Moderate",
     availability: "Available",
     spotsLeft: 12,
     totalSpots: 18,
     nextDeparture: "2024-05-01",
-    included: ["Luxury Hotels", "Breakfast", "Desert Safari", "City Tours"],
-    notIncluded: ["Flights", "Lunch & Dinner", "Shopping"],
+    included: ["Mountain Lodges", "Breakfast", "Guided Hikes", "Equipment"],
+    notIncluded: ["Flights", "Lunch & Dinner", "Personal Gear"],
   },
   {
     id: 10,
-    title: "Iceland Northern Lights",
-    location: "Iceland",
-    price: 1980,
-    duration: "11 days",
+    title: "Qatar Modern Skyline",
+    location: "Qatar",
+    price: 1100,
+    duration: "6 days",
     groupSize: "4-10 people",
     rating: 4.9,
     reviews: 134,
-    image: "/gallery/aurora.jpg",
-    description: "Witness the magical Northern Lights and explore Iceland's stunning natural wonders.",
-    highlights: ["Northern Lights", "Blue Lagoon", "Glacier Walks", "Waterfalls"],
-    category: "Nature",
-    difficulty: "Moderate",
+    image: "/destination/qatar.jpg",
+    description: "Experience Qatar's stunning modern skyline with futuristic architecture and Arabian hospitality.",
+    highlights: ["Modern Skyline", "Futuristic Architecture", "Desert Views", "Arabian Culture"],
+    category: "City",
+    difficulty: "Easy",
     availability: "Filling Fast",
     spotsLeft: 3,
     totalSpots: 10,
     nextDeparture: "2024-09-15",
-    included: ["Hotels", "Breakfast", "Activities", "Transport"],
+    included: ["Luxury Hotels", "Breakfast", "City Tours", "Desert Safari"],
     notIncluded: ["Flights", "Lunch & Dinner", "Optional Tours"],
   },
   {
     id: 11,
-    title: "Moroccan Desert Adventure",
-    location: "Morocco",
-    price: 890,
+    title: "Dubai Desert Oasis",
+    location: "UAE",
+    price: 1320,
     duration: "7 days",
     groupSize: "6-16 people",
     rating: 4.8,
     reviews: 87,
-    image: "/images/bali.webp",
-    description: "Journey from Marrakech to the Sahara Desert, experiencing Berber culture and camping under the stars.",
-    highlights: ["Sahara Camping", "Camel Trek", "Marrakech Souks", "Atlas Mountains"],
+    image: "/destination/dubai.webp",
+    description: "Experience Dubai's desert oasis with luxury resorts, golden sands, and Arabian hospitality.",
+    highlights: ["Desert Oasis", "Golden Sands", "Luxury Resorts", "Arabian Culture"],
     category: "Desert",
-    difficulty: "Moderate",
+    difficulty: "Easy",
     availability: "Available",
     spotsLeft: 9,
     totalSpots: 16,
     nextDeparture: "2024-03-10",
-    included: ["Transport", "Desert Camp", "Guides", "Most Meals"],
-    notIncluded: ["Flights", "Tips", "Personal Shopping"],
+    included: ["Luxury Hotels", "Breakfast", "Desert Safari", "City Tours"],
+    notIncluded: ["Flights", "Lunch & Dinner", "Shopping"],
   },
   {
     id: 12,
-    title: "New Zealand Adventure",
-    location: "New Zealand",
-    price: 2250,
-    duration: "14 days",
+    title: "Saudi Arabia Desert Heritage",
+    location: "Saudi Arabia",
+    price: 1450,
+    duration: "8 days",
     groupSize: "8-20 people",
     rating: 4.9,
     reviews: 167,
-    image: "/gallery/canyon.avif",
-    description: "Experience both North and South Islands with adventure activities, Maori culture, and stunning landscapes.",
-    highlights: ["Milford Sound", "Queenstown Adventures", "Hobbiton", "Maori Culture"],
-    category: "Adventure",
+    image: "/destination/arabia.webp",
+    description: "Explore Saudi Arabia's vast desert landscapes with ancient heritage sites and Bedouin culture.",
+    highlights: ["Desert Landscapes", "Ancient Heritage", "Bedouin Culture", "Islamic Sites"],
+    category: "Desert",
     difficulty: "Moderate",
     availability: "Available",
     spotsLeft: 14,
     totalSpots: 20,
     nextDeparture: "2024-11-01",
-    included: ["Hotels", "Transport", "Activities", "Some Meals"],
-    notIncluded: ["Flights", "Adventure Sports", "Most Meals"],
+    included: ["Desert Camps", "Transport", "Guided Tours", "Some Meals"],
+    notIncluded: ["Flights", "Visa", "Most Meals"],
+  },
+  {
+    id: 13,
+    title: "Baku Caspian Coast",
+    location: "Azerbaijan",
+    price: 720,
+    duration: "6 days",
+    groupSize: "6-15 people",
+    rating: 4.7,
+    reviews: 89,
+    image: "/destination/baku.webp",
+    description: "Discover Baku's stunning Caspian Sea coastline with modern architecture and ancient heritage.",
+    highlights: ["Caspian Sea", "Modern Architecture", "Ancient Heritage", "Azerbaijani Culture"],
+    category: "City",
+    difficulty: "Easy",
+    availability: "Available",
+    spotsLeft: 8,
+    totalSpots: 15,
+    nextDeparture: "2024-04-20",
+    included: ["Coastal Hotels", "Breakfast", "City Tours", "Entrance Fees"],
+    notIncluded: ["Flights", "Lunch & Dinner", "Personal Shopping"],
+  },
+  {
+    id: 14,
+    title: "Sri Lanka Tropical Paradise",
+    location: "Sri Lanka",
+    price: 890,
+    duration: "9 days",
+    groupSize: "4-12 people",
+    rating: 4.8,
+    reviews: 112,
+    image: "/destination/sri-lanka.webp",
+    description: "Experience Sri Lanka's tropical paradise with lush landscapes, pristine beaches, and rich biodiversity.",
+    highlights: ["Tropical Landscapes", "Pristine Beaches", "Rich Biodiversity", "Sri Lankan Culture"],
+    category: "Nature",
+    difficulty: "Easy",
+    availability: "Limited",
+    spotsLeft: 5,
+    totalSpots: 12,
+    nextDeparture: "2024-05-15",
+    included: ["Beach Hotels", "Breakfast", "Nature Tours", "Wildlife Safari"],
+    notIncluded: ["Flights", "Lunch & Dinner", "Optional Tours"],
+  },
+  {
+    id: 15,
+    title: "Abu Dhabi Desert Sands",
+    location: "UAE",
+    price: 980,
+    duration: "5 days",
+    groupSize: "6-18 people",
+    rating: 4.6,
+    reviews: 76,
+    image: "/destination/abu-dabi.webp",
+    description: "Explore Abu Dhabi's golden desert sands with luxury resorts and Arabian hospitality.",
+    highlights: ["Golden Desert", "Luxury Resorts", "Arabian Hospitality", "Desert Adventures"],
+    category: "Desert",
+    difficulty: "Easy",
+    availability: "Available",
+    spotsLeft: 12,
+    totalSpots: 18,
+    nextDeparture: "2024-06-01",
+    included: ["Desert Resorts", "Breakfast", "Desert Tours", "Cultural Experiences"],
+    notIncluded: ["Flights", "Lunch & Dinner", "Optional Activities"],
+  },
+  {
+    id: 16,
+    title: "Singapore Marina Bay",
+    location: "Singapore",
+    price: 1150,
+    duration: "6 days",
+    groupSize: "4-15 people",
+    rating: 4.9,
+    reviews: 145,
+    image: "/destination/singapore.webp",
+    description: "Experience Singapore's iconic Marina Bay with stunning skyline views and modern urban landscape.",
+    highlights: ["Marina Bay", "Iconic Skyline", "Modern Architecture", "Urban Landscape"],
+    category: "City",
+    difficulty: "Easy",
+    availability: "Filling Fast",
+    spotsLeft: 7,
+    totalSpots: 15,
+    nextDeparture: "2024-07-10",
+    included: ["Marina Bay Hotels", "Breakfast", "City Tours", "Attraction Passes"],
+    notIncluded: ["Flights", "Lunch & Dinner", "Shopping"],
+  },
+  {
+    id: 17,
+    title: "Turkey Mediterranean Coast",
+    location: "Turkey",
+    price: 680,
+    duration: "7 days",
+    groupSize: "6-16 people",
+    rating: 4.7,
+    reviews: 98,
+    image: "/destination/turkey.webp",
+    description: "Discover Turkey's stunning Mediterranean coastline with pristine beaches and ancient coastal towns.",
+    highlights: ["Mediterranean Coast", "Pristine Beaches", "Coastal Towns", "Turkish Culture"],
+    category: "Beach",
+    difficulty: "Easy",
+    availability: "Available",
+    spotsLeft: 10,
+    totalSpots: 16,
+    nextDeparture: "2024-08-05",
+    included: ["Coastal Hotels", "Breakfast", "Coastal Tours", "Beach Activities"],
+    notIncluded: ["Flights", "Lunch & Dinner", "Water Sports"],
   },
 ]
 
@@ -342,9 +446,11 @@ const DestinationCard = ({
     <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 bg-white rounded-3xl">
       <div className="relative overflow-hidden">
         <div className="relative h-72 overflow-hidden">
-          <img
+          <Image
             src={destination.image || "/placeholder.svg"}
             alt={destination.title}
+            width={500}
+            height={500}
             className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -461,8 +567,7 @@ const DestinationCard = ({
             Quick View
           </Button>
           <Button
-            variant="outline"
-            className="hover:bg-primary/10 transition-colors duration-300 h-12 text-base font-semibold border-primary/20 text-primary"
+            className="bg-white hover:text-white text-black transition-colors duration-300 h-12 text-base font-semibold border-primary/20 text-primary"
             onClick={onContactUs}
           >
             Book Now
@@ -492,7 +597,7 @@ export default function Page() {
   const destinationsPerPage = 9
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlistContext()
   const { toast } = useToast()
-
+  const router = useRouter()
   // Use debounced values for smooth filtering
   const debouncedSearchQuery = useDebounce(searchQuery, 300)
   const debouncedPriceRange = useDebounce(priceRange, 500)
@@ -503,7 +608,7 @@ export default function Page() {
     setIsLoading(true)
     
     const filterTimer = setTimeout(() => {
-      let filtered = destinations.filter(destination => {
+      const filtered = destinations.filter(destination => {
         const matchesSearch = destination.title.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
                             destination.location.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
         const matchesCategory = selectedCategory === "all" || destination.category.toLowerCase() === selectedCategory
@@ -571,8 +676,6 @@ export default function Page() {
         notIncluded: destination.notIncluded,
       }
       addToWishlist(tour)
-      // Ensure required 'destination' field exists for Tour type
-      addToWishlist({ ...(destination as any), destination: destination.location } as Tour)
     }
   }
 
@@ -581,6 +684,7 @@ export default function Page() {
   }
 
   const handleContactUs = () => {
+    router.push(`/contact`)
     toast({
       title: "Contact Us",
       description: "Please contact us to book this destination. We'll get back to you soon!",
@@ -601,8 +705,8 @@ export default function Page() {
       <Navigation scrollToSection={scrollToSection} />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-24 lg:py-32">
-        <div className="absolute inset-0 bg-[url('/images/bg.jpg')] bg-cover bg-center opacity-10" />
+      <section className="relative bg-gradient-to-br from-blue-30 via-white to-purple-30 py-24 lg:py-32">
+        <div className="absolute inset-0 bg-[url('/destination/tailand.webp')] bg-cover bg-center opacity-40" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -624,7 +728,7 @@ export default function Page() {
               <span className="text-primary block">Destinations</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
-              Explore the world's most beautiful destinations with our carefully curated travel experiences. 
+              Explore the world&apos;s most beautiful destinations with our carefully curated travel experiences. 
               From pristine beaches to majestic mountains, find your perfect adventure.
             </p>
           </motion.div>
@@ -688,9 +792,8 @@ export default function Page() {
               
               <div className="relative">
                 <Button
-                  variant="outline"
                   onClick={() => setShowFilters(!showFilters)}
-                  className="h-14 w-full text-lg"
+                  className="h-14 w-full text-lg bg-white text-black hover:text-white"
                 >
                   <Filter className="h-5 w-5 mr-2" />
                   Filters
@@ -724,7 +827,7 @@ export default function Page() {
                   <Button
                     variant={selectedCategory === category.id ? "default" : "outline"}
                     onClick={() => setSelectedCategory(category.id)}
-                    className="flex items-center gap-3 h-14 px-8 text-base font-medium transition-all duration-300 hover:shadow-lg"
+                    className="flex rounded-full items-center gap-3 h-14 px-8 text-base font-medium transition-all duration-300 hover:shadow-lg"
                   >
                     <Icon className="h-5 w-5" />
                     {category.name}
@@ -869,11 +972,10 @@ export default function Page() {
               {totalPages > 1 && (
                 <div className="flex items-center justify-center gap-3">
                   <Button
-                    variant="outline"
                     size="icon"
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                     disabled={currentPage === 1}
-                    className="h-12 w-12"
+                    className="h-12 w-12 bg-white text-black hover:text-white"
                   >
                     <ChevronLeft className="h-5 w-5" />
                   </Button>
@@ -883,18 +985,17 @@ export default function Page() {
                       key={i + 1}
                       variant={currentPage === i + 1 ? "default" : "outline"}
                       onClick={() => setCurrentPage(i + 1)}
-                      className="w-12 h-12 text-base font-medium"
+                      className="w-12 h-12 text-base font-medium rounded-full"
                     >
                       {i + 1}
                     </Button>
                   ))}
                   
                   <Button
-                    variant="outline"
                     size="icon"
                     onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                     disabled={currentPage === totalPages}
-                    className="h-12 w-12"
+                    className="h-12 w-12 bg-white text-black hover:text-white"
                   >
                     <ChevronRight className="h-5 w-5" />
                   </Button>
@@ -923,7 +1024,9 @@ export default function Page() {
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                  <img
+                  <Image
+                    width={500}
+                    height={300}
                     src={selectedDestination.image}
                     alt={selectedDestination.title}
                     className="w-full h-64 object-cover rounded-lg"

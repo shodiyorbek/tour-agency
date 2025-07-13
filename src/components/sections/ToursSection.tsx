@@ -13,6 +13,7 @@ import { useWishlistContext } from "@/components/wishlist-provider"
 import { useToast } from "@/hooks/use-toast"
 import { useDebounce } from "@/hooks/use-debounce"
 import { Tour } from "@/hooks/use-wishlist"
+import Image from "next/image"
 
 const tours = [
   {
@@ -413,14 +414,13 @@ const TourCard: FC<TourCardProps> = ({
     }}
     exit={{ opacity: 0, scale: 0.9, y: -20 }}
     whileHover={{ y: -5, scale: 1.02 }}
-    className={viewMode === 'list' ? 'mb-4' : ''}
   >
-    <Card className={`group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 ${
-      viewMode === 'list' ? 'flex' : ''
-    }`}>
-      <div className={`relative overflow-hidden ${viewMode === 'list' ? 'w-1/3' : ''}`}>
+    <Card className={`group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 flex`}>
+      <div className={`relative overflow-hidden `}>
         <div className="relative h-64 overflow-hidden">
-          <img
+          <Image
+            width={500}
+            height={300}
             src={tour.image || "/placeholder.svg"}
             alt={tour.title}
             className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -573,7 +573,7 @@ export default function ToursSection() {
     setIsLoading(true)
     
     const filterTimer = setTimeout(() => {
-      let filtered = tours.filter(tour => {
+      const filtered = tours.filter(tour => {
         const matchesSearch = tour.title.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
                             tour.destination.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
         const matchesCategory = selectedCategory === "All" || tour.category === selectedCategory

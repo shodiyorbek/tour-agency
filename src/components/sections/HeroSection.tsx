@@ -22,7 +22,7 @@ interface CarouselApi {
 
 const tourCards = [
   {
-    title: "Mountain Tour",
+    title: "Amazing baku",
     type: "Explore",
     subtitle: "$850.00/Person",
     description:
@@ -32,7 +32,7 @@ const tourCards = [
     bg: "/destination/baku.webp",
   },
   {
-    title: "Yachts Tour",
+    title: "China Great Wall",
     type: "Explore",
     subtitle: "$750.00/Person",
     description:
@@ -42,7 +42,7 @@ const tourCards = [
     bg: "/destination/china.webp",
   },
   {
-    title: "Aurora Adventure",
+    title: "Saudi Arabia",
     type: "Explore",
     subtitle: "$950.00/Person",
     description: "Chase the northern lights and explore arctic wonders.",
@@ -80,7 +80,7 @@ export default function HeroSection() {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="relative min-h-[500px] md:h-[600px] lg:h-[700px] flex items-center bg-black overflow-hidden rounded-[20px] md:rounded-[30px] lg:rounded-[40px]  md:mt-16 lg:mt-24 max-w-[1240px] mx-auto mx-4 mt-20 md:mx-8 lg:mx-auto"
+      className="relative min-h-[500px] md:h-[600px] lg:h-[700px] flex items-center bg-black overflow-hidden rounded-[20px] md:rounded-[30px] lg:rounded-[40px]  md:mt-16 lg:mt-24 max-w-[1240px] md:mx-auto mx-4 mt-20  lg:mx-auto "
     >
       {/* Dynamic Background Image */}
       <motion.div
@@ -89,14 +89,13 @@ export default function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
         className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: `url(${activeCard.bg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
       >
-        <Image
-          src={activeCard.bg}
-          alt={activeCard.title}
-          fill
-          className="object-cover w-full h-full"
-          priority
-        />
         <div className="absolute inset-0 bg-black/40" />
       </motion.div>
 
@@ -156,8 +155,7 @@ export default function HeroSection() {
             >
               <Button
                 onClick={() => router.push("/destination")}
-                size={"lg"}
-                className="bg-white h-[50px] md:h-[60px] text-black px-6 md:px-8 py-3 md:py-4 rounded-full text-sm md:text-lg font-bold shadow-lg flex items-center gap-2"
+                className="bg-white hover:text-white h-[50px] md:h-[60px] text-black px-6 md:px-8 py-3 md:py-4 rounded-full text-sm md:text-lg font-bold shadow-lg flex items-center gap-2"
               >
                 Explore Tours
                 <span className="ml-2">→</span>
@@ -263,7 +261,7 @@ export default function HeroSection() {
                         />
                       </motion.div>
                       <div className="flex flex-col flex-1 h-full py-2 md:py-4 text-center sm:text-left">
-                        <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-white">
+                        <h3 className="text-lg md:text-xl lg:text-xl font-bold text-white">
                           {card.title}
                         </h3>
                         <span className="text-sm md:text-base lg:text-lg text-white">
@@ -278,7 +276,7 @@ export default function HeroSection() {
                           whileTap={{ scale: 0.95 }}
                           className="flex justify-center sm:justify-start"
                         >
-                          <Button className="mt-2 h-[40px] md:h-[50px] w-full sm:w-[120px] md:w-[150px] text-xs md:text-sm font-bold">
+                          <Button onClick={()=>router.push("/destination")} className="mt-2 h-[40px] bg-white hover:text-white text-black md:h-[50px] w-full sm:w-[120px] md:w-[150px] text-xs md:text-sm font-bold">
                             Book Now
                           </Button>
                         </motion.div>

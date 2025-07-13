@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/carousel";
 import { AnimatePresence, motion } from "framer-motion";
 import Autoplay from "embla-carousel-autoplay";
+import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 const destinations = [
   {
@@ -93,14 +95,12 @@ export default function DestinationSection() {
     y: 0,
   });
   const carouselRef = React.useRef<HTMLDivElement>(null);
-
-  // Embla carousel API sync
+  const router = useRouter()
   const handleSelect = (api: unknown) => {
     if (!api || typeof api !== "object" || !("selectedScrollSnap" in api))
       return;
     const emblaApi = api as unknown as { selectedScrollSnap: () => number };
     if (typeof emblaApi.selectedScrollSnap !== "function") return;
-    // setActiveIdx(emblaApi.selectedScrollSnap()); // This line was removed as per the edit hint.
   };
 
   return (
@@ -214,9 +214,9 @@ export default function DestinationSection() {
                                 <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                                 {destination.duration}
                               </div>
-                              <button className="w-full bg-white/90 text-black py-2 sm:py-3 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold hover:bg-primary/20 transition-colors duration-300">
+                              <Button onClick={()=>router.push("/destination")} className="w-full hover:text-white bg-white/90 text-black py-2 sm:py-3 text-sm sm:text-base font-semibold hover:bg-primary/20 transition-colors duration-300">
                                 Book Now
-                              </button>
+                              </Button>
                             </div>
                           </motion.div>
                         )}
@@ -231,9 +231,9 @@ export default function DestinationSection() {
 
         {/* View All Button */}
         <div className="text-center mt-8 sm:mt-10 md:mt-12">
-          <button className="bg-gray-900 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base font-semibold hover:bg-gray-800 transition-colors duration-300">
+          <Button onClick={()=>router.push("/destination")} className="bg-white text-black hover:text-white">
             View All Destinations
-          </button>
+          </Button>
         </div>
       </div>
     </section>

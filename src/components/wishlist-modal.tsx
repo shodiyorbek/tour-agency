@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { useWishlistContext } from '@/components/wishlist-provider'
 import { Tour } from '@/hooks/use-wishlist'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 interface WishlistModalProps {
   isOpen: boolean
@@ -16,7 +17,7 @@ interface WishlistModalProps {
 
 export default function WishlistModal({ isOpen, onClose }: WishlistModalProps) {
   const { wishlist, removeFromWishlist, clearWishlist, getWishlistCount } = useWishlistContext()
-
+  const router = useRouter()
   if (!isOpen) return null
 
   return (
@@ -87,7 +88,7 @@ export default function WishlistModal({ isOpen, onClose }: WishlistModalProps) {
                     <div className="absolute top-2 sm:top-3 right-2 sm:right-3">
                       <button
                         onClick={() => removeFromWishlist(tour.id)}
-                        className="p-1.5 sm:p-2 bg-white/90 rounded-full hover:bg-white transition-colors duration-200 group"
+                        className="p-1.5 flex items-center justify-center bg-white/90 rounded-full hover:bg-white transition-colors duration-200 group"
                       >
                         <Heart className="h-3 w-3 sm:h-4 sm:w-4 text-primary fill-current group-hover:scale-110 transition-transform" />
                       </button>
@@ -140,8 +141,8 @@ export default function WishlistModal({ isOpen, onClose }: WishlistModalProps) {
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-2">
-                      <Button className="flex-1 bg-primary hover:bg-primary/90 text-xs sm:text-sm h-8 sm:h-9">
-                        View Details
+                      <Button onClick={() => router.push(`/contact`)} className="flex-1 bg-primary hover:bg-primary/90 text-xs sm:text-sm h-8 sm:h-9">
+                        Book Now
                       </Button>
                       <Button
                         variant="outline"
