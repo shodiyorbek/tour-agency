@@ -90,9 +90,9 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
             </button>
             <Button 
               className="text-sm lg:text-base"
-              onClick={() => scrollToSection("contact")}
+              onClick={() => router.push("/destination")}
             >
-              Contact Us
+             Book now
             </Button>
           </div>
 
@@ -122,46 +122,31 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
         {isMenuOpen && (
           <div className="md:hidden bg-white border-t border-gray-100 animate-in slide-in-from-top duration-200">
             <div className="px-2 pt-2 pb-3 space-y-1">
+              
+              
               <button
-                onClick={() => handleMobileNavClick("home")}
-                className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
-              >
-                Home
-              </button>
-              <button
-                onClick={() => handleMobileNavClick("hot-deals")}
-                className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
-              >
-                Hot Deals
-              </button>
-              <button
-                onClick={() => handleMobileNavClick("tours")}
+                onClick={() => router.push("/destination")}
                 className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
               >
                 Tours
               </button>
               <button
-                onClick={() => handleMobileNavClick("gallery")}
+                onClick={() => router.push("/gallery")}
                 className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
               >
                 Gallery
               </button>
               <button
-                onClick={() => handleMobileNavClick("about")}
+                onClick={() => scrollToSection("about")}
                 className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
               >
                 About Us
               </button>
-              <button
-                onClick={() => handleMobileNavClick("contact")}
-                className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium"
-              >
-                Contact
-              </button>
+              
               <div className="border-t border-gray-200 mt-2 pt-2">
                 <Button 
                   className="w-full"
-                  onClick={() => handleMobileNavClick("contact")}
+                  onClick={() => router.push("/contact")}
                 >
                   Contact Us
                 </Button>

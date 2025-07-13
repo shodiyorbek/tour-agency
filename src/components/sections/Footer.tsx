@@ -3,12 +3,14 @@
 import { Plane, Instagram, Facebook, Twitter } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 interface FooterProps {
   scrollToSection: (sectionId: string) => void
 }
 
 export default function Footer({ scrollToSection }: FooterProps) {
+  const router = useRouter()
   return (
     <footer className="bg-background border-t text-foreground py-8 sm:py-10 lg:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -56,7 +58,7 @@ export default function Footer({ scrollToSection }: FooterProps) {
             <ul className="space-y-1.5 sm:space-y-2">
               <li>
                 <button
-                  onClick={() => scrollToSection("home")}
+                  onClick={() => router.push("/")}
                   className="text-sm sm:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                 >
                   Home
@@ -64,7 +66,7 @@ export default function Footer({ scrollToSection }: FooterProps) {
               </li>
               <li>
                 <button
-                  onClick={() => scrollToSection("tours")}
+                  onClick={() => router.push("/destination")}
                   className="text-sm sm:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                 >
                   Tours
@@ -72,23 +74,23 @@ export default function Footer({ scrollToSection }: FooterProps) {
               </li>
               <li>
                 <button
-                  onClick={() => scrollToSection("gallery")}
+                  onClick={() => router.push("/gallery")}
                   className="text-sm sm:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                 >
                   Gallery
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => scrollToSection("about")}
+                <Link
+                  href="/about"
                   className="text-sm sm:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                 >
                   About
-                </button>
+                </Link>
               </li>
               <li>
                 <button
-                  onClick={() => scrollToSection("contact")}
+                  onClick={() => router.push("/contact")}
                   className="text-sm sm:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                 >
                   Contact
@@ -101,22 +103,22 @@ export default function Footer({ scrollToSection }: FooterProps) {
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Destinations</h3>
             <ul className="space-y-1.5 sm:space-y-2 text-muted-foreground">
               <li>
-                <Link href="#" className="text-sm sm:text-base hover:text-foreground transition-colors duration-200">
+                <Link href="/destination" className="text-sm sm:text-base hover:text-foreground transition-colors duration-200">
                   Dubai
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-sm sm:text-base hover:text-foreground transition-colors duration-200">
+                <Link href="/destination" className="text-sm sm:text-base hover:text-foreground transition-colors duration-200">
                   USA
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-sm sm:text-base hover:text-foreground transition-colors duration-200">
+                <Link href="/destination" className="text-sm sm:text-base hover:text-foreground transition-colors duration-200">
                   Japan
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-sm sm:text-base hover:text-foreground transition-colors duration-200">
+                <Link href="/destination" className="text-sm sm:text-base hover:text-foreground transition-colors duration-200">
                   Maldives
                 </Link>
               </li>
