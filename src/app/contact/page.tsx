@@ -1,3 +1,12 @@
+import type { Metadata } from 'next'
+import { constructMetadata, generateStructuredData } from '@/lib/metadata'
+
+export const metadata: Metadata = constructMetadata({
+  title: 'Contact Us | Get in Touch with Big Tour',
+  description: 'Contact Big Tour for personalized travel planning, tour bookings, and expert travel advice. Our travel specialists are here to help create your perfect journey.',
+  image: '/destination/baku.webp',
+})
+
 "use client";
 
 import { useState } from "react";
@@ -37,6 +46,7 @@ import { CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import Navigation from "@/components/sections/Navigation";
 import Footer from "@/components/sections/Footer";
+import SEOStructuredData from "@/components/SEOStructuredData";
 
 const contactInfo = [
   {
@@ -224,6 +234,10 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOStructuredData 
+        type="FAQPage" 
+        data={{ faqs: faqData }} 
+      />
       <Navigation scrollToSection={scrollToSection} />
 
       {/* Hero Section */}
