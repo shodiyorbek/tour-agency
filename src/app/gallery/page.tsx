@@ -24,6 +24,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import Navigation from "@/components/sections/Navigation"
 import Footer from "@/components/sections/Footer"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 // Gallery data with categories using destination images
 const galleryData = [
@@ -62,7 +63,7 @@ const galleryData = [
     travelers: "10 people",
     rating: 4.7,
     price: "$1,899",
-    image: "/destination/qatar.jpg",
+    image: "/destination/qatar.webp",
     description: "Discover the stunning desert landscapes and modern cityscapes of Qatar.",
     tags: ["Desert", "Adventure", "Modern"]
   },
@@ -264,6 +265,7 @@ const ImageSkeleton = () => (
 )
 
 export default function GalleryPage() {
+  const router = useRouter()
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState<typeof galleryData[0] | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -662,7 +664,7 @@ export default function GalleryPage() {
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              <Button className="bg-primary hover:bg-primary/90 text-white px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+              <Button onClick={() => router.push("/destination")} className="bg-primary hover:bg-primary/90 text-white px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
                 View All Destinations
               </Button>
             </motion.div>
