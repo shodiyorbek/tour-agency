@@ -218,7 +218,7 @@ export default function ImageGallery() {
             {galleryImages.slice(0, 6).map((image, index) => (
               <div 
                 key={image.id}
-                ref={addGalleryItemRef}
+                ref={(el) => addGalleryItemRef(el)}
                 className={`relative overflow-hidden rounded-lg cursor-pointer gallery-item group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl ${
                   index === 0 || index === 3 ? 'aspect-square' : 'aspect-[4/3]'
                 }`}
@@ -254,7 +254,7 @@ export default function ImageGallery() {
             {/* First grid: 2 images stacked */}
             <div className="flex flex-col gap-4 h-full">
               <div 
-                ref={addGalleryItemRef}
+                ref={(el) => addGalleryItemRef(el)}
                 className="flex-1 relative overflow-hidden rounded-xl cursor-pointer gallery-item group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
                 onClick={() => openLightbox(galleryImages[0], 0)}
               >
@@ -276,7 +276,7 @@ export default function ImageGallery() {
                 </div>
               </div>
               <div 
-                ref={addGalleryItemRef}
+                ref={(el) => addGalleryItemRef(el)}
                 className="flex-1 relative overflow-hidden rounded-xl cursor-pointer gallery-item group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
                 onClick={() => openLightbox(galleryImages[1], 1)}
               >
@@ -301,7 +301,7 @@ export default function ImageGallery() {
 
             {/* Second grid: 1 image taking full height */}
             <div 
-              ref={addGalleryItemRef}
+              ref={(el) => addGalleryItemRef(el)}
               className="relative overflow-hidden rounded-xl cursor-pointer gallery-item h-full group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
               onClick={() => openLightbox(galleryImages[2], 2)}
             >
@@ -325,7 +325,7 @@ export default function ImageGallery() {
 
             {/* Third grid: 1 image taking full height */}
             <div 
-              ref={addGalleryItemRef}
+              ref={(el) => addGalleryItemRef(el)}
               className="relative overflow-hidden rounded-xl cursor-pointer gallery-item h-full group transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl" 
               onClick={() => openLightbox(galleryImages[3], 3)}
             >

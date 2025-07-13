@@ -344,8 +344,7 @@ export default function GalleryPage() {
   useEffect(() => {
     const preloadImages = () => {
       filteredData.slice(0, 6).forEach(item => {
-        // @ts-ignore
-        const img = new Image()
+        const img = new window.Image()
         img.src = item.image
         img.onload = () => handleImageLoad(item.id)
         img.onerror = () => handleImageError(item.id)
