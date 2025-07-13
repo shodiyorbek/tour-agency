@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { useWishlistContext } from "@/components/wishlist-provider"
 import WishlistModal from "@/components/wishlist-modal"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 interface NavigationProps {
   scrollToSection: (sectionId: string) => void
@@ -46,12 +47,12 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
            
-            <button
-              onClick={() => scrollToSection("hot-deals")}
+            <Link
+              href="#hot-deals"
               className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"
             >
               Hot Deals
-            </button>
+            </Link>
             <button
               onClick={() => router.push("/destination")}
               className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium"

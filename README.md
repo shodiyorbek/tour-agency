@@ -1,178 +1,211 @@
-# Wanderlust Travel Agency - Enhanced with Advanced Animations
+# Big Trip - Premium Travel Agency Website
 
-A premium travel agency website featuring sophisticated GSAP animations, interactive image gallery with parallax effects, and immersive user experiences.
+A modern, responsive travel agency website built with Next.js 14, featuring advanced animations, interactive galleries, and a comprehensive booking system.
 
-## 🚀 New Features Added
+## 🚀 Quick Start
 
-### Advanced GSAP Animations
-- **Scroll-triggered animations** for all major sections
-- **Parallax effects** on hero background and gallery images
-- **Staggered animations** for tour cards and stats
-- **Smooth scrolling** navigation with GSAP
-- **Enhanced hover effects** with scale and transform animations
-- **Animated counters** with smooth number transitions
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
 
-### Interactive Image Gallery
-- **Parallax scrolling effects** with varying speeds for depth
-- **Lightbox functionality** with smooth transitions
-- **Keyboard navigation** (arrow keys) in lightbox
-- **Responsive masonry-style layout**
-- **Zoom hover effects** with overlay information
-- **Smooth fade-in animations** on scroll
+### Installation & Setup
 
-### Performance Optimizations
-- **GSAP Context API** for proper cleanup
-- **ScrollTrigger optimization** with proper refresh handling
-- **Efficient animation queuing** to prevent performance issues
-- **Responsive breakpoint handling** for animations
-- **Lazy loading** for gallery images
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd tour-agency
+   ```
 
-## 🎨 Animation Details
-
-### Hero Section
-- **Cascading text animations** with staggered timing
-- **Parallax background movement** on scroll
-- **Button hover effects** with scale transforms
-- **Smooth fade-in sequence** on page load
-
-### Tour Cards
-- **3D hover effects** with rotation and scale
-- **Image zoom animations** on hover
-- **Content slide animations** for enhanced interaction
-- **Staggered entrance animations** based on scroll position
-
-### Stats Section
-- **Animated counters** that trigger on scroll
-- **Bounce-in effects** with GSAP's back ease
-- **Icon hover animations** with color transitions
-- **Progressive number counting** for engagement
-
-### Gallery Section
-- **Multi-speed parallax** for depth perception
-- **Masonry layout animations** with staggered reveals
-- **Lightbox transitions** with scale and fade effects
-- **Touch-friendly navigation** for mobile devices
-
-## 📱 Responsive Design Enhancements
-
-### Mobile Optimizations
-- **Touch-friendly hover states** for mobile devices
-- **Reduced motion preferences** respect
-- **Optimized animation performance** for lower-end devices
-- **Responsive parallax effects** that scale appropriately
-
-### Tablet Adaptations
-- **Medium-screen specific animations** 
-- **Touch gesture support** for gallery navigation
-- **Optimized scroll triggers** for tablet viewports
-
-## 🛠 Technical Implementation
-
-### GSAP Integration
-\`\`\`javascript
-// Example of scroll-triggered animation
-gsap.fromTo(".tour-card", 
-  {
-    opacity: 0,
-    y: 100,
-    rotationX: 15
-  },
-  {
-    opacity: 1,
-    y: 0,
-    rotationX: 0,
-    duration: 0.8,
-    stagger: 0.15,
-    ease: "power2.out",
-    scrollTrigger: {
-      trigger: toursRef.current,
-      start: "top 70%",
-      toggleActions: "play none none reverse"
-    }
-  }
-)
-\`\`\`
-
-### Performance Considerations
-- **Context cleanup** to prevent memory leaks
-- **Animation batching** for smooth performance
-- **Reduced motion support** for accessibility
-- **Efficient scroll handling** with throttling
-
-## 🎯 User Experience Improvements
-
-### Micro-Interactions
-- **Button hover animations** with subtle scale effects
-- **Card lift effects** on hover for depth perception
-- **Smooth transitions** between all states
-- **Loading animations** for better perceived performance
-
-### Navigation Enhancements
-- **Smooth scroll to sections** with GSAP
-- **Active state animations** for navigation items
-- **Mobile menu transitions** with slide effects
-- **Breadcrumb animations** for user orientation
-
-## 🔧 Installation & Setup
-
-1. **Install dependencies:**
-   \`\`\`bash
-   npm install gsap
-   \`\`\`
-
-2. **GSAP Plugins Used:**
-   - ScrollTrigger for scroll-based animations
-   - TextPlugin for text animations (optional)
-   - MotionPathPlugin for advanced path animations (premium)
+2. **Install dependencies:**
+   ```bash
+   npm install --legacy-peer-deps
+   ```
 
 3. **Run the development server:**
-   \`\`\`bash
+   ```bash
    npm run dev
-   \`\`\`
+   ```
 
-## 📊 Performance Metrics
+4. **Open your browser:**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+## ✨ Key Features & Solutions
+
+### 🎨 Advanced Animation System
+- **GSAP Integration** with ScrollTrigger for smooth scroll-based animations
+- **Framer Motion** for component-level animations and micro-interactions
+- **Staggered animations** for tour cards, stats, and gallery items
+- **Parallax effects** on hero backgrounds and gallery images
+- **Performance-optimized** animations with proper cleanup and context management
+
+### 🖼️ Interactive Image Gallery
+- **Masonry-style responsive layout** with dynamic grid system
+- **Lightbox functionality** with smooth transitions and keyboard navigation
+- **Parallax scrolling effects** with varying speeds for depth perception
+- **Lazy loading** with animated skeleton placeholders
+- **Touch-friendly navigation** for mobile devices
+
+### 💫 Hero Section with Dynamic Carousel
+- **Auto-rotating background carousel** with smooth transitions
+- **Animated text overlays** that sync with background changes
+- **Progress indicators** and navigation controls
+- **Responsive design** that adapts to all screen sizes
+- **Search integration** with modern form components
+
+### 🛍️ Wishlist System
+- **LocalStorage persistence** for saved tours across sessions
+- **Global state management** with React Context
+- **Interactive heart icons** on tour cards
+- **Dedicated wishlist modal** with full tour management
+- **Real-time count badges** in navigation
+
+### 📱 Responsive Design Excellence
+- **Mobile-first approach** with progressive enhancement
+- **Touch-optimized interactions** for mobile devices
+- **Flexible grid systems** that adapt to all screen sizes
+- **Optimized typography** scaling across devices
+- **Performance-conscious** animations for lower-end devices
+
+### 🎯 SEO & Performance
+- **Structured data** implementation for rich search results
+- **Meta tag optimization** with dynamic generation
+- **Image optimization** with Next.js Image component
+- **Lazy loading** for improved Core Web Vitals
+- **Accessibility features** with ARIA labels and keyboard navigation
+
+### 🔧 Modern Tech Stack
+- **Next.js 14** with App Router
+- **TypeScript** for type safety
+- **Tailwind CSS** for utility-first styling
+- **Radix UI** for accessible components
+- **Framer Motion** for animations
+- **GSAP** for advanced animations
+- **React Hook Form** for form handling
+
+## 🏗️ Project Structure
+
+```
+src/
+├── app/                    # Next.js App Router pages
+│   ├── contact/           # Contact page
+│   ├── destination/       # Destination listing page
+│   ├── gallery/          # Gallery page
+│   └── globals.css       # Global styles
+├── components/            # Reusable components
+│   ├── sections/         # Page sections
+│   ├── ui/              # UI components (Radix-based)
+│   └── hooks/           # Custom React hooks
+├── lib/                  # Utility functions
+└── styles/              # Additional styles
+```
+
+## 🎨 Design System
+
+### Color Palette
+- **Primary**: Blue (#3b82f6) - Used for main actions and highlights
+- **Secondary**: Gray scale for text and backgrounds
+- **Accent**: White/Black for contrast and readability
+
+### Typography
+- **Headings**: Bold, large-scale typography for impact
+- **Body**: Clean, readable fonts for content
+- **Responsive**: Scales appropriately across all devices
+
+### Components
+- **Cards**: Elevated design with hover effects
+- **Buttons**: Primary styling with hover animations
+- **Forms**: Clean, accessible form components
+- **Navigation**: Sticky header with smooth scrolling
+
+## 🚀 Performance Optimizations
 
 ### Animation Performance
-- **60fps animations** maintained across all devices
-- **Optimized scroll triggers** with minimal reflow
-- **Efficient memory usage** with proper cleanup
-- **Battery-friendly animations** on mobile devices
+- **GSAP Context API** for proper cleanup
+- **ScrollTrigger optimization** with refresh handling
+- **Efficient animation queuing** to prevent performance issues
+- **Reduced motion support** for accessibility
 
 ### Loading Performance
 - **Lazy loading** for gallery images
 - **Progressive enhancement** for animations
-- **Fallback states** for reduced motion preferences
 - **Optimized bundle size** with tree shaking
+- **Image optimization** with Next.js Image component
 
-## 🎨 Design Philosophy
+### Mobile Optimizations
+- **Touch-friendly hover states** for mobile devices
+- **Optimized animation performance** for lower-end devices
+- **Responsive parallax effects** that scale appropriately
+- **Battery-friendly animations** on mobile devices
 
-### Premium Feel
-- **Subtle, sophisticated animations** that enhance rather than distract
-- **Consistent timing** across all interactions
-- **Smooth, natural motion** that feels organic
-- **Attention to detail** in micro-interactions
+## 🔧 Development Features
 
-### User-Centric Approach
-- **Accessibility-first** animation design
-- **Performance-conscious** implementation
-- **Mobile-optimized** touch interactions
-- **Intuitive navigation** with visual feedback
+### Code Quality
+- **ESLint configuration** for code consistency
+- **TypeScript** for type safety
+- **Prettier** for code formatting
+- **Component-based architecture** for maintainability
 
-## 🚀 Future Enhancements
+### State Management
+- **React Context** for global state (wishlist, theme)
+- **Local storage** for persistence
+- **Custom hooks** for reusable logic
 
-### Planned Features
-- **3D card flip animations** for tour details
-- **Magnetic cursor effects** for desktop users
-- **Advanced parallax scenes** with multiple layers
-- **Interactive timeline animations** for booking process
+### Testing & Debugging
+- **Development tools** integration
+- **Error boundaries** for graceful error handling
+- **Console logging** for debugging
 
-### Performance Optimizations
-- **WebGL acceleration** for complex animations
-- **Intersection Observer** for more efficient scroll triggers
-- **Animation preloading** for smoother experiences
-- **Progressive Web App** features for offline functionality
+## 📊 Analytics & Monitoring
+
+### Performance Metrics
+- **Core Web Vitals** optimization
+- **Lighthouse scores** monitoring
+- **Bundle size** analysis
+- **Animation performance** tracking
+
+### User Experience
+- **Loading states** with skeleton placeholders
+- **Error handling** with fallback UI
+- **Accessibility** compliance
+- **Mobile responsiveness** testing
+
+## 🚀 Deployment
+
+### Production Build
+```bash
+npm run build
+npm run start
+```
+
+### Environment Variables
+Create a `.env.local` file for environment-specific configurations.
+
+### Hosting
+The application is optimized for deployment on:
+- Vercel (recommended)
+- Netlify
+- AWS Amplify
+- Any static hosting service
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.
 
 ---
 
-*This enhanced version transforms the travel agency website into a premium, interactive experience that rivals the best travel websites in the industry.*
-\`\`\`
+*Built with ❤️ using Next.js, TypeScript, and modern web technologies.*
