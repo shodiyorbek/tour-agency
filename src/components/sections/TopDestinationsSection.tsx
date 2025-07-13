@@ -3,57 +3,62 @@
 import React, { useState } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { MapPin, Star } from "lucide-react"
 
+import { motion, AnimatePresence } from "framer-motion"
+import { useRouter } from "next/navigation"
 const destinations = [
   {
     id: 1,
     name: "Santorini, Greece",
-    image: "/gallery/kyoto.jpg",
+    image: "/destination/istanbul.webp",
     rating: 4.8,
     price: "$1,200",
     duration: "5 Days",
-    description: "Experience the stunning white architecture and breathtaking sunsets of the Greek islands."
+    description: "Experience the stunning white architecture and breathtaking sunsets of the Greek islands.",
+    listings: 28
   },
   {
     id: 2,
     name: "Bali, Indonesia",
-    image: "/gallery/over-water.jpg",
+    image: "/destination/bali.webp",
     rating: 4.9,
     price: "$950",
     duration: "7 Days",
-    description: "Discover tropical paradise with pristine beaches and rich cultural heritage."
+    description: "Discover tropical paradise with pristine beaches and rich cultural heritage.",
+    listings: 15
   },
   {
     id: 3,
     name: "Swiss Alps",
-    image: "/gallery/aurora.jpg",
+    image: "/destination/tailand.webp",
     rating: 4.7,
     price: "$1,500",
     duration: "6 Days",
-    description: "Adventure through majestic mountains and picturesque alpine villages."
+    description: "Adventure through majestic mountains and picturesque alpine villages.",
+    listings: 22
   },
   {
     id: 4,
     name: "Tokyo, Japan",
-    image: "/gallery/macho.jpg",
+    image: "/destination/vietnam.webp",
     rating: 4.6,
     price: "$1,300",
     duration: "8 Days",
-    description: "Immerse yourself in the perfect blend of tradition and modern innovation."
+    description: "Immerse yourself in the perfect blend of tradition and modern innovation.",
+    listings: 25
   }
 ]
 
 export default function TopDestinationsSection() {
-  const [expandedId, setExpandedId] = useState<number | null>(null)
-
+  const [expandedId, setExpandedId] = useState<number>(1)
+  const router = useRouter()
   const handleImageClick = (id: number) => {
-    setExpandedId(expandedId === id ? null : id)
+    setExpandedId(id)
   }
 
   return (
     <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4">
+      <div className="max-w-[1240px]  mx-auto w-full">
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -64,102 +69,121 @@ export default function TopDestinationsSection() {
           </p>
         </div>
 
-        {/* Destinations Grid */}
-        <div className="grid grid-cols-4 gap-2 max-w-4xl mx-auto">
+        {/* Destinations Row - Horizontal on desktop, Vertical on mobile */}
+        <div className="flex flex-col md:flex-row gap-4 mx-auto">
           {destinations.map((destination) => {
             const isExpanded = expandedId === destination.id
-            const isCollapsed = expandedId !== null && !isExpanded
-
+            const isCollapsed = !isExpanded
             return (
-              <div
+              <motion.div
                 key={destination.id}
-                className={`relative group cursor-pointer transition-all duration-500 ease-in-out ${
-                  isExpanded 
-                    ? 'col-span-2 row-span-2' 
-                    : isCollapsed 
-                      ? 'col-span-1 opacity-60 scale-90' 
-                      : 'col-span-1'
-                }`}
+                layout
+                transition={{ 
+                  type: 'spring', 
+                  stiffness: 100, 
+                  damping: 20,
+                  duration: 0.8
+                }}
+                className={`relative group cursor-pointer rounded-3xl overflow-hidden shadow-lg bg-white/0 flex flex-col justify-end ${
+                  isExpanded
+                    ? 'md:flex-1 md:min-w-[50%] h-[300px] md:h-[500px] z-10'
+                    : 'w-full md:w-[150px] md:min-w-[150px] h-[120px] md:h-[500px] opacity-80 hover:opacity-100'
+                } ${isCollapsed ? 'scale-95 opacity-60' : ''}`}
                 onClick={() => handleImageClick(destination.id)}
+                animate={{
+                  zIndex: isExpanded ? 10 : 1,
+                  scale: isCollapsed ? 0.95 : 1,
+                  opacity: isCollapsed ? 0.6 : 1,
+                  borderRadius: '32px',
+                  boxShadow: isExpanded
+                    ? '0 8px 32px 0 rgba(31, 38, 135, 0.37)'
+                    : '0 2px 8px 0 rgba(31, 38, 135, 0.15)'
+                }}
               >
-                {/* Image Container */}
-                <div className={`relative overflow-hidden rounded-2xl shadow-lg transition-all duration-500 ${
-                  isExpanded ? 'h-96' : 'h-32'
-                }`}>
+                <motion.div
+                  className="absolute inset-0"
+                  initial={false}
+                  animate={{
+                    scale: isExpanded ? 1.04 : 1,
+                  }}
+                  transition={{ 
+                    duration: 0.8, 
+                    ease: [0.4, 0, 0.2, 1] 
+                  }}
+                  style={{ zIndex: 0 }}
+                >
                   <Image
                     src={destination.image}
                     alt={destination.name}
                     fill
-                    className="object-cover transition-all duration-500 hover:scale-110"
+                    className="object-cover transition-all duration-500"
                   />
-                  
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                  
-                  {/* Content */}
-                  <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
-                    <div className="flex items-center justify-between mb-1">
-                      <h3 className={`font-bold ${isExpanded ? 'text-lg' : 'text-sm'}`}>{destination.name}</h3>
-                      <div className="flex items-center gap-1">
-                        <Star className={`${isExpanded ? 'w-4 h-4' : 'w-3 h-3'} fill-yellow-400 text-yellow-400`} />
-                        <span className={`${isExpanded ? 'text-sm' : 'text-xs'}`}>{destination.rating}</span>
-                      </div>
-                    </div>
-                    
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10" />
+                </motion.div>
+                {/* Content */}
+                <motion.div
+                  className={`absolute z-20 flex ${
+                    isExpanded
+                      ? 'flex-col md:flex-row items-start md:items-end justify-between bottom-0 left-0 right-0 p-4 md:p-8'
+                      : 'flex-col items-start justify-end bottom-0 left-0 p-4 md:p-6 h-full w-full'
+                  }`}
+                  style={isExpanded ? {} : { writingMode: 'vertical-rl', textOrientation: 'mixed' }}
+                  initial={false}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                    y: 0,
+                  }}
+                  transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+                >
+                  <motion.div
+                    initial={false}
+                    animate={{
+                      opacity: 1,
+                      y: isExpanded ? 0 : 20,
+                    }}
+                    transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+                    className={`${isExpanded ? 'mb-4 md:mb-0' : 'mb-8'}`}
+                  >
+                    <h3 className={`font-bold text-white ${isExpanded ? 'text-xl md:text-2xl mb-2' : 'text-lg md:text-xl'}`}>{destination.name}</h3>
+                    <span className={`text-white/80 ${isExpanded ? 'text-sm md:text-base' : 'text-xs md:text-sm'}`}>{destination.listings} Listing</span>
+                  </motion.div>
+                  <AnimatePresence>
                     {isExpanded && (
-                      <div className="space-y-3 animate-in slide-in-from-bottom-2 duration-500">
-                        <p className="text-sm opacity-90">{destination.description}</p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-4 text-sm">
-                            <span className="flex items-center gap-1">
-                              <MapPin className="w-4 h-4" />
-                              {destination.duration}
-                            </span>
-                            <span className="font-semibold text-yellow-400">
-                              {destination.price}
-                            </span>
-                          </div>
-                          <Button 
-                            size="sm" 
-                            className="bg-yellow-400 text-black hover:bg-yellow-300"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              // Handle booking
-                            }}
-                          >
-                            Book Now
-                          </Button>
-                        </div>
-                      </div>
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+                        className="flex-shrink-0"
+                      >
+                        <Button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push("/destination");
+                          }}
+                          size="lg" 
+                          className="border-white rounded-full bg-white text-black hover:text-white  backdrop-blur-md text-sm md:text-base"
+                        >
+                          Book Now
+                        </Button>
+                      </motion.div>
                     )}
-                    
-                    {!isExpanded && (
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs opacity-90">{destination.duration}</span>
-                        <span className="font-semibold text-yellow-400 text-xs">{destination.price}</span>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Expand/Collapse Indicator */}
-                  <div className={`absolute top-2 right-2 ${isExpanded ? 'w-8 h-8' : 'w-6 h-6'} rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center transition-all duration-300 ${
-                    isExpanded ? 'bg-yellow-400/90' : 'hover:bg-white/30'
-                  }`}>
-                    <span className={`text-white font-bold ${isExpanded ? 'text-sm' : 'text-xs'}`}>
-                      {isExpanded ? '×' : '+'}
-                    </span>
-                  </div>
-                </div>
-              </div>
+                  </AnimatePresence>
+                </motion.div>
+              </motion.div>
             )
           })}
         </div>
 
         {/* Call to Action */}
         <div className="text-center mt-12">
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-lg font-semibold">
-            View All Destinations
-          </Button>
+                                            <Button 
+                        onClick={() => router.push("/destination")}
+                        className="bg-white text-black h-[50px] w-[200px]"
+                      >
+                        View All Destinations
+                      </Button>
         </div>
       </div>
     </section>

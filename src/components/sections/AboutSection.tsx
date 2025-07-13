@@ -13,6 +13,7 @@ export default function AboutSection() {
     <section id="about" ref={aboutRef} className="py-12 sm:py-16 lg:py-20 bg-muted/20 mt-16 sm:mt-20 lg:mt-[120px]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
+
           <motion.div 
             className="about-content order-2 lg:order-1"
             initial={{ opacity: 0, x: -50 }}
@@ -36,6 +37,7 @@ export default function AboutSection() {
               viewport={{ once: true, threshold: 0.1 }}
               transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
             >
+
               With over 25 years of experience in crafting extraordinary travel experiences, we specialize in creating
               personalized journeys that go beyond the ordinary. Our expert team ensures every detail is perfect.
             </motion.p>
@@ -117,6 +119,7 @@ export default function AboutSection() {
             transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           >
             <div className="relative mx-auto max-w-md lg:max-w-none">
+
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -139,6 +142,7 @@ export default function AboutSection() {
                 transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
               >
                 <div className="text-2xl sm:text-3xl font-bold text-yellow-400">
+
                   <AnimatedCounter end={25} suffix="+" />
                 </div>
                 <div className="text-sm sm:text-base text-muted-foreground">Years Experience</div>

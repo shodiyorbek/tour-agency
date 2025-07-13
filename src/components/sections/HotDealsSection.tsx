@@ -24,12 +24,12 @@ import {
   Clock, 
   Users, 
   Calendar,
-  ArrowRight,
   Info,
   X
 } from "lucide-react"
 import Image from "next/image"
 import Autoplay from "embla-carousel-autoplay"
+import { useRouter } from "next/navigation"
 
 const hotDeals = [
   {
@@ -43,7 +43,7 @@ const hotDeals = [
     groupSize: "2-8 people",
     rating: 4.9,
     reviews: 234,
-    image: "/images/bali.webp",
+    image: "/destination/bali.webp",
     description: "Escape to the stunning beaches of Bali with luxury resorts, traditional temples, and vibrant culture. This limited-time offer includes spa treatments and sunset dinners.",
     highlights: ["Luxury Beach Resort", "Temple Tours", "Spa Package", "Sunset Dinner"],
     validUntil: "2024-02-28",
@@ -62,7 +62,7 @@ const hotDeals = [
     groupSize: "4-12 people",
     rating: 4.8,
     reviews: 189,
-    image: "/images/tropical-beach.jpg",
+    image: "/destination/gruzia.webp",
     description: "Experience magical winter landscapes with skiing, cozy chalets, and Christmas markets. Includes equipment rental and mountain railway adventures.",
     highlights: ["Ski Lessons", "Mountain Chalet", "Christmas Markets", "Scenic Railways"],
     validUntil: "2024-01-31",
@@ -81,7 +81,7 @@ const hotDeals = [
     groupSize: "2-10 people",
     rating: 4.7,
     reviews: 156,
-    image: "/gallery/dubai-sunset.jpg",
+    image: "/destination/dubai.webp",
     description: "Immerse yourself in luxury with desert safaris, gold souks, and modern marvels. Includes Burj Khalifa access and traditional dhow cruise.",
     highlights: ["Desert Safari", "Burj Khalifa", "Gold Souk", "Dhow Cruise"],
     validUntil: "2024-03-15",
@@ -100,7 +100,7 @@ const hotDeals = [
     groupSize: "4-8 people",
     rating: 5.0,
     reviews: 98,
-    image: "/gallery/serengeti.webp",
+    image: "/destination/maldivs.webp",
     description: "Witness the Great Migration and Big Five in their natural habitat. Luxury tented camps with expert guides and cultural village visits included.",
     highlights: ["Great Migration", "Big Five Safari", "Luxury Tents", "Cultural Villages"],
     validUntil: "2024-04-30",
@@ -119,7 +119,7 @@ const hotDeals = [
     groupSize: "6-16 people",
     rating: 4.9,
     reviews: 267,
-    image: "/gallery/over-water.jpg",
+    image: "/destination/singapore.webp",
     description: "Sail through crystal-clear waters visiting Mykonos, Santorini, and Crete. Includes yacht accommodation and traditional Greek dining experiences.",
     highlights: ["Yacht Experience", "Santorini Sunset", "Greek Cuisine", "Ancient Ruins"],
     validUntil: "2024-05-20",
@@ -135,7 +135,7 @@ export default function HotDealsSection() {
   const [count, setCount] = useState(0)
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const [selectedTour, setSelectedTour] = useState<Tour | null>(null)
-
+  const router = useRouter()
   const { wishlist, addToWishlist, removeFromWishlist, isInWishlist } = useWishlistContext()
   const { toast } = useToast()
 
@@ -144,7 +144,7 @@ export default function HotDealsSection() {
     id: deal.id,
     title: deal.title,
     destination: deal.destination,
-    price: deal.salePrice, // Use sale price as the current price
+    price: deal.salePrice, 
     duration: deal.duration,
     groupSize: deal.groupSize,
     rating: deal.rating,
@@ -153,8 +153,8 @@ export default function HotDealsSection() {
     description: deal.description,
     highlights: deal.highlights,
     category: deal.category,
-    spotsLeft: 10, // Default value for demo
-    totalSpots: 20, // Default value for demo
+    spotsLeft: 10, 
+    totalSpots: 20, 
     nextDeparture: deal.validUntil,
     included: deal.highlights,
     notIncluded: ["Flights", "Travel Insurance", "Personal Expenses"]
@@ -167,7 +167,7 @@ export default function HotDealsSection() {
   }, {} as Record<number, typeof hotDeals[0]>)
 
   const handleContactUs = (tour: Tour) => {
-    // Scroll to contact section
+    
     const contactSection = document.getElementById('contact')
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' })
@@ -282,7 +282,7 @@ export default function HotDealsSection() {
             }}
           >
             <CarouselContent>
-              {tours.map((tour, index) => (
+              {tours.map((tour) => (
                 <CarouselItem key={tour.id}>
                   <Card 
                     className="group overflow-hidden border-0 bg-white/80 backdrop-blur-sm hover:bg-white shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
@@ -325,8 +325,8 @@ export default function HotDealsSection() {
                                 </div>
                                 <Button 
                                   size="sm" 
-                                  className="bg-primary hover:bg-primary/90"
-                                  onClick={() => handleContactUs(tour)}
+                                  className="bg-white rounded-full text-black hover:text-white"
+                                  onClick={() => router.push("/contact")}
                                 >
                                   Contact Us
                                 </Button>
@@ -442,7 +442,7 @@ export default function HotDealsSection() {
                               <Button
                                 onClick={() => setSelectedTour(tour)}
                                 variant="outline"
-                                className="flex-1 hover:bg-primary/10"
+                                className="flex-1 bg-white text-black rounded-full"
                               >
                                 <Info className="h-4 w-4 mr-2" />
                                 View Details
@@ -468,13 +468,15 @@ export default function HotDealsSection() {
           </Carousel>
 
           {/* Carousel Indicators */}
-          <div className="flex justify-center mt-6">
-            <div className="flex space-x-2">
+          <div className="flex justify-center mt-4 sm:mt-6">
+            <div className="flex space-x-1 sm:space-x-2">
               {Array.from({ length: count }).map((_, index) => (
                 <button
                   key={index}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === current - 1 ? 'bg-primary w-6' : 'bg-primary/30'
+                  className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
+                    index === current - 1 
+                      ? 'bg-primary w-4 sm:w-6' 
+                      : 'bg-primary/30 w-1.5 sm:w-2'
                   }`}
                   onClick={() => api?.scrollTo(index)}
                 />
@@ -502,9 +504,11 @@ export default function HotDealsSection() {
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                  <img
+                  <Image
                     src={selectedTour.image}
                     alt={selectedTour.title}
+                    width={600}
+                    height={600}
                     className="w-full h-64 object-cover rounded-lg"
                   />
                 </div>
@@ -540,7 +544,7 @@ export default function HotDealsSection() {
                       <span className="text-2xl font-bold">${selectedTour.price}</span>
                       <span className="text-muted-foreground"> per person</span>
                     </div>
-                    <Button onClick={() => handleContactUs(selectedTour)} className="bg-primary hover:bg-primary/90">
+                    <Button onClick={() => handleContactUs(selectedTour)} className="bg-white text-black hover:text-white">
                       Contact Us
                     </Button>
                   </div>

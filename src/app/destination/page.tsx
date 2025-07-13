@@ -17,7 +17,9 @@ import {
   ChevronRight,
   Globe,
   Mountain,
+  Waves,
   Palmtree,
+
   Building,
   TreePine,
   Plane,
@@ -33,6 +35,7 @@ import { useWishlistContext } from "@/components/wishlist-provider"
 import { useToast } from "@/hooks/use-toast"
 import { useDebounce } from "@/hooks/use-debounce"
 import { Tour } from "@/hooks/use-wishlist"
+import Navigation from "@/components/sections/Navigation"
 import Footer from "@/components/sections/Footer"
 
 const destinations = [
@@ -292,7 +295,7 @@ const destinations = [
 
 const categories = [
   { id: "all", name: "All Destinations", icon: Globe },
-  { id: "beach", name: "Beach", icon: Palmtree },
+  { id: "beach", name: "Beach", icon: Waves },
   { id: "mountain", name: "Mountain", icon: Mountain },
   { id: "city", name: "City", icon: Building },
   { id: "nature", name: "Nature", icon: TreePine },
@@ -333,26 +336,26 @@ const DestinationCard = ({
       }
     }}
     exit={{ opacity: 0, scale: 0.9, y: -20 }}
-    whileHover={{ y: -5, scale: 1.02 }}
+    whileHover={{ y: -8, scale: 1.02 }}
     className="group"
   >
-    <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300">
+    <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 bg-white rounded-3xl">
       <div className="relative overflow-hidden">
-        <div className="relative h-64 overflow-hidden">
+        <div className="relative h-72 overflow-hidden">
           <img
             src={destination.image || "/placeholder.svg"}
             alt={destination.title}
-            className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+            className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         </div>
         
         <div className="absolute top-4 left-4 flex gap-2">
-          <Badge className="bg-primary text-white backdrop-blur-sm">
+          <Badge className="bg-primary text-white backdrop-blur-sm border-0">
             {destination.category}
           </Badge>
           {destination.spotsLeft <= 3 && (
-            <Badge className="bg-red-600 text-white backdrop-blur-sm animate-pulse">
+                            <Badge className="bg-primary text-primary-foreground backdrop-blur-sm animate-pulse border-0">
               Only {destination.spotsLeft} spots left!
             </Badge>
           )}
@@ -363,7 +366,7 @@ const DestinationCard = ({
             e.stopPropagation()
             onToggleWishlist(destination)
           }}
-          className="absolute top-4 right-4 p-2 bg-white/90 rounded-full hover:bg-white transition-all duration-200 group/heart"
+          className="absolute top-4 right-4 p-3 bg-white/95 rounded-full hover:bg-white transition-all duration-300 group/heart shadow-lg"
         >
           <Heart 
             className={`h-5 w-5 transition-all duration-300 ${
@@ -375,8 +378,8 @@ const DestinationCard = ({
         </button>
       </div>
       
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between mb-2">
+      <CardContent className="p-8">
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <div className="flex items-center">
               {[...Array(5)].map((_, i) => (
@@ -390,72 +393,76 @@ const DestinationCard = ({
                 />
               ))}
             </div>
-            <span className="text-sm font-medium">{destination.rating}</span>
+            <span className="text-sm font-semibold">{destination.rating}</span>
             <span className="text-sm text-muted-foreground">({destination.reviews})</span>
           </div>
-          <div className="text-2xl font-bold text-primary">
-            ${destination.price}
-            <span className="text-sm font-normal text-muted-foreground">/person</span>
+          <div className="text-right">
+            <div className="text-3xl font-bold text-primary">
+              ${destination.price.toLocaleString()}
+            </div>
+            <span className="text-sm text-muted-foreground">per person</span>
           </div>
         </div>
         
-        <h3 className="text-xl group-hover:text-primary transition-colors duration-200 line-clamp-1 mb-2">
+        <h3 className="text-xl font-bold group-hover:text-primary transition-colors duration-300 line-clamp-1 mb-3">
           {destination.title}
         </h3>
         
-        <p className="flex items-center gap-2 text-muted-foreground text-sm mb-4">
-          <MapPin className="h-4 w-4" />
-          {destination.location}
-          <Badge variant="outline" className="ml-2">
+        <div className="flex items-center gap-2 text-muted-foreground text-sm mb-4">
+          <MapPin className="h-4 w-4 text-primary" />
+          <span className="font-medium">{destination.location}</span>
+          <Badge variant="outline" className="ml-2 border-primary/20 text-primary">
             {destination.difficulty}
           </Badge>
-        </p>
+        </div>
         
-        <div className="grid grid-cols-2 gap-3 text-sm text-muted-foreground mb-4">
-          <div className="flex items-center gap-1">
+        <div className="grid grid-cols-2 gap-4 text-sm text-muted-foreground mb-6">
+          <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-primary" />
-            {destination.duration}
+            <span className="font-medium">{destination.duration}</span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <Users className="h-4 w-4 text-primary" />
-            {destination.groupSize}
+            <span className="font-medium">{destination.groupSize}</span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4 text-primary" />
-            Next: {new Date(destination.nextDeparture).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+            <span className="font-medium">
+              Next: {new Date(destination.nextDeparture).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+            </span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <ArrowRight className="h-4 w-4 text-primary" />
-            {destination.availability}
+            <span className="font-medium">{destination.availability}</span>
           </div>
         </div>
         
-        <div className="mb-4">
-          <div className="flex flex-wrap gap-1">
+        <div className="mb-6">
+          <div className="flex flex-wrap gap-2">
             {destination.highlights.slice(0, 3).map((highlight, idx) => (
-              <Badge key={idx} variant="secondary" className="text-xs">
+              <Badge key={idx} variant="secondary" className="text-xs bg-primary/10 text-primary border-0">
                 {highlight}
               </Badge>
             ))}
             {destination.highlights.length > 3 && (
-              <Badge variant="outline" className="text-xs">
+              <Badge variant="outline" className="text-xs border-primary/20 text-primary">
                 +{destination.highlights.length - 3} more
               </Badge>
             )}
           </div>
         </div>
         
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <Button 
             onClick={() => onSelectDestination(destination)}
-            className="flex-1 bg-primary hover:bg-primary/90 transition-all duration-200 group"
+            className="flex-1 bg-primary hover:bg-primary/90 transition-all duration-300 h-12 text-base font-semibold"
           >
             <ArrowRight className="h-4 w-4 mr-2" />
             Quick View
           </Button>
           <Button
             variant="outline"
-            className="hover:bg-primary/10 transition-colors duration-200"
+            className="hover:bg-primary/10 transition-colors duration-300 h-12 text-base font-semibold border-primary/20 text-primary"
             onClick={onContactUs}
           >
             Book Now
@@ -468,96 +475,9 @@ const DestinationCard = ({
 
 DestinationCard.displayName = 'DestinationCard'
 
-// Simple Navigation Component for Destination Page
-const DestinationNavigation = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { getWishlistCount } = useWishlistContext()
 
-  return (
-    <nav className="fixed top-0 w-full bg-white z-50 border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 relative">
-              <img
-                src="/images/logo.png"
-                alt="Big Trip Logo"
-                className="w-8 h-8 object-contain"
-              />
-            </div>
-            <span className="text-xl sm:text-2xl font-bold text-foreground">Big Trip</span>
-          </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
-            <a href="/" className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium">
-              Home
-            </a>
-            <a href="/destination" className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium">
-              Destinations
-            </a>
-            <a href="/tours" className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium">
-              Tours
-            </a>
-            <a href="/about" className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium">
-              About
-            </a>
-            <a href="/contact" className="nav-link text-foreground hover:text-primary transition-colors duration-200 relative font-medium">
-              Contact
-            </a>
-            
-            <div className="relative text-foreground hover:text-primary transition-colors duration-200 p-2">
-              <Heart className="h-5 w-5 lg:h-6 lg:w-6" />
-              {getWishlistCount() > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary/80 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                  {getWishlistCount()}
-                </span>
-              )}
-            </div>
-            <Button className="text-sm lg:text-base">
-              Contact Us
-            </Button>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-2">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-foreground hover:text-primary transition-colors duration-200 p-2"
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-100 animate-in slide-in-from-top duration-200">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              <a href="/" className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium">
-                Home
-              </a>
-              <a href="/destination" className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium">
-                Destinations
-              </a>
-              <a href="/tours" className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium">
-                Tours
-              </a>
-              <a href="/about" className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium">
-                About
-              </a>
-              <a href="/contact" className="block w-full text-left px-3 py-2 text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors duration-200 font-medium">
-                Contact
-              </a>
-            </div>
-          </div>
-        )}
-      </div>
-    </nav>
-  )
-}
-
-export default function DestinationPage() {
+export default function Page() {
   const [selectedDestination, setSelectedDestination] = useState<typeof destinations[0] | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
@@ -628,6 +548,29 @@ export default function DestinationPage() {
     if (isInWishlist(destination.id)) {
       removeFromWishlist(destination.id)
     } else {
+      // Convert destination to Tour format
+      const tour: Tour = {
+        id: destination.id,
+        title: destination.title,
+        destination: destination.location,
+        price: destination.price,
+        duration: destination.duration,
+        groupSize: destination.groupSize,
+        rating: destination.rating,
+        reviews: destination.reviews,
+        image: destination.image,
+        description: destination.description,
+        highlights: destination.highlights,
+        category: destination.category,
+        difficulty: destination.difficulty,
+        availability: destination.availability,
+        spotsLeft: destination.spotsLeft,
+        totalSpots: destination.totalSpots,
+        nextDeparture: destination.nextDeparture,
+        included: destination.included,
+        notIncluded: destination.notIncluded,
+      }
+      addToWishlist(tour)
       // Ensure required 'destination' field exists for Tour type
       addToWishlist({ ...(destination as any), destination: destination.location } as Tour)
     }
@@ -645,29 +588,44 @@ export default function DestinationPage() {
   }
 
   const scrollToSection = (sectionId: string) => {
+    // For destination page, we can implement smooth scrolling to sections
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
     <div className="min-h-screen bg-background">
-      <DestinationNavigation />
+      <Navigation scrollToSection={scrollToSection} />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 py-20">
-        <div className="absolute inset-0 bg-[url('/images/bg.jpg')] bg-cover bg-center opacity-20" />
+      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-24 lg:py-32">
+        <div className="absolute inset-0 bg-[url('/images/bg.jpg')] bg-cover bg-center opacity-10" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6"
+            >
+              <Globe className="h-4 w-4" />
+              Explore the World
+            </motion.div>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
               Discover Amazing
               <span className="text-primary block">Destinations</span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Explore the world's most beautiful destinations with our carefully curated travel experiences
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
+              Explore the world's most beautiful destinations with our carefully curated travel experiences. 
+              From pristine beaches to majestic mountains, find your perfect adventure.
             </p>
           </motion.div>
 
@@ -675,17 +633,17 @@ export default function DestinationPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white rounded-2xl shadow-xl p-6 max-w-4xl mx-auto"
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="bg-white rounded-3xl shadow-2xl p-8 max-w-5xl mx-auto border border-gray-100"
           >
-            <div className="flex flex-col lg:flex-row gap-4">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+              <div className="lg:col-span-2 relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <Input
-                  placeholder="Search destinations, locations..."
+                  placeholder="Search destinations, locations, or activities..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-10 h-12"
+                  className="pl-12 pr-12 h-14 text-lg"
                 />
                 {searchQuery !== debouncedSearchQuery && (
                   <motion.div
@@ -708,16 +666,16 @@ export default function DestinationPage() {
                         duration: 0.3
                       }
                     }}
-                    className="absolute right-3 top-1/2 -translate-y-1/2"
+                    className="absolute right-4 top-1/2 -translate-y-1/2"
                   >
                     <div className="h-5 w-5 border-2 border-primary border-t-transparent rounded-full" />
                   </motion.div>
                 )}
               </div>
               
-              <div className="flex gap-2">
+              <div className="relative">
                 <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="w-[180px] h-12">
+                  <SelectTrigger className="h-14 text-lg">
                     <SelectValue placeholder="Sort by" />
                   </SelectTrigger>
                   <SelectContent>
@@ -726,13 +684,15 @@ export default function DestinationPage() {
                     ))}
                   </SelectContent>
                 </Select>
-                
+              </div>
+              
+              <div className="relative">
                 <Button
                   variant="outline"
                   onClick={() => setShowFilters(!showFilters)}
-                  className="h-12 px-4"
+                  className="h-14 w-full text-lg"
                 >
-                  <Filter className="h-4 w-4 mr-2" />
+                  <Filter className="h-5 w-5 mr-2" />
                   Filters
                 </Button>
               </div>
@@ -742,21 +702,34 @@ export default function DestinationPage() {
       </section>
 
       {/* Category Filter */}
-      <section className="py-8 bg-white border-b">
+      <section className="py-12 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+              Browse by Category
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Find your perfect destination by exploring our curated categories
+            </p>
+          </div>
           <div className="flex flex-wrap gap-4 justify-center">
             {categories.map((category) => {
               const Icon = category.icon
               return (
-                <Button
+                <motion.div
                   key={category.id}
-                  variant={selectedCategory === category.id ? "default" : "outline"}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className="flex items-center gap-2 h-12 px-6"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <Icon className="h-4 w-4" />
-                  {category.name}
-                </Button>
+                  <Button
+                    variant={selectedCategory === category.id ? "default" : "outline"}
+                    onClick={() => setSelectedCategory(category.id)}
+                    className="flex items-center gap-3 h-14 px-8 text-base font-medium transition-all duration-300 hover:shadow-lg"
+                  >
+                    <Icon className="h-5 w-5" />
+                    {category.name}
+                  </Button>
+                </motion.div>
               )
             })}
           </div>
@@ -769,13 +742,17 @@ export default function DestinationPage() {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
-          className="bg-muted/20 border-b"
+          className="bg-gradient-to-r from-blue-50 to-purple-50 border-b border-gray-200"
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div>
-                <label className="text-sm font-medium mb-2 block">Price Range</label>
-                <div className="space-y-2">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-semibold text-foreground mb-2">Refine Your Search</h3>
+              <p className="text-muted-foreground">Customize your search to find the perfect destination</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <label className="text-base font-semibold mb-4 block text-foreground">Price Range</label>
+                <div className="space-y-4">
                   <Slider
                     value={priceRange}
                     onValueChange={setPriceRange}
@@ -784,16 +761,16 @@ export default function DestinationPage() {
                     step={50}
                     className="w-full"
                   />
-                  <div className="flex justify-between text-sm text-muted-foreground">
-                    <span>${priceRange[0]}</span>
-                    <span>${priceRange[1]}</span>
+                  <div className="flex justify-between text-sm font-medium text-muted-foreground">
+                    <span>${priceRange[0].toLocaleString()}</span>
+                    <span>${priceRange[1].toLocaleString()}</span>
                   </div>
                 </div>
               </div>
               
-              <div>
-                <label className="text-sm font-medium mb-2 block">Duration (Days)</label>
-                <div className="space-y-2">
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <label className="text-base font-semibold mb-4 block text-foreground">Duration (Days)</label>
+                <div className="space-y-4">
                   <Slider
                     value={durationRange}
                     onValueChange={setDurationRange}
@@ -802,14 +779,14 @@ export default function DestinationPage() {
                     step={1}
                     className="w-full"
                   />
-                  <div className="flex justify-between text-sm text-muted-foreground">
+                  <div className="flex justify-between text-sm font-medium text-muted-foreground">
                     <span>{durationRange[0]} days</span>
                     <span>{durationRange[1]} days</span>
                   </div>
                 </div>
               </div>
               
-              <div className="flex items-end">
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-end">
                 <Button
                   variant="outline"
                   onClick={() => {
@@ -818,7 +795,7 @@ export default function DestinationPage() {
                     setSelectedCategory("all")
                     setSearchQuery("")
                   }}
-                  className="w-full"
+                  className="w-full h-12 text-base font-medium"
                 >
                   Clear All Filters
                 </Button>
@@ -829,13 +806,18 @@ export default function DestinationPage() {
       )}
 
       {/* Results Section */}
-      <section className="py-12">
+      <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Results Count */}
-          <div className="flex items-center justify-between mb-8">
-            <p className="text-muted-foreground">
-              {filteredDestinations.length} {filteredDestinations.length === 1 ? 'destination' : 'destinations'} found
-            </p>
+          <div className="flex items-center justify-between mb-12">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+                {filteredDestinations.length} {filteredDestinations.length === 1 ? 'Destination' : 'Destinations'} Found
+              </h2>
+              <p className="text-muted-foreground">
+                Discover amazing places that match your preferences
+              </p>
+            </div>
             {(searchQuery || selectedCategory !== "all" || priceRange[0] > 0 || priceRange[1] < 3000 || durationRange[0] > 1 || durationRange[1] < 20) && (
               <Button
                 variant="ghost"
@@ -846,16 +828,16 @@ export default function DestinationPage() {
                   setDurationRange([1, 20])
                   setSortBy("Popular")
                 }}
-                className="text-primary hover:text-primary/80"
+                className="text-primary hover:text-primary/80 font-medium"
               >
-                Clear filters
+                Clear all filters
               </Button>
             )}
           </div>
 
           {/* Destinations Grid */}
           {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[...Array(6)].map((_, i) => (
                 <div key={i} className="animate-pulse">
                   <div className="bg-muted h-64 rounded-t-lg" />
@@ -869,7 +851,7 @@ export default function DestinationPage() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 {currentDestinations.map((destination, index) => (
                   <DestinationCard
                     key={destination.id}
@@ -885,14 +867,15 @@ export default function DestinationPage() {
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-3">
                   <Button
                     variant="outline"
                     size="icon"
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                     disabled={currentPage === 1}
+                    className="h-12 w-12"
                   >
-                    <ChevronLeft className="h-4 w-4" />
+                    <ChevronLeft className="h-5 w-5" />
                   </Button>
                   
                   {[...Array(totalPages)].map((_, i) => (
@@ -900,7 +883,7 @@ export default function DestinationPage() {
                       key={i + 1}
                       variant={currentPage === i + 1 ? "default" : "outline"}
                       onClick={() => setCurrentPage(i + 1)}
-                      className="w-10 h-10"
+                      className="w-12 h-12 text-base font-medium"
                     >
                       {i + 1}
                     </Button>
@@ -911,8 +894,9 @@ export default function DestinationPage() {
                     size="icon"
                     onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                     disabled={currentPage === totalPages}
+                    className="h-12 w-12"
                   >
-                    <ChevronRight className="h-4 w-4" />
+                    <ChevronRight className="h-5 w-5" />
                   </Button>
                 </div>
               )}
@@ -988,7 +972,13 @@ export default function DestinationPage() {
         </div>
       )}
 
-      <Footer scrollToSection={scrollToSection} />
+      <Footer scrollToSection={(sectionId: string) => {
+        // For destination page, we can implement smooth scrolling to sections
+        const element = document.getElementById(sectionId)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }} />
     </div>
   )
-}
+} 
