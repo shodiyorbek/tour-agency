@@ -5,8 +5,8 @@ import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Big Tour - Premium Travel Agency | Luxury Tours & Adventures',
-    template: '%s | Big Tour'
+    default: 'Big Trip',
+    template: '%s | Big Trip'
   },
   description: 'Discover extraordinary travel experiences with Big Tour. Book luxury tours, adventure trips, and cultural journeys to destinations worldwide. Expert guides, premium accommodations, and unforgettable memories.',
   keywords: [
@@ -47,22 +47,22 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://bigtour.com',
-    siteName: 'Big Tour',
-    title: 'Big Tour - Premium Travel Agency | Luxury Tours & Adventures',
-    description: 'Discover extraordinary travel experiences with Big Tour. Book luxury tours, adventure trips, and cultural journeys to destinations worldwide.',
+    siteName: 'Big Trip',
+    title: 'Big Trip - Travel Agency',
+    description: 'Discover extraordinary travel experiences with Big Trip. Book luxury tours, adventure trips, and cultural journeys to destinations worldwide.',
     images: [
       {
         url: '/images/logo.png',
         width: 1200,
         height: 630,
-        alt: 'Big Tour - Premium Travel Agency',
+        alt: 'Big Trip - Travel Agency',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Big Tour - Premium Travel Agency | Luxury Tours & Adventures',
-    description: 'Discover extraordinary travel experiences with Big Tour. Book luxury tours, adventure trips, and cultural journeys to destinations worldwide.',
+    title: 'Big Trip - Travel Agency',
+    description: 'Discover extraordinary travel experiences with Big Trip. Book luxury tours, adventure trips, and cultural journeys to destinations worldwide.',
     images: ['/images/logo.png'],
     creator: '@bigtour',
   },
@@ -102,8 +102,8 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#3b82f6" />
         
@@ -114,7 +114,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "TravelAgency",
-              "name": "Big Tour",
+              "name": "Big Trip",
               "description": "Premium travel agency offering luxury tours, adventure trips, and cultural journeys worldwide",
               "url": "https://bigtour.com",
               "logo": "https://bigtour.com/images/logo.png",
@@ -175,9 +175,9 @@ export default function RootLayout({
                 "reviewCount": "5000"
               },
               "sameAs": [
-                "https://facebook.com/bigtour",
-                "https://instagram.com/bigtour",
-                "https://twitter.com/bigtour"
+                "https://www.instagram.com/bigtrip.uz/",
+                "https://www.facebook.com/bigtrip.uz/",
+                "https://www.twitter.com/bigtrip.uz/"
               ]
             })
           }}

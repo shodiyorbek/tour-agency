@@ -1,13 +1,7 @@
-import type { Metadata } from 'next'
-import { constructMetadata, generateStructuredData } from '@/lib/metadata'
-
-export const metadata: Metadata = constructMetadata({
-  title: 'Contact Us | Get in Touch with Big Tour',
-  description: 'Contact Big Tour for personalized travel planning, tour bookings, and expert travel advice. Our travel specialists are here to help create your perfect journey.',
-  image: '/destination/baku.webp',
-})
 
 "use client";
+
+
 
 import { useState } from "react";
 import {

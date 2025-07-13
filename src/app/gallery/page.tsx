@@ -1,11 +1,3 @@
-import type { Metadata } from 'next'
-import { constructMetadata, generateStructuredData } from '@/lib/metadata'
-
-export const metadata: Metadata = constructMetadata({
-  title: 'Travel Gallery | Photo Gallery & Travel Inspiration',
-  description: 'Browse our stunning travel photo gallery showcasing luxury destinations, cultural experiences, and adventure tours. Get inspired for your next journey with Big Tour.',
-  image: '/gallery/dubai-sunset.jpg',
-})
 
 "use client"
 

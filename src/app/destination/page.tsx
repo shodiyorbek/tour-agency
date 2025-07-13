@@ -1,11 +1,4 @@
-import type { Metadata } from 'next'
-import { constructMetadata, generateStructuredData } from '@/lib/metadata'
 
-export const metadata: Metadata = constructMetadata({
-  title: 'Destinations | Luxury Tours & Travel Packages',
-  description: 'Explore our curated collection of luxury travel destinations worldwide. From tropical paradises to cultural cities, find your perfect adventure with Big Tour.',
-  image: '/destination/bali.webp',
-})
 
 "use client"
 

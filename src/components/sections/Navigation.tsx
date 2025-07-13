@@ -31,12 +31,12 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-2 cursor-pointer" onClick={() => router.push("/")}>
-            <div className="w-8 h-8 relative">
+            <div className="w-12 h-12 relative">
               <Image
                 src="/images/logo.png"
                 alt="Big Trip Logo"
-                width={32}
-                height={32}
+                width={48}
+                height={48}
                 className="object-contain"
               />
             </div>

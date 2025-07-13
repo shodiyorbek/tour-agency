@@ -33,19 +33,19 @@ export default function Footer({ scrollToSection }: FooterProps) {
             </p>
             <div className="flex space-x-3 sm:space-x-4">
               <Link
-                href="https://instagram.com/wanderlust"
+                href="https://www.instagram.com/bigtrip.uz/"
                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
               </Link>
               <Link
-                href="https://facebook.com/wanderlust"
+                href="https://www.instagram.com/bigtrip.uz/"
                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 <Facebook className="h-4 w-4 sm:h-5 sm:w-5" />
               </Link>
               <Link
-                href="https://twitter.com/wanderlust"
+                href="https://www.instagram.com/bigtrip.uz/"
                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 <Twitter className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -128,10 +128,9 @@ export default function Footer({ scrollToSection }: FooterProps) {
           <div>
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Contact Info</h3>
             <div className="space-y-1.5 sm:space-y-2 text-sm sm:text-base text-muted-foreground">
-              <div>123 Travel Street</div>
-              <div>Adventure City, AC 12345</div>
-              <div>Phone: +1 (555) 012-3456</div>
-              <div className="break-all">Email: hello@wanderlust.com</div>
+              <div>Chilonzor,Sergeli,Yunusobod </div>
+              <div>Phone: +998 90 019 22 00</div>
+              <div className="break-all">Email: bigtrip@gmail.com</div>
             </div>
           </div>
         </div>
