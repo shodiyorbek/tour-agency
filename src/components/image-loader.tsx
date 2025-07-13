@@ -1,71 +1,54 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
-import { cn } from "@/lib/utils"
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 
-interface OptimizedImageProps {
+interface ImageLoaderProps {
   src: string
   alt: string
   width?: number
   height?: number
+  className?: string
+  priority?: boolean
   fill?: boolean
   sizes?: string
-  priority?: boolean
-  className?: string
-  onLoad?: () => void
-  onError?: () => void
-  placeholder?: string
   quality?: number
 }
 
-export function OptimizedImage({
+export default function ImageLoader({
   src,
   alt,
   width,
   height,
+  className = "",
+  priority = false,
   fill = false,
   sizes,
-  priority = false,
-  className,
-  onLoad,
-  onError,
-  placeholder = "/placeholder.svg",
   quality = 75
-}: OptimizedImageProps) {
+}: ImageLoaderProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
-  const [imageSrc, setImageSrc] = useState(src)
-
-  useEffect(() => {
-    setImageSrc(src)
-    setIsLoading(true)
-    setHasError(false)
-  }, [src])
 
   const handleLoad = () => {
     setIsLoading(false)
-    onLoad?.()
   }
 
   const handleError = () => {
     setIsLoading(false)
     setHasError(true)
-    setImageSrc(placeholder)
-    onError?.()
   }
 
   return (
-    <div className={cn("relative overflow-hidden", className)}>
-      {/* Enhanced Loading placeholder with animation */}
+    <div className={`relative ${className}`}>
+      {/* Loading skeleton */}
       <AnimatePresence>
         {isLoading && (
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
+            className="absolute inset-0 bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse rounded-lg"
           >
             <div className="flex items-center justify-center h-full">
               <div className="flex space-x-1">
@@ -82,14 +65,14 @@ export function OptimizedImage({
           </motion.div>
         )}
       </AnimatePresence>
-      
-      {/* Enhanced Error placeholder */}
+
+      {/* Error state */}
       <AnimatePresence>
         {hasError && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="absolute inset-0 bg-gray-100 flex items-center justify-center"
+            className="absolute inset-0 bg-gray-100 flex items-center justify-center rounded-lg"
           >
             <div className="text-center text-gray-500">
               <div className="text-2xl mb-2">📷</div>
@@ -98,23 +81,21 @@ export function OptimizedImage({
           </motion.div>
         )}
       </AnimatePresence>
-      
+
+      {/* Actual image */}
       <Image
-        src={imageSrc}
+        src={src}
         alt={alt}
         width={width}
         height={height}
+        className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+        priority={priority}
         fill={fill}
         sizes={sizes}
-        priority={priority}
         quality={quality}
         onLoad={handleLoad}
         onError={handleError}
-        className={cn(
-          "transition-opacity duration-300",
-          isLoading ? "opacity-0" : "opacity-100"
-        )}
       />
     </div>
   )
-} 
+}

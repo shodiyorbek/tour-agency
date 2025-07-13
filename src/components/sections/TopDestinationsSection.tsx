@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import Image from "next/image"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 import { Button } from "@/components/ui/button"
 
 import { motion, AnimatePresence } from "framer-motion"
@@ -112,7 +112,7 @@ export default function TopDestinationsSection() {
                   }}
                   style={{ zIndex: 0 }}
                 >
-                  <Image
+                  <OptimizedImage
                     src={destination.image}
                     alt={destination.name}
                     fill

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { WishlistProvider } from '@/components/wishlist-provider'
 import { Toaster } from '@/components/ui/toaster'
+import GlobalLoader from '@/components/global-loader'
 
 export const metadata: Metadata = {
   title: 'Big Tour - Your Dream Travel Agency',
@@ -22,10 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen overflow-y-auto">
-        <WishlistProvider>
-          {children}
-        </WishlistProvider>
-        <Toaster />
+        <GlobalLoader>
+          <WishlistProvider>
+            {children}
+          </WishlistProvider>
+          <Toaster />
+        </GlobalLoader>
       </body>
     </html>
   )

@@ -13,7 +13,7 @@ import { useWishlistContext } from "@/components/wishlist-provider"
 import { useToast } from "@/hooks/use-toast"
 import { useDebounce } from "@/hooks/use-debounce"
 import { Tour } from "@/hooks/use-wishlist"
-import Image from "next/image"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 
 const tours = [
   {
@@ -418,7 +418,7 @@ const TourCard: FC<TourCardProps> = ({
     <Card className={`group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 flex`}>
       <div className={`relative overflow-hidden `}>
         <div className="relative h-64 overflow-hidden">
-          <Image
+          <OptimizedImage
             width={500}
             height={300}
             src={tour.image || "/placeholder.svg"}

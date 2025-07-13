@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 import { Menu, X, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useWishlistContext } from "@/components/wishlist-provider"
@@ -32,7 +32,7 @@ export default function Navigation({ scrollToSection }: NavigationProps) {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-2 cursor-pointer" onClick={() => router.push("/")}>
             <div className="w-8 h-8 relative">
-              <Image
+              <OptimizedImage
                 src="/images/logo.png"
                 alt="Big Trip Logo"
                 width={32}

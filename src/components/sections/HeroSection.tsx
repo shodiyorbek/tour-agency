@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -252,7 +252,7 @@ export default function HeroSection() {
                         whileHover={{ scale: 1.05 }}
                         className="w-full sm:w-[140px] md:w-[180px] h-[120px] sm:h-[140px] md:h-[160px] aspect-square rounded-lg md:rounded-xl overflow-hidden flex-shrink-0"
                       >
-                        <Image
+                        <OptimizedImage
                           src={card.image}
                           alt={card.title}
                           width={160}

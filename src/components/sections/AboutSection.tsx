@@ -2,7 +2,7 @@
 
 import { useRef } from "react"
 import { Award, Users, Camera } from "lucide-react"
-import Image from "next/image"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 import AnimatedCounter from "@/components/animated-counter"
 
 export default function AboutSection() {
@@ -68,7 +68,7 @@ export default function AboutSection() {
 
           <div className="about-image relative order-1 lg:order-2">
             <div className="relative mx-auto max-w-md lg:max-w-none">
-              <Image
+              <OptimizedImage
                 src="/destination/baku.webp"
                 alt="Travel experience"
                 width={500}

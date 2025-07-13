@@ -2,7 +2,7 @@
 
 import { Plane, Instagram, Facebook, Twitter } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 
 interface FooterProps {
   scrollToSection: (sectionId: string) => void
@@ -16,7 +16,7 @@ export default function Footer({ scrollToSection }: FooterProps) {
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center space-x-2 mb-3 sm:mb-4">
               <div className="w-6 h-6 sm:w-8 sm:h-8 relative">
-                <Image
+                <OptimizedImage
                   src="/images/logo.png"
                   alt="Big Trip Logo"
                   width={32}

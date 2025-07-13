@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 import { Star, Users, Calendar, Award } from "lucide-react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
@@ -142,7 +142,7 @@ export default function BestRecommendedSection() {
 
               {/* Image */}
               <div className="relative h-72 overflow-hidden">
-                <Image
+                <OptimizedImage
                   src={place.image}
                   alt={place.name}
                   fill

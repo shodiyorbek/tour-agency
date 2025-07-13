@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Star, Calendar } from "lucide-react";
 import React from "react";
 import {
@@ -176,7 +176,7 @@ export default function DestinationSection() {
                       }
                       onMouseEnter={() => setHoveredIdx(idx)}
                       onMouseLeave={() => setHoveredIdx(null)}>
-                      <Image
+                      <OptimizedImage
                         src={destination.image.replace("/public", "")}
                         alt={destination.name}
                         fill

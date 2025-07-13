@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { useWishlistContext } from '@/components/wishlist-provider'
 import { Tour } from '@/hooks/use-wishlist'
-import Image from 'next/image'
+import { OptimizedImage } from "@/components/ui/optimized-image"
 import { useRouter } from 'next/navigation'
 
 interface WishlistModalProps {
@@ -75,7 +75,7 @@ export default function WishlistModal({ isOpen, onClose }: WishlistModalProps) {
               {wishlist.map((tour: Tour) => (
                 <Card key={tour.id} className="group overflow-hidden border shadow-md hover:shadow-lg transition-shadow">
                   <div className="relative overflow-hidden">
-                    <Image
+                    <OptimizedImage
                       src={tour.image || "/placeholder.svg"}
                       alt={tour.title}
                       width={400}

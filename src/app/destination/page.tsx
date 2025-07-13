@@ -34,7 +34,7 @@ import { useDebounce } from "@/hooks/use-debounce"
 import { Tour } from "@/hooks/use-wishlist"
 import Navigation from "@/components/sections/Navigation"
 import Footer from "@/components/sections/Footer"
-import Image from "next/image"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 import { useRouter } from "next/navigation"
 
 const destinations = [
@@ -446,7 +446,7 @@ const DestinationCard = ({
     <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 bg-white rounded-3xl">
       <div className="relative overflow-hidden">
         <div className="relative h-72 overflow-hidden">
-          <Image
+          <OptimizedImage
             src={destination.image || "/placeholder.svg"}
             alt={destination.title}
             width={500}
@@ -1024,7 +1024,7 @@ export default function Page() {
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                  <Image
+                  <OptimizedImage
                     width={500}
                     height={300}
                     src={selectedDestination.image}

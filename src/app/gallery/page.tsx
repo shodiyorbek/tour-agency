@@ -22,7 +22,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import Navigation from "@/components/sections/Navigation"
 import Footer from "@/components/sections/Footer"
-import Image from "next/image"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 
 // Gallery data with categories using destination images
 const galleryData = [
@@ -688,7 +688,7 @@ export default function GalleryPage() {
             >
               {/* Image */}
               <div className="relative">
-                <Image
+                <OptimizedImage
                   width={500}
                   height={300}
                   src={selectedImage.image}

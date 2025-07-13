@@ -27,7 +27,7 @@ import {
   Info,
   X
 } from "lucide-react"
-import Image from "next/image"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 import Autoplay from "embla-carousel-autoplay"
 import { useRouter } from "next/navigation"
 
@@ -285,7 +285,7 @@ export default function HotDealsSection() {
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]">
                         {/* Mobile: Image First */}
                         <div className="relative h-64 sm:h-80 lg:h-auto overflow-hidden group order-1 lg:order-2">
-                          <Image
+                          <OptimizedImage
                             src={tour.image || "/placeholder.svg"}
                             alt={tour.title}
                             width={600}
@@ -496,7 +496,7 @@ export default function HotDealsSection() {
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                  <Image
+                  <OptimizedImage
                     src={selectedTour.image}
                     alt={selectedTour.title}
                     width={600}
