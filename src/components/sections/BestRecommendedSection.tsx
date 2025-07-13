@@ -9,7 +9,7 @@ const recommendedPlaces = [
   {
     id: 1,
     name: "Swiss Alps, Switzerland",
-    image: "/gallery/macho.jpg",
+    image: "/destination/arabia.webp",
     rating: 5.0,
     reviews: 2341,
     price: "$2,499",
@@ -23,7 +23,7 @@ const recommendedPlaces = [
   {
     id: 2,
     name: "Maldives Overwater Villas",
-    image: "/gallery/over-water.jpg",
+    image: "/destination/gruzia.webp",
     rating: 4.9,
     reviews: 1892,
     price: "$3,299",
@@ -37,7 +37,7 @@ const recommendedPlaces = [
   {
     id: 3,
     name: "Northern Lights, Iceland",
-    image: "/gallery/aurora.jpg",
+    image: "/destination/maldivs.webp",
     rating: 4.9,
     reviews: 1567,
     price: "$1,899",
@@ -51,7 +51,7 @@ const recommendedPlaces = [
   {
     id: 4,
     name: "Kyoto Cherry Blossoms",
-    image: "/gallery/kyoto.jpg",
+    image: "/destination/baku.webp",
     rating: 4.8,
     reviews: 1245,
     price: "$2,199",
@@ -65,7 +65,7 @@ const recommendedPlaces = [
   {
     id: 5,
     name: "Safari in Botswana",
-    image: "/gallery/serengeti.webp",
+    image: "/destination/abu-dabi.webp",
     rating: 4.9,
     reviews: 987,
     price: "$4,299",
@@ -79,7 +79,7 @@ const recommendedPlaces = [
   {
     id: 6,
     name: "Amalfi Coast, Italy",
-    image: "/gallery/turkey.webp",
+    image: "/destination/sri-lanka.webp",
     rating: 4.8,
     reviews: 2034,
     price: "$2,799",

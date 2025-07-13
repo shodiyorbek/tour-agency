@@ -10,7 +10,7 @@ const destinations = [
   {
     id: 1,
     name: "Santorini, Greece",
-    image: "/gallery/kyoto.jpg",
+    image: "/destination/istanbul.webp",
     rating: 4.8,
     price: "$1,200",
     duration: "5 Days",
@@ -20,7 +20,7 @@ const destinations = [
   {
     id: 2,
     name: "Bali, Indonesia",
-    image: "/gallery/over-water.jpg",
+    image: "/destination/bali.webp",
     rating: 4.9,
     price: "$950",
     duration: "7 Days",
@@ -30,7 +30,7 @@ const destinations = [
   {
     id: 3,
     name: "Swiss Alps",
-    image: "/gallery/aurora.jpg",
+    image: "/destination/tailand.webp",
     rating: 4.7,
     price: "$1,500",
     duration: "6 Days",
@@ -40,7 +40,7 @@ const destinations = [
   {
     id: 4,
     name: "Tokyo, Japan",
-    image: "/gallery/macho.jpg",
+    image: "/destination/vietnam.webp",
     rating: 4.6,
     price: "$1,300",
     duration: "8 Days",
@@ -69,8 +69,8 @@ export default function TopDestinationsSection() {
           </p>
         </div>
 
-        {/* Destinations Row */}
-        <div className="flex flex-row gap-4  mx-auto">
+        {/* Destinations Row - Horizontal on desktop, Vertical on mobile */}
+        <div className="flex flex-col md:flex-row gap-4 mx-auto">
           {destinations.map((destination) => {
             const isExpanded = expandedId === destination.id
             const isCollapsed = !isExpanded
@@ -86,8 +86,8 @@ export default function TopDestinationsSection() {
                 }}
                 className={`relative group cursor-pointer rounded-3xl overflow-hidden shadow-lg bg-white/0 flex flex-col justify-end ${
                   isExpanded
-                    ? 'flex-1 min-w-[50%] h-[500px] z-10'
-                    : 'w-[150px] min-w-[150px] h-[500px] opacity-80 hover:opacity-100'
+                    ? 'md:flex-1 md:min-w-[50%] h-[300px] md:h-[500px] z-10'
+                    : 'w-full md:w-[150px] md:min-w-[150px] h-[120px] md:h-[500px] opacity-80 hover:opacity-100'
                 } ${isCollapsed ? 'scale-95 opacity-60' : ''}`}
                 onClick={() => handleImageClick(destination.id)}
                 animate={{
@@ -124,8 +124,8 @@ export default function TopDestinationsSection() {
                 <motion.div
                   className={`absolute z-20 flex ${
                     isExpanded
-                      ? 'flex-row items-end justify-between bottom-0 left-0 right-0 p-8'
-                      : 'flex-col items-start justify-end bottom-0 left-0 p-6 h-full w-full'
+                      ? 'flex-col md:flex-row items-start md:items-end justify-between bottom-0 left-0 right-0 p-4 md:p-8'
+                      : 'flex-col items-start justify-end bottom-0 left-0 p-4 md:p-6 h-full w-full'
                   }`}
                   style={isExpanded ? {} : { writingMode: 'vertical-rl', textOrientation: 'mixed' }}
                   initial={false}
@@ -143,10 +143,10 @@ export default function TopDestinationsSection() {
                       y: isExpanded ? 0 : 20,
                     }}
                     transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-                    className={`${isExpanded ? '' : 'mb-8'}`}
+                    className={`${isExpanded ? 'mb-4 md:mb-0' : 'mb-8'}`}
                   >
-                    <h3 className={`font-bold text-white ${isExpanded ? 'text-2xl mb-2' : 'text-xl'}`}>{destination.name}</h3>
-                    <span className={`text-white/80 ${isExpanded ? 'text-base' : 'text-sm'}`}>{destination.listings} Listing</span>
+                    <h3 className={`font-bold text-white ${isExpanded ? 'text-xl md:text-2xl mb-2' : 'text-lg md:text-xl'}`}>{destination.name}</h3>
+                    <span className={`text-white/80 ${isExpanded ? 'text-sm md:text-base' : 'text-xs md:text-sm'}`}>{destination.listings} Listing</span>
                   </motion.div>
                   <AnimatePresence>
                     {isExpanded && (
@@ -163,8 +163,7 @@ export default function TopDestinationsSection() {
                             router.push("/destination");
                           }}
                           size="lg" 
-                          variant="outline"
-                          className="border-white text-white backdrop-blur-md"
+                          className="border-white rounded-full bg-white text-black hover:text-white  backdrop-blur-md text-sm md:text-base"
                         >
                           Book Now
                         </Button>

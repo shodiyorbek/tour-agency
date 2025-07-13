@@ -43,7 +43,7 @@ const hotDeals = [
     groupSize: "2-8 people",
     rating: 4.9,
     reviews: 234,
-    image: "/images/bali.webp",
+    image: "/destination/bali.webp",
     description: "Escape to the stunning beaches of Bali with luxury resorts, traditional temples, and vibrant culture. This limited-time offer includes spa treatments and sunset dinners.",
     highlights: ["Luxury Beach Resort", "Temple Tours", "Spa Package", "Sunset Dinner"],
     validUntil: "2024-02-28",
@@ -62,7 +62,7 @@ const hotDeals = [
     groupSize: "4-12 people",
     rating: 4.8,
     reviews: 189,
-    image: "/images/tropical-beach.jpg",
+    image: "/destination/gruzia.webp",
     description: "Experience magical winter landscapes with skiing, cozy chalets, and Christmas markets. Includes equipment rental and mountain railway adventures.",
     highlights: ["Ski Lessons", "Mountain Chalet", "Christmas Markets", "Scenic Railways"],
     validUntil: "2024-01-31",
@@ -81,7 +81,7 @@ const hotDeals = [
     groupSize: "2-10 people",
     rating: 4.7,
     reviews: 156,
-    image: "/gallery/dubai-sunset.jpg",
+    image: "/destination/dubai.webp",
     description: "Immerse yourself in luxury with desert safaris, gold souks, and modern marvels. Includes Burj Khalifa access and traditional dhow cruise.",
     highlights: ["Desert Safari", "Burj Khalifa", "Gold Souk", "Dhow Cruise"],
     validUntil: "2024-03-15",
@@ -100,7 +100,7 @@ const hotDeals = [
     groupSize: "4-8 people",
     rating: 5.0,
     reviews: 98,
-    image: "/gallery/serengeti.webp",
+    image: "/destination/maldivs.webp",
     description: "Witness the Great Migration and Big Five in their natural habitat. Luxury tented camps with expert guides and cultural village visits included.",
     highlights: ["Great Migration", "Big Five Safari", "Luxury Tents", "Cultural Villages"],
     validUntil: "2024-04-30",
@@ -119,7 +119,7 @@ const hotDeals = [
     groupSize: "6-16 people",
     rating: 4.9,
     reviews: 267,
-    image: "/gallery/over-water.jpg",
+    image: "/destination/singapore.webp",
     description: "Sail through crystal-clear waters visiting Mykonos, Santorini, and Crete. Includes yacht accommodation and traditional Greek dining experiences.",
     highlights: ["Yacht Experience", "Santorini Sunset", "Greek Cuisine", "Ancient Ruins"],
     validUntil: "2024-05-20",
@@ -468,13 +468,15 @@ export default function HotDealsSection() {
           </Carousel>
 
           {/* Carousel Indicators */}
-          <div className="flex justify-center mt-6">
-            <div className="flex space-x-2">
+          <div className="flex justify-center mt-4 sm:mt-6">
+            <div className="flex space-x-1 sm:space-x-2">
               {Array.from({ length: count }).map((_, index) => (
                 <button
                   key={index}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === current - 1 ? 'bg-primary w-6' : 'bg-primary/30'
+                  className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
+                    index === current - 1 
+                      ? 'bg-primary w-4 sm:w-6' 
+                      : 'bg-primary/30 w-1.5 sm:w-2'
                   }`}
                   onClick={() => api?.scrollTo(index)}
                 />
