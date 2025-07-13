@@ -13,7 +13,11 @@ export default function Footer({ scrollToSection }: FooterProps) {
     <footer className="bg-background border-t text-foreground py-8 sm:py-10 lg:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          <div className="sm:col-span-2 lg:col-span-1">
+          <div 
+            className="sm:col-span-2 lg:col-span-1"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
             <div className="flex items-center space-x-2 mb-3 sm:mb-4">
               <div className="w-6 h-6 sm:w-8 sm:h-8 relative">
                 <Image
@@ -51,7 +55,10 @@ export default function Footer({ scrollToSection }: FooterProps) {
             </div>
           </div>
 
-          <div>
+          <div
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Quick Links</h3>
             <ul className="space-y-1.5 sm:space-y-2">
               <li>
@@ -97,7 +104,10 @@ export default function Footer({ scrollToSection }: FooterProps) {
             </ul>
           </div>
 
-          <div>
+          <div
+            data-aos="fade-up"
+            data-aos-delay="600"
+          >
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Destinations</h3>
             <ul className="space-y-1.5 sm:space-y-2 text-muted-foreground">
               <li>
@@ -123,7 +133,10 @@ export default function Footer({ scrollToSection }: FooterProps) {
             </ul>
           </div>
 
-          <div>
+          <div
+            data-aos="fade-up"
+            data-aos-delay="800"
+          >
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Contact Info</h3>
             <div className="space-y-1.5 sm:space-y-2 text-sm sm:text-base text-muted-foreground">
               <div>123 Travel Street</div>
@@ -134,7 +147,11 @@ export default function Footer({ scrollToSection }: FooterProps) {
           </div>
         </div>
 
-        <div className="border-t border-border mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-xs sm:text-sm text-muted-foreground">
+        <div 
+          className="border-t border-border mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-xs sm:text-sm text-muted-foreground"
+          data-aos="fade-up"
+          data-aos-delay="1000"
+        >
           <p>&copy; {new Date().getFullYear()} Big Trip Travel Agency. All rights reserved.</p>
         </div>
       </div>

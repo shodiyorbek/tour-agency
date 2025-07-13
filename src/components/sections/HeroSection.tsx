@@ -61,23 +61,43 @@ export default function HeroSection() {
       <div className="relative z-10 flex flex-col md:flex-row w-full h-full px-8 py-20 gap-4">
         {/* Left Side: Title, Subtitle, Description, Button */}
         <div className="flex-1 flex flex-col justify-center items-start max-w-xl text-white gap-4">
-          <h1 className="text-6xl font-extrabold leading-tight mb-2 drop-shadow-lg">
+          <h1 
+            className="text-6xl font-extrabold leading-tight mb-2 drop-shadow-lg"
+            data-aos="fade-right"
+            data-aos-delay="200"
+          >
             Explore
           </h1>
-          <h2 className="text-2xl font-semibold mb-2 drop-shadow-lg">
+          <h2 
+            className="text-2xl font-semibold mb-2 drop-shadow-lg"
+            data-aos="fade-right"
+            data-aos-delay="400"
+          >
             beauty of the whole world
           </h2>
-          <p className="text-lg mb-6 drop-shadow-lg">
+          <p 
+            className="text-lg mb-6 drop-shadow-lg"
+            data-aos="fade-right"
+            data-aos-delay="600"
+          >
             {activeCard.description}
           </p>
-          <Button className="bg-white text-black px-8 py-4 rounded-full text-lg font-bold shadow-lg flex items-center gap-2">
+          <Button 
+            className="bg-white text-black px-8 py-4 rounded-full text-lg font-bold shadow-lg flex items-center gap-2"
+            data-aos="fade-up"
+            data-aos-delay="800"
+          >
             Explore Tours
             <span className="ml-2">→</span>
           </Button>
         </div>
 
         {/* Right Side: Carousel above cards */}
-        <div className="flex-1 flex flex-col justify-center items-end relative min-h-[400px]">
+        <div 
+          className="flex-1 flex flex-col justify-center items-end relative min-h-[400px]"
+          data-aos="fade-left"
+          data-aos-delay="300"
+        >
           {/* Carousel Controls and Progress bar above cards */}
           <div className="w-full max-w-2xl mb-8">
             {/* Progress bar */}
@@ -112,7 +132,11 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll Down Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-20">
+      <div 
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-20"
+        data-aos="fade-up"
+        data-aos-delay="1000"
+      >
         <span className="text-white text-sm mb-1">Scroll Down</span>
         <ArrowDown className="w-8 h-8 text-white animate-bounce" />
       </div>

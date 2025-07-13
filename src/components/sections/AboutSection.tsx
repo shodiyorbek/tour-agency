@@ -13,16 +13,28 @@ export default function AboutSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
           <div className="about-content order-2 lg:order-1">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6">
+            <h2 
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6"
+              data-aos="fade-right"
+              data-aos-delay="200"
+            >
               About <span className="text-yellow-400">Our Company</span>
             </h2>
-            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8">
+            <p 
+              className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8"
+              data-aos="fade-right"
+              data-aos-delay="400"
+            >
               With over 25 years of experience in crafting extraordinary travel experiences, we specialize in creating
               personalized journeys that go beyond the ordinary. Our expert team ensures every detail is perfect.
             </p>
 
             <div className="space-y-4 sm:space-y-6">
-              <div className="flex items-start space-x-3 sm:space-x-4">
+              <div 
+                className="flex items-start space-x-3 sm:space-x-4"
+                data-aos="fade-up"
+                data-aos-delay="600"
+              >
                 <div className="flex-shrink-0">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                     <Award className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
@@ -36,7 +48,11 @@ export default function AboutSection() {
                 </div>
               </div>
 
-              <div className="flex items-start space-x-3 sm:space-x-4">
+              <div 
+                className="flex items-start space-x-3 sm:space-x-4"
+                data-aos="fade-up"
+                data-aos-delay="800"
+              >
                 <div className="flex-shrink-0">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                     <Users className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
@@ -50,7 +66,11 @@ export default function AboutSection() {
                 </div>
               </div>
 
-              <div className="flex items-start space-x-3 sm:space-x-4">
+              <div 
+                className="flex items-start space-x-3 sm:space-x-4"
+                data-aos="fade-up"
+                data-aos-delay="1000"
+              >
                 <div className="flex-shrink-0">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                     <Camera className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
@@ -66,7 +86,11 @@ export default function AboutSection() {
             </div>
           </div>
 
-          <div className="about-image relative order-1 lg:order-2">
+          <div 
+            className="about-image relative order-1 lg:order-2"
+            data-aos="fade-left"
+            data-aos-delay="300"
+          >
             <div className="relative mx-auto max-w-md lg:max-w-none">
               <Image
                 src="/placeholder.svg?height=600&width=500"
@@ -75,7 +99,11 @@ export default function AboutSection() {
                 height={600}
                 className="rounded-xl sm:rounded-2xl shadow-2xl w-full"
               />
-              <div className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 bg-white p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-lg">
+              <div 
+                className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 bg-white p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-lg"
+                data-aos="zoom-in"
+                data-aos-delay="1200"
+              >
                 <div className="text-2xl sm:text-3xl font-bold text-yellow-400">
                   <AnimatedCounter end={25} suffix="+" />
                 </div>

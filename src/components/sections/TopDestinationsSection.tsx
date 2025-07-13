@@ -56,17 +56,25 @@ export default function TopDestinationsSection() {
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 
+            className="text-4xl font-bold text-gray-900 mb-4"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
             Top Destinations
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p 
+            className="text-lg text-gray-600 max-w-2xl mx-auto"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
             Discover our most popular destinations that travelers love. Click on any image to explore more details.
           </p>
         </div>
 
         {/* Destinations Grid */}
         <div className="grid grid-cols-4 gap-2 max-w-4xl mx-auto">
-          {destinations.map((destination) => {
+          {destinations.map((destination, index) => {
             const isExpanded = expandedId === destination.id
             const isCollapsed = expandedId !== null && !isExpanded
 
@@ -81,6 +89,8 @@ export default function TopDestinationsSection() {
                       : 'col-span-1'
                 }`}
                 onClick={() => handleImageClick(destination.id)}
+                data-aos="zoom-in"
+                data-aos-delay={200 + (index * 100)}
               >
                 {/* Image Container */}
                 <div className={`relative overflow-hidden rounded-2xl shadow-lg transition-all duration-500 ${
@@ -156,7 +166,11 @@ export default function TopDestinationsSection() {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-12">
+        <div 
+          className="text-center mt-12"
+          data-aos="fade-up"
+          data-aos-delay="800"
+        >
           <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-lg font-semibold">
             View All Destinations
           </Button>

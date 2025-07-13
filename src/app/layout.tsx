@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { WishlistProvider } from '@/components/wishlist-provider'
+import { AOSProvider } from '@/components/aos-provider'
 import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
@@ -22,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen overflow-y-auto">
-        <WishlistProvider>
-          {children}
-        </WishlistProvider>
+        <AOSProvider>
+          <WishlistProvider>
+            {children}
+          </WishlistProvider>
+        </AOSProvider>
         <Toaster />
       </body>
     </html>
