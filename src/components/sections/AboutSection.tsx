@@ -91,17 +91,7 @@ export default function AboutSection() {
               </div>
             </div>
 
-            <div className="mb-8">
-              <h3 className="text-xl font-semibold text-foreground mb-2">Popular Destinations</h3>
-              <ul className="list-disc list-inside text-muted-foreground text-sm sm:text-base space-y-1">
-                <li><b>Turkey</b> (all-inclusive and sightseeing tours)</li>
-                <li><b>Georgia & Armenia</b> (exclusive routes, gastronomic tours)</li>
-                <li><b>UAE</b> (especially in autumn and winter)</li>
-                <li><b>Thailand & Bali</b> — for winter stays and yoga retreats</li>
-                <li><b>Europe</b> (Italy, Spain, Czech Republic) — sightseeing and cultural tours</li>
-                <li>Custom trips across Asia, South America, and cruises</li>
-              </ul>
-            </div>
+       
 
             <div>
               <h3 className="text-xl font-semibold text-foreground mb-2">Office & Online</h3>
